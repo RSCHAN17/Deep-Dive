@@ -6,6 +6,7 @@ const cors = require('cors');
 const userRouter = require('./routers/users');
 const animalRouter = require('./routers/animals');
 const achievementRouter = require('./routers/achievements');
+const spotRouter = require('./routers/spottings');
 
 const app = express();
 app.use(cors());
@@ -22,6 +23,6 @@ app.get("/", (req, res) => {
 app.use("/users", userRouter);
 app.use("/animals", animalRouter);
 app.use("/achievements", achievementRouter);
-
+app.use("/spottings", spotRouter);
 
 module.exports = app;
