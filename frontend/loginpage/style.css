@@ -160,7 +160,7 @@ input:focus {
   outline: 2px solid #2F6B72;
 }
 
-button {
+#submit {
   padding: 10px;
   font-size: 16px;
   border-radius: 999px;
@@ -168,6 +168,7 @@ button {
   background-color: #2F6B72;
   color: #E8FFC9;
   cursor: pointer;
+  font-family: "Roboto Slab", serif;
 }
 
 button:hover {
@@ -191,9 +192,7 @@ button:hover {
 .signup a:hover {
   text-decoration: underline;
 }
-#submit {
-    font-family: "Roboto Slab", serif;
-}
+
 
 #footerdiv {
     position: relative;
