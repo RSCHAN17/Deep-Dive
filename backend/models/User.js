@@ -42,7 +42,7 @@ class User{
             throw new Error('Email address is already taken.');
         }
         const usernameTaken = await db.query("SELECT * FROM users WHERE username = $1;", [username]);
-        if (usernameTaken.rows.lenfth !== 0){
+        if (usernameTaken.rows.length !== 0){
             throw new Error('Username is already taken.');
         }
         let response = await db.query("INSERT INTO users (username, password, email_address) VALUES ($1, $2, $3) RETURNING user_id;", [username, password, email_address]);
