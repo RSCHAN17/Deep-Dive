@@ -5,7 +5,9 @@ const userRouter = Router();
 
 userRouter.post("/register", userController.register);
 userRouter.post("/login", userController.login);
-userRouter.get("/", userController.index)
-userRouter.get("/id/:id", userController.show)
+userRouter.get("/", userController.index);
+userRouter.get("/id/:id", userController.show);
+userRouter.get("/pics/:id", userController.getPFP);
+userRouter.patch("/pics/:id", userController.setPFP);
 
 module.exports = userRouter;

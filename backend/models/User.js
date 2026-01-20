@@ -1,4 +1,5 @@
 const db = require('../database/connection');
+const Animal = require('./Animal');
 
 class User{
     constructor({user_id, username, password, email_address, spotting_points, achievement_points, total_points, current_pfp, current_title, daily_streak}) {
@@ -15,7 +16,7 @@ class User{
     }
 
     static async getAll(){
-        const response = await db.query("SELECT * FROM users;");
+        const response = await db.query("SELECT * FROM users ORDER BY total_points DESC;");
         return response.rows.map(p => new User(p));
     }
 
@@ -52,11 +53,31 @@ class User{
     }
 
     static async updatePointsByID(id){
-        const spot_response = await db.query("SELECT SUM(spot_points) FROM spottings WHERE user_id = $1;", [id]);
-        const achievement_response = await db.query("SELECT SUM(value) FROM achievements WHERE achievement_id IN (SELECT achievement_id FROM achievement_user_complete WHERE user_id = $1);", [id]);
-        const total_points = Math.ceil(spot_response) + achievement_response;
-        const response = await db.query("UPDATE users SET spotting_points = $1, achievement_points = $2, total_points = $3 WHERE user_id = $4;", [spot_response, achievement_response, total_points, id]);
+        const spot_response = await db.query("SELECT COALESCE(SUM(spot_points),0) FROM spottings WHERE user_id = $1;", [id]);
+        const spot_score = spot_response.rows[0].coalesce;
+
+        const achievement_response = await db.query("SELECT COALESCE(SUM(value),0) FROM achievements WHERE achievement_id IN (SELECT achievement_id FROM achievement_user_complete WHERE user_id = $1);", [id]);
+        const achievement_score = achievement_response.rows[0].coalesce;
+
+        const total_points = Math.ceil(spot_score) + achievement_score;
+        console.log(total_points);
+        const response = await db.query("UPDATE users SET spotting_points = $1, achievement_points = $2, total_points = $3 WHERE user_id = $4 RETURNING user_id;", [spot_score, achievement_score, total_points, id]);
+        const player_id = response.rows[0].user_id;
+        const player = await User.getOneByID(player_id);
+        return player;
     } 
+
+    async getAvailablePFPs(){
+        const response = await db.query("SELECT profile_picture FROM animals WHERE animal_id IN (SELECT animal_id FROM spottings WHERE user_id = $1);", [this.user_id]);
+        return response.rows.map(r => r.profile_picture)
+    }
+
+    async setPFP(animal_id){
+        const desired = await Animal.getOneByID(animal_id);
+        const response = await db.query("UPDATE users SET profile_picture = $1 WHERE user_id = $2 RETURNING user_id;", [desired.profile_picture, this.user_id]);
+        const fresh_pic = response.rows[0].user_id;
+        return await User.getOneByID(fresh_pic);
+    }
 }
 
 module.exports = User;
