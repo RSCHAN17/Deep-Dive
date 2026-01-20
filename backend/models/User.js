@@ -1,4 +1,5 @@
 const db = require('../database/connection');
+const Animal = require('./Animal');
 
 class User{
     constructor({user_id, username, password, email_address, spotting_points, achievement_points, total_points, current_pfp, current_title, daily_streak}) {
@@ -65,6 +66,18 @@ class User{
         const player = await User.getOneByID(player_id);
         return player;
     } 
+
+    async getAvailablePFPs(){
+        const response = await db.query("SELECT profile_picture FROM animals WHERE animal_id IN (SELECT animal_id FROM spottings WHERE user_id = $1);", [this.user_id]);
+        return response.rows.map(r => r.profile_picture)
+    }
+
+    async setPFP(animal_id){
+        const desired = await Animal.getOneByID(animal_id);
+        const response = await db.query("UPDATE users SET profile_picture = $1 WHERE user_id = $2 RETURNING user_id;", [desired.profile_picture, this.user_id]);
+        const fresh_pic = response.rows[0].user_id;
+        return await User.getOneByID(fresh_pic);
+    }
 }
 
 module.exports = User;

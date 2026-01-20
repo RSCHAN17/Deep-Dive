@@ -83,5 +83,27 @@ async function show (req, res) {
     }
 }
 
+async function getPFP(req, res) {
+    try {
+        let id = req.params.id;
+        const user = await User.updatePointsByID(id);
+        profiles_available = user.getAvailablePFPs();
+        res.status(200).send(profiles_available);
+    } catch (err) {
+        res.status(500).json({ error: err.message })
+    }
+}
 
-module.exports = { register, login, index, show }
+async function setPFP(req, res){
+    try {
+        let id = req.params.id;
+        let animal_id = req.body;
+        const user = await User.updatePointsByID(id);
+        new_face = user.setPFP(animal_id);
+        res.status(202).json(new_face);
+    } catch (err) {
+        res.status(404).json({ error: err.message })
+    }
+}
+
+module.exports = { register, login, index, show, getPFP, setPFP }
