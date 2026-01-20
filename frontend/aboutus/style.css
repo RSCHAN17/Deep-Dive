@@ -2,6 +2,8 @@ html, body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  background-color: #AFC9A6;
+
 }
 .navbar {
   background-color: #333;
@@ -115,3 +117,65 @@ html, body {
     justify-content: center;
     font-family: "Roboto Slab", serif;
 }
+.section {
+  margin: 16px 16px 18px;
+}
+
+.section-title {
+  font-family: "Jockey One", serif;
+  font-weight: 800;
+  font-size: 18px;
+  color: #12464D;
+  margin: 8px 0 10px;
+}
+
+.rounded-box {
+  border-radius: 18px;
+  padding: 14px;
+  background: #E0FFb1;
+}
+
+.rounded-box p {
+  margin: 0;
+  text-align: center;
+  line-height: 1.4;
+  color: #12464D;
+}
+
+.rounded-box.tall {
+  min-height: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rounded-box.small {
+  padding: 12px 14px;
+}
+
+.rounded-box p {
+  font-family: "Roboto Slab", serif;
+}
+
+
+.who-grid {
+  display: grid;
+  grid-template-columns: 70px 1fr;
+  gap: 14px;
+  align-items: start;
+}
+
+.avatars {
+  display: grid;
+  gap: 18px;
+  padding-top: 6px;
+}
+
+.avatar { /* Avatar container, will change to images later */ 
+  width: 56px;
+  height: 56px;
+  background: #D9D9D9;
+  border-radius: 10px;
+}
+
+
