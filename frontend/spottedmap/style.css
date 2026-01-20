@@ -1,0 +1,117 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.navbar {
+  background-color: #333;
+  font-family: Arial;
+  background-color:#36656B ;
+  display: flex;
+  position:relative;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 0 0;
+  width:100%;
+  align-items: center;
+  top:0;
+}
+
+.navbar a {
+  float: left;
+  font-size: 16px;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+#title {
+    font-family: "Jockey One", sans-serif;
+    color: #E0FFB1;
+    font-size: 35px;
+    padding-bottom: 18px;
+}
+
+.dropdown {
+  float: none;
+  overflow: hidden;
+  position: static;
+}
+
+.dropdown .dropbtn {
+  font-size:16px;
+  border: none;
+  outline: none;
+  color: white;
+  padding: 19px 16px;
+  background-color: inherit;
+  font-family: inherit; 
+  margin: 0; 
+}
+
+.dropdown:hover .dropbtn {
+  background-color: #12464D;
+}
+
+.dropdown-content {
+  display: grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:16px;
+  position: absolute;
+  background-color: #E0FFB1;
+  top:100%;
+  left: 0;
+  right: 0;
+  width:100%;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1000;
+  visibility: hidden;
+}
+
+.dropdown-content a {
+  float: none;
+  color: black;
+  padding: 20px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+
+}
+.dropdown-items {
+    background-color: #A5C89E;
+    border:0;
+    border-radius:15px;
+    padding:10px;
+    margin:10px;
+    font-family: "Jockey One", sans-serif;
+    color: #12464D;
+
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+  visibility: visible;
+}
+
+#footerdiv {
+    position: fixed;
+    bottom:0;
+    left:0;
+    background-color: #36656B;
+    height: 72px;
+    width:100%;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+#contactdetails {
+    color: #E0FFB1;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Roboto Slab", serif;
+}
