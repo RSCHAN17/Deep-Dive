@@ -64,4 +64,24 @@ async function login(req, res) {
     }
 }
 
-module.exports = { register, login }
+async function index(req, res) {
+    try {
+        const users = await User.getAll();
+        res.status(200).json(users);
+    } catch (err) {
+        res.status(500).json({ error: err.message })
+    }
+}
+
+async function show (req, res) {
+    try {
+        let id = req.params.id;
+        const user = await User.getOneByID(id);
+        res.status(200).json(user);
+    } catch (err) {
+        res.status(404).json({ error: err.message });
+    }
+}
+
+
+module.exports = { register, login, index, show }

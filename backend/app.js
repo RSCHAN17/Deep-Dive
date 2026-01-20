@@ -1,8 +1,9 @@
 const express = require('express');
 const cors = require('cors');
 
-// LOGGER AND ROUTERS
+
 // const logRoutes = require();
+const userRouter = require('./routers/users');
 
 const app = express();
 app.use(cors());
@@ -16,6 +17,6 @@ app.get("/", (req, res) => {
     })
 });
 
-// app.use("/blahblah", blahRouter) etc...
+app.use("/users", userRouter);
 
 module.exports = app;
