@@ -1,7 +1,10 @@
+
+
 html, body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  overflow-x: hidden;
 }
 .navbar {
   background-color: #333;
@@ -96,9 +99,393 @@ html, body {
 .dropdown:hover .dropdown-content {
   visibility: visible;
 }
+body {
+  margin: 0;
+  font-family: "Roboto Slab", serif;
+  /* min-height: 100vh; */
+  display: flex;
+  flex-direction: column;
+  background-color: #AFC9A6; 
+  color: #10323A; 
+} 
 
+main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding-left: 20px;
+  padding-right: 20px;
+  align-items: center;
+}
+
+h2 {
+  font-family: "Jockey One", sans-serif;
+  color:#12464D;
+  display: flex;
+  align-self: flex-start;
+  text-align: left;
+  padding-left: 15px;
+}
+select {
+  background-color: #A5C89E;
+  border:0;
+  border-radius: 15px;
+  height:30px;
+  font-family: "Roboto Slab", sans-serif;
+}
+
+#edit-location{
+  background-color: #E0FFB1;
+  border-radius:15px;
+  border:0px;
+  font-family: "Jockey One", sans-serif;
+  width: 330px;
+  color:#12464D;
+  
+}
+.accinfo {
+  background-color:#E0FFB1;
+  border-radius: 15px;
+  height: 200px;
+  width:320px;
+  display: flex;
+
+}
+.user-left {
+  width: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding-left: 20px;
+}
+
+.profile-pic {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  background-color: #A5C89E;
+}
+
+.edit-profile {
+  font-size: 12px;
+  padding: 4px 8px;
+  border: none;
+  border-radius: 8px;
+  background-color: #36656B;
+  color: #E0FFB1;
+  cursor: pointer;
+  font-family: "Roboto Slab", serif;
+}
+
+
+.user-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap:15px;
+  padding-left: 20px;
+  
+}
+
+.username {
+  font-family: "Jockey One", sans-serif;
+  font-size: 18px;
+  color: #12464D;
+  padding-top: 14px;
+}
+
+.usertitle {
+  font-size: 12px;
+  color: #36656B;
+  margin-bottom: 4px;
+}
+
+
+.level-text {
+  font-size: 12px;
+}
+.level-row,
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  padding-right: 15px;
+}
+.stat-row span, .level-row span {
+  font-family: "Jockey One", sans-serif;
+  font-size: 15px;
+}
+
+.level-row strong,
+.stat-row strong {
+  font-variant-numeric: tabular-nums;
+}
+.progress-bar {
+  width: 80%;
+  height: 8px;
+  background-color: #A5C89E;
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 4px 0;
+  border: 1px black
+  
+}
+
+.progress-fill {
+  height: 100%;
+  width: 60%; 
+  background-color: #36656B;
+}
+
+.xp-text {
+  font-size: 11px;
+  color: #12464D;
+  text-align: center;
+  margin-top: 2px;
+  padding-right: 30px;
+}
+
+.user-stats {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 12px;
+  gap:1px
+}
+.sightinglist {
+  background-color:#E0FFB1;
+  border-radius: 15px;
+  height: 310px;
+  width:330px;
+}
+.sightinglist, .zoo-list {
+  background-color: #E0FFB1;
+  border-radius: 15px;
+  height: 310px;
+  width: 330px;
+  padding: 10px;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+
+.sighting-item, .zoo-item {
+  display: flex;
+  gap: 10px;
+  padding: 8px;
+  background-color: #A5C89E;
+  border-radius: 12px;
+  margin-bottom: 8px;
+}
+
+
+.sighting-img, .zoo-img {
+  width: 56px;
+  height: 56px;
+  border-radius: 8px;
+  object-fit: cover;
+  background-color: #36656B;
+  flex-shrink: 0;
+}
+
+
+.sighting-info, .zoo-info{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 12px;
+}
+
+
+.sighting-species, .zoo-species {
+  font-family: "Jockey One", sans-serif;
+  color: #12464D;
+  font-size:19px
+}
+
+.sighting-location,
+.sighting-date, .zoo-latin, .zoo-group {
+  color: #36656B;
+  font-size: 11px;
+}
+.zoo-reward{
+  display: flex;
+  align-items: flex-end;
+  padding-left: 115px;
+  font-family: "Roboto Slab", serif;
+  font-size: 11px;
+  color:#12464D;
+  flex-direction: column-reverse;
+  gap:20px
+}
+.myzoo-search {
+    width: 310px;
+    padding: 8px 10px;             
+    margin-bottom: 8px;            
+    border-radius: 12px;           
+    border: none;                  
+    background-color: #A5C89E;     
+    font-family: "Jockey One", sans-serif;
+    font-size: 12px;
+    color: #12464D;
+    outline: none;
+    box-sizing: border-box;
+    margin-top: 5px;
+}
+
+.achlist {
+   background-color:#E0FFB1;
+  border-radius: 15px;
+  height: 310px;
+  width:330px;
+}
+.achlist {
+  background-color: #E0FFB1;
+  border-radius: 15px;
+  height: 310px;
+  width: 330px;
+  padding: 10px;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+
+.achievement-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #A5C89E;
+  border-radius: 12px;
+  margin-bottom: 8px;
+  gap: 10px;
+}
+
+.achievement-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1; 
+  font-size: 12px;
+}
+
+
+.achievement-title {
+  font-family: "Jockey One", sans-serif;
+  font-size: 19px;
+  color: #12464D;
+}
+
+.achievement-desc {
+  font-size: 11px;
+  color: #36656B;
+}
+
+.achievement-reward {
+  font-size: 11px;
+  font-weight: bold;
+  color: #12464D;
+}
+
+
+.achievement-tick {
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: white;
+  flex-shrink: 0;
+  background-color: transparent;
+  transition: background-color 0.3s;
+}
+
+.achievement-tick.achieved {
+  background-color: #2ECC71;
+  border-color: #2ECC71; 
+  color:#12464D;
+}
+.achievement-tick.achieved::after {
+  content: "✓"; /* adds checkmark */
+}
+
+.achievement-tick.not-achieved {
+  background-color: #F44336; 
+}
+.myzoo {
+  background-color:#E0FFB1;
+  border-radius: 15px;
+  height: 310px;
+  width:330px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+/* Modal overlay */
+.modal {
+  display: none;                  
+  position: fixed;                 
+  z-index: 1000;                   
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;                  
+  background-color: rgba(0, 0, 0, 0.5); 
+  justify-content: center;
+  align-items: center;
+}
+
+/* Modal box */
+.modal-content {
+  background-color: #E0FFB1;
+  border-radius: 15px;
+  padding: 20px;
+  width: 320px;
+  max-width: 90%;
+  box-shadow: 0px 8px 16px rgba(0,0,0,0.3);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Close button */
+.close-btn {
+  align-self: flex-end;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+h3 {
+  font-family: "Jockey One", serif;
+  font-size: 25px;
+  color:#12464D
+}
+
+
+
+/* Save button */
+#save-profile {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 8px;
+  background-color: #36656B;
+  color: #E0FFB1;
+  cursor: pointer;
+  font-family: "Roboto Slab", serif;
+  margin-top: 10px;
+}
 #footerdiv {
-    position: fixed;
+    position: relative;
     bottom:0;
     left:0;
     background-color: #36656B;
