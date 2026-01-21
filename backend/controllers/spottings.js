@@ -19,6 +19,26 @@ async function show(req, res) {
     }
 }
 
+async function filterByUser(req, res) {
+    try {
+        let id = req.params.id;
+        const spots = await Spotting.filterByUser(id);
+        res.status(200).json(spots)
+    } catch (err) {
+        res.status(404).json({ error: err.message });
+    }
+}
+
+async function filterByType(req, res) {
+    try {
+        let type = req.params.type
+        const spots = await Spotting.filterByType(type);
+        res.status(200).json(spots)
+    } catch (err) {
+        res.status(404).json({ error: err.message })
+    }
+}
+
 async function create(req, res) {
     try {
         const data = req.body;
@@ -29,4 +49,4 @@ async function create(req, res) {
     }
 }
 
-module.exports = { index, show, create }
+module.exports = { index, show, filterByUser, filterByType, create }

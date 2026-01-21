@@ -9,5 +9,7 @@ userRouter.get("/", userController.index);
 userRouter.get("/id/:id", userController.show);
 userRouter.get("/pics/:id", userController.getPFP);
 userRouter.patch("/pics/:id", userController.setPFP);
+userRouter.get("/title/:id", userController.getTitle);
+userRouter.patch("/title/:id", userController.setTitle);
 
 module.exports = userRouter;

@@ -22,7 +22,7 @@ async function register(req, res) {
         if (err.message.includes('already taken')) {
             return res.status(409).json({ error: err.message });
         }
-        res.status(500).json({ error: 'Registration failed:' + err.message });
+        res.status(500).json({ error: 'Registration failed: ' + err.message });
     }
 }
 
@@ -87,7 +87,7 @@ async function getPFP(req, res) {
     try {
         let id = req.params.id;
         const user = await User.updatePointsByID(id);
-        profiles_available = user.getAvailablePFPs();
+        let profiles_available = user.getAvailablePFPs();
         res.status(200).send(profiles_available);
     } catch (err) {
         res.status(500).json({ error: err.message })
@@ -106,4 +106,35 @@ async function setPFP(req, res){
     }
 }
 
-module.exports = { register, login, index, show, getPFP, setPFP }
+async function getTitle(req, res) {
+    try {
+        let id = req.params.id;
+        const user = await User.getOneByID(id);
+        let titles_available = user.getAvailableTitles();
+        res.status(200).send(titles_available);
+    } catch (err) {
+        res.status(500).json({ error: err.message })
+    }
+}
+
+async function setTitle(req, res){
+    try {
+        let id = req.params.id;
+        let achievement_id = req.body;
+        const user = await User.updatePointsByID(id);
+        new_title = user.setTitle(achievement_id);
+        res.status(202).json(new_title);
+    } catch (err) {
+        res.status(404).json({ error: err.message })
+    }
+}
+
+module.exports = { 
+    register,
+    login,
+    index, 
+    show,
+    getPFP,
+    setPFP,
+    getTitle,
+    setTitle }

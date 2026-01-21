@@ -1,4 +1,6 @@
-DROP TABLE IF EXISTS challenges;
+DROP TABLE IF EXISTS families cascade;
+DROP TABLE IF EXISTS challenges cascade;
+DROP TABLE IF EXISTS challenge_user_complete cascade;
 DROP TABLE IF EXISTS achievement_user_complete;
 DROP TABLE IF EXISTS achievements;
 DROP TABLE IF EXISTS animals cascade;
@@ -12,6 +14,7 @@ CREATE TABLE users (
     email_address VARCHAR(75) UNIQUE NOT NULL,
     spotting_points FLOAT,
     achievement_points INT,
+    challenge_points INT,
     total_points INT,
     current_pfp VARCHAR(255),
     current_title VARCHAR(80),
@@ -19,19 +22,30 @@ CREATE TABLE users (
     PRIMARY KEY (user_id)
 );
 
+CREATE TABLE families (
+    id INT GENERATED ALWAYS AS IDENTITY,
+    family_name VARCHAR(50),
+    common_name VARCHAR(50),
+    profile_picture VARCHAR (255),
+    PRIMARY KEY (id)
+);
+
 CREATE TABLE animals (
     animal_id INT GENERATED ALWAYS AS IDENTITY,
     name VARCHAR(50) UNIQUE NOT NULL,
     type VARCHAR(50) NOT NULL,
-    group_behaviour VARCHAR(50) NOT NULL,
-    population_in_uk INT NOT NULL,
     capture_points INT NOT NULL,
     pack_bonus_mult FLOAT NOT NULL,
     description VARCHAR(255) NOT NULL,
     fun_fact VARCHAR(255),
-    profile_picture VARCHAR(255),
-    PRIMARY KEY (animal_id)
+    zoo_image VARCHAR(255),
+    species VARCHAR(255) UNIQUE NOT NULL,
+    family_id INT NOT NULL,
+    PRIMARY KEY (animal_id),
+    FOREIGN KEY (family_id) REFERENCES families(id)
 );
+
+
 
 CREATE TABLE spottings (
     spot_id INT GENERATED ALWAYS AS IDENTITY,
@@ -69,5 +83,16 @@ CREATE TABLE challenges (
     id INT GENERATED ALWAYS AS IDENTITY,
     challenge_name VARCHAR(50) NOT NULL,
     challenge_description VARCHAR(255) NOT NULL,
+    points INT NOT NULL,
     PRIMARY KEY (id)
+);
+
+CREATE TABLE challenge_user_complete (
+    id INT GENERATED ALWAYS AS IDENTITY, 
+    user_id INT NOT NULL,
+    challenge_id INT NOT NULL,
+    challenge_score INT NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (challenge_id) REFERENCES challenges(id),
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
