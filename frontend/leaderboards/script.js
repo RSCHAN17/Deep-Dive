@@ -14,7 +14,7 @@ const dropDown3 = document.querySelector("#dd3")
 const dropDown4 = document.querySelector("#dd4")
 
 dropDown4.addEventListener("click", () => {
-    window.location.href = "./"
+    window.location.href = "../submitspot/index.html"
 })
 dropDown2.addEventListener("click", () => {
     window.location.href = "../aboutus/index.html"

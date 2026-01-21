@@ -17,7 +17,7 @@ dropDown1.addEventListener("click", () => {
     window.location.href = "../myaccount/index.html"
 })
 dropDown2.addEventListener("click", () => {
-    window.location.href = "../aboutus/index.html"
+    window.location.href = "../submitspot/index.html"
 })
 dropDown3.addEventListener("click", () => {
     window.location.href = "../spottedmap/index.html"
