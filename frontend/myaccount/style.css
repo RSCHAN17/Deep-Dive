@@ -117,8 +117,6 @@ main {
   padding-left: 20px;
   padding-right: 20px;
   align-items: center;
-
- 
 }
 
 h2 {
@@ -129,7 +127,23 @@ h2 {
   text-align: left;
   padding-left: 15px;
 }
+select {
+  background-color: #A5C89E;
+  border:0;
+  border-radius: 15px;
+  height:30px;
+  font-family: "Roboto Slab", sans-serif;
+}
 
+#edit-location{
+  background-color: #E0FFB1;
+  border-radius:15px;
+  border:0px;
+  font-family: "Jockey One", sans-serif;
+  width: 330px;
+  color:#12464D;
+  
+}
 .accinfo {
   background-color:#E0FFB1;
   border-radius: 15px;
@@ -456,13 +470,7 @@ h3 {
   font-size: 25px;
   color:#12464D
 }
-select {
-  background-color: #A5C89E;
-  border:0;
-  border-radius: 15px;
-  height:30px;
-  font-family: "Roboto Slab", sans-serif;
-}
+
 
 
 /* Save button */
