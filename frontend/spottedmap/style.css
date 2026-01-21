@@ -154,14 +154,79 @@ body {
   color: #12464D;
 }
 
-.chatbot-placeholder {
-  height: 160px;
-  border-radius: 18px;
-  background: #D9D9D9;
+.info-box {
+  display: flex;
+  height: 200px;
+  border: 0;
+  border-radius: 15px;
+  padding: 12px;
+  box-sizing: border-box;
+  gap: 16px;
+  background: #E0FFB1;
+}
+
+.left {
+  width: 140px;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
 }
+
+.title {
+  margin: 0 0 8px 0;
+  font-size: 22px;
+  font-family: "Jockey One", serif;
+  color:#36656B
+  
+}
+.icons {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  padding-bottom: 5px;
+}
+
+.icon {
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+}
+.left img {
+  width: 100%;
+  height: auto;
+  border-radius: 15px;
+  object-fit: cover;
+}
+
+.right {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-top: 10px;
+  background-color: #A5C89E;
+  border-radius: 15px;
+  margin-top: 45px;
+  margin-bottom: -5px;
+  
+
+}
+
+.right p {
+  margin: 0 0 6px 0;
+  font-size: 14px;
+  padding-left: 10px;
+  font-family: "Roboto Slab", sans-serif;
+  color:#36656B
+}
+
 
 .map-filter-btn {
   position: absolute;

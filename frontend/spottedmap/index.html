@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,8 +9,11 @@
   <link rel="stylesheet" href="style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Jockey+One&family=Roboto+Slab:wght@100..900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Jockey+One&family=Roboto+Slab:wght@100..900&display=swap"
+    rel="stylesheet" />
+  <script src="script.js" defer></script>
 </head>
+
 
 <body>
   <div class="navbar">
@@ -25,10 +29,10 @@
       </button>
 
       <div class="dropdown-content">
-        <button class="dropdown-items" type="button">My Account</button>
-        <button class="dropdown-items" type="button">About Us</button>
-        <button class="dropdown-items" type="button">Spotted Map</button>
-        <button class="dropdown-items" type="button">Leaderboards</button>
+        <button id="dd1" class="dropdown-items">My Account</button>
+        <button id="dd2" class="dropdown-items">About Us</button>
+        <button id="dd3" class="dropdown-items">Submit Sighting</button>
+        <button id="dd4" class="dropdown-items">Leaderboards</button>
       </div>
     </div>
   </div>
@@ -38,8 +42,10 @@
       <div class="map-placeholder">
 
         <button class="map-filter-btn" type="button" aria-label="Open filters" aria-expanded="false">
-          <svg class="map-filter-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" width="22" height="22" aria-hidden="true">
-            <path d="M440-160q-17 0-28.5-11.5T400-200v-240L168-736q-15-20-4.5-42t36.5-22h560q26 0 36.5 22t-4.5 42L560-440v240q0 17-11.5 28.5T520-160h-80Zm40-308 198-252H282l198 252Zm0 0Z"/>
+          <svg class="map-filter-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" width="22"
+            height="22" aria-hidden="true">
+            <path
+              d="M440-160q-17 0-28.5-11.5T400-200v-240L168-736q-15-20-4.5-42t36.5-22h560q26 0 36.5 22t-4.5 42L560-440v240q0 17-11.5 28.5T520-160h-80Zm40-308 198-252H282l198 252Zm0 0Z" />
           </svg>
         </button>
 
@@ -47,7 +53,8 @@
           <div class="filter-title">Filter</div>
 
           <div class="filter-block">
-            <input id="animalSearch" class="filter-search" type="search" placeholder="Filter by animal" autocomplete="off" />
+            <input id="animalSearch" class="filter-search" type="search" placeholder="Filter by animal"
+              autocomplete="off" />
 
             <label class="filter-range">
               <input id="proximity" type="range" min="0" max="100" value="0" />
@@ -91,9 +98,9 @@
           </div>
 
           <div class="filter-actions">
-  <button type="button" class="filter-action submit">Search</button>
-  <button type="button" class="filter-action clear" id="clearFilters">Clear</button>
-</div>
+            <button type="button" class="filter-action submit">Search</button>
+            <button type="button" class="filter-action clear" id="clearFilters">Clear</button>
+          </div>
 
         </div>
 
@@ -103,67 +110,37 @@
 
       <p class="last-updated">Last updated</p>
 
-      <div class="chatbot-placeholder">
-        <p class="placeholder-text">Info/chatbot</p>
+
+      <div class="info-box">
+  <div class="left">
+    <div class="header">
+      <h3 class="title">Red Fox</h3>
+      <div class="icons">
+        <img class="icon report" src="../assets/reporticon2.svg" alt="reporticon">
+       <img class="icon like" src="../assets/thumbsup2.svg" alt="likeicon">
       </div>
+    </div>
+          <img src="../assets/fox.jpg" alt="Preview" />
+        </div>
+
+        <div class="right">
+          <p><strong>Spotted by:</strong> FoxLover123</p>
+          <p><strong>In:</strong> Hampshire</p>
+          <p><strong>On:</strong> 25/07/2015</p>
+        </div>
+      </div>
+
+
     </div>
   </main>
 
   <footer>
     <div id="footerdiv">
+
       <p id="contactdetails">Subscribe to the Newsletter</p>
     </div>
   </footer>
 
-  <script>
-    const panel = document.getElementById("filterPanel");
-    const btn = document.querySelector(".map-filter-btn");
-    const slider = document.getElementById("proximity");
-    const sliderValue = document.getElementById("proximityValue");
-    const clearBtn = document.getElementById("clearFilters");
-    const checkboxes = Array.from(document.querySelectorAll(".filter-checkbox"));
-    const animalSearch = document.getElementById("animalSearch");
-
-    function updateRangeFill() {
-      const min = Number(slider.min) || 0;
-      const max = Number(slider.max) || 100;
-      const val = Number(slider.value) || 0;
-      const pct = ((val - min) / (max - min)) * 100;
-
-      slider.style.background =
-        `linear-gradient(to right, #36656B 0%, #36656B ${pct}%, #A5C89E ${pct}%, #A5C89E 100%)`; 
-      /* Chrome/Safari: needed to show filled portion - could not find other way currently*/
-    }
-
-    btn.addEventListener("click", () => {
-      const isOpen = panel.classList.toggle("open");
-      panel.setAttribute("aria-hidden", String(!isOpen));
-      btn.setAttribute("aria-expanded", String(isOpen));
-    });
-
-    slider.addEventListener("input", () => {
-      sliderValue.textContent = slider.value;
-      updateRangeFill();
-    });
-
-    clearBtn.addEventListener("click", () => {
-      slider.value = 0;
-      sliderValue.textContent = "0";
-      updateRangeFill();
-      checkboxes.forEach(cb => (cb.checked = false));
-      animalSearch.value = "";
-    });
-
-    document.addEventListener("click", (e) => {
-      if (!panel.classList.contains("open")) return;
-      if (panel.contains(e.target) || btn.contains(e.target)) return;
-
-      panel.classList.remove("open");
-      panel.setAttribute("aria-hidden", "true");
-      btn.setAttribute("aria-expanded", "false");
-    });
-
-    updateRangeFill();
-  </script>
 </body>
+
 </html>
