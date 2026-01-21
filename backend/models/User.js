@@ -1,5 +1,6 @@
 const db = require('../database/connection');
 const Animal = require('./Animal');
+const Achievement = require('./Achievement');
 
 class User{
     constructor({user_id, username, password, email_address, spotting_points, achievement_points, challenge_points, total_points, current_pfp, current_title, daily_streak}) {
@@ -78,9 +79,21 @@ class User{
 
     async setPFP(animal_id){
         const desired = await Animal.getOneByID(animal_id);
-        const response = await db.query("UPDATE users SET profile_picture = $1 WHERE user_id = $2 RETURNING user_id;", [desired.profile_picture, this.user_id]);
+        const response = await db.query("UPDATE users SET current_pfp = $1 WHERE user_id = $2 RETURNING user_id;", [desired.profile_picture, this.user_id]);
         const fresh_pic = response.rows[0].user_id;
         return await User.getOneByID(fresh_pic);
+    }
+
+    async getAvailableTitles() {
+        const response = await db.query("SELECT title FROM achievements WHERE achievement_id IN (SELECT achievement_id FROM achievement_user_complete WHERE user_id = $1);", [this.user_id]);
+        return response.rows.map(r => r.title);
+    }
+
+    async setTitle(achievement_id) {
+        const desired = await Achievement.getOneByID(achievement_id);
+        const response = await db.query("UPDATE users SET current_title = $1 WHERE user_id = $2 RETURNING user_id;", [desired.title, this.user_id]);
+        const fresh_title = response.rows[0].user_id;
+        return await User.getOneByID(fresh_title);
     }
 }
 
