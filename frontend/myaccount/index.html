@@ -10,6 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Jockey+One&family=Roboto+Slab:wght@100..900&display=swap"
         rel="stylesheet">
+    <script src="script.js" defer></script>
 </head>
 
 <body>
@@ -23,22 +24,441 @@
                 <img id="burger" src="../assets/burgericon.svg" alt="burgericon" width="40px">
             </button>
             <div class="dropdown-content">
-                <button class="dropdown-items">My Account</button>
-                <button class="dropdown-items">About Us</button>
-                <button class="dropdown-items">Spotted Map</button>
-                <button class="dropdown-items">Leaderboards</button>
-
-
+                <button id="dd1" class="dropdown-items">My Account</button>
+                <button id="dd2" class="dropdown-items">About Us</button>
+                <button id="dd3" class="dropdown-items">Spotted Map</button>
+                <button id="dd4" class="dropdown-items">Leaderboards</button>
             </div>
         </div>
     </div>
+    <main>
+        <h2>My Account</h2>
+        <div class="accinfo">
+            <div class="user-left">
+                <img src="../assets/ravenlogo.svg" alt="Profile picture" class="profile-pic">
+                <button class="edit-profile">Edit</button>
+            </div>
 
-    <footer>
-        <div id = "footerdiv">
-            <p id="contactdetails">Subscribe to the Newsletter</p>
+            <div class="user-right">
+                <div class="user-header">
+                    <div class="username">Username</div>
+                    <div class="usertitle">Wildlife Spotter</div>
+                </div>
+
+                <div class="level-section">
+                    <div class="level-row">
+                        <span>Spotter Level</span>
+                        <strong>4</strong>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill"></div>
+                    </div>
+                    <div class="xp-text">320 / 500XP</div>
+                </div>
+
+                <div class="user-stats">
+                    <div class="stat-row">
+                        <span>Species</span>
+                        <strong>27</strong>
+                    </div>
+                    <div class="stat-row">
+                        <span>Spottings</span>
+                        <strong>142</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h2>My Sightings</h2>
+        <div class="sightinglist">
+            <div class="sighting-item">
+                <img src="../assets/fox.jpg" alt="Fox" class="sighting-img">
+
+                <div class="sighting-info">
+                    <div class="sighting-species">Red Fox</div>
+                    <div class="sighting-location">New Forest</div>
+                    <div class="sighting-date">12 Jan 2026</div>
+                </div>
+            </div>
+            <div class="sighting-item">
+                <img src="../assets/fox.jpg" alt="Fox" class="sighting-img">
+
+                <div class="sighting-info">
+                    <div class="sighting-species">Red Fox</div>
+                    <div class="sighting-location">New Forest</div>
+                    <div class="sighting-date">12 Jan 2026</div>
+                </div>
+            </div>
+            <div class="sighting-item">
+                <img src="../assets/fox.jpg" alt="Fox" class="sighting-img">
+
+                <div class="sighting-info">
+                    <div class="sighting-species">Red Fox</div>
+                    <div class="sighting-location">New Forest</div>
+                    <div class="sighting-date">12 Jan 2026</div>
+                </div>
+            </div>
+            <div class="sighting-item">
+                <img src="../assets/fox.jpg" alt="Fox" class="sighting-img">
+
+                <div class="sighting-info">
+                    <div class="sighting-species">Red Fox</div>
+                    <div class="sighting-location">New Forest</div>
+                    <div class="sighting-date">12 Jan 2026</div>
+                </div>
+            </div>
+            <div class="sighting-item">
+                <img src="../assets/fox.jpg" alt="Fox" class="sighting-img">
+
+                <div class="sighting-info">
+                    <div class="sighting-species">Red Fox</div>
+                    <div class="sighting-location">New Forest</div>
+                    <div class="sighting-date">12 Jan 2026</div>
+                </div>
+            </div>
+            <div class="sighting-item">
+                <img src="../assets/fox.jpg" alt="Fox" class="sighting-img">
+
+                <div class="sighting-info">
+                    <div class="sighting-species">Red Fox</div>
+                    <div class="sighting-location">New Forest</div>
+                    <div class="sighting-date">12 Jan 2026</div>
+                </div>
+            </div>
+            <div class="sighting-item">
+                <img src="../assets/fox.jpg" alt="Fox" class="sighting-img">
+
+                <div class="sighting-info">
+                    <div class="sighting-species">Red Fox</div>
+                    <div class="sighting-location">New Forest</div>
+                    <div class="sighting-date">12 Jan 2026</div>
+                </div>
+            </div>
+            <div class="sighting-item">
+                <img src="../assets/fox.jpg" alt="Fox" class="sighting-img">
+
+                <div class="sighting-info">
+                    <div class="sighting-species">Red Fox</div>
+                    <div class="sighting-location">New Forest</div>
+                    <div class="sighting-date">12 Jan 2026</div>
+                </div>
+            </div>
+            <div class="sighting-item">
+                <img src="../assets/fox.jpg" alt="Fox" class="sighting-img">
+
+                <div class="sighting-info">
+                    <div class="sighting-species">Red Fox</div>
+                    <div class="sighting-location">New Forest</div>
+                    <div class="sighting-date">12 Jan 2026</div>
+                </div>
+            </div>
+            <div class="sighting-item">
+                <img src="../assets/fox.jpg" alt="Fox" class="sighting-img">
+
+                <div class="sighting-info">
+                    <div class="sighting-species">Red Fox</div>
+                    <div class="sighting-location">New Forest</div>
+                    <div class="sighting-date">12 Jan 2026</div>
+                </div>
+            </div>
+            <div class="sighting-item">
+                <img src="../assets/fox.jpg" alt="Fox" class="sighting-img">
+
+                <div class="sighting-info">
+                    <div class="sighting-species">Red Fox</div>
+                    <div class="sighting-location">New Forest</div>
+                    <div class="sighting-date">12 Jan 2026</div>
+                </div>
+            </div>
+            <div class="sighting-item">
+                <img src="../assets/fox.jpg" alt="Fox" class="sighting-img">
+
+                <div class="sighting-info">
+                    <div class="sighting-species">Red Fox</div>
+                    <div class="sighting-location">New Forest</div>
+                    <div class="sighting-date">12 Jan 2026</div>
+                </div>
+            </div>
         </div>
 
-    </footer>
+        <h2>Achievement List</h2>
+        <div class="achlist">
+            <div class="achievement-item">
+                <div class="achievement-info">
+                    <div class="achievement-title">First Sighting</div>
+                    <div class="achievement-desc">Logged your first animal spotting.</div>
+                    <div class="achievement-reward">Reward: 50 XP</div>
+                </div>
+                <div class="achievement-tick"></div>
+            </div>
+            <div class="achievement-item">
+                <div class="achievement-info">
+                    <div class="achievement-title">First Sighting</div>
+                    <div class="achievement-desc">Logged your first animal spotting.</div>
+                    <div class="achievement-reward">Reward: 50 XP</div>
+                </div>
+                <div class="achievement-tick"></div>
+            </div>
+            <div class="achievement-item">
+                <div class="achievement-info">
+                    <div class="achievement-title">First Sighting</div>
+                    <div class="achievement-desc">Logged your first animal spotting.</div>
+                    <div class="achievement-reward">Reward: 50 XP</div>
+                </div>
+                <div class="achievement-tick achieved"></div>
+            </div>
+            <div class="achievement-item">
+                <div class="achievement-info">
+                    <div class="achievement-title">First Sighting</div>
+                    <div class="achievement-desc">Logged your first animal spotting.</div>
+                    <div class="achievement-reward">Reward: 50 XP</div>
+                </div>
+                <div class="achievement-tick"></div>
+            </div>
+            <div class="achievement-item">
+                <div class="achievement-info">
+                    <div class="achievement-title">First Sighting</div>
+                    <div class="achievement-desc">Logged your first animal spotting.</div>
+                    <div class="achievement-reward">Reward: 50 XP</div>
+                </div>
+                <div class="achievement-tick achieved"></div>
+            </div>
+            <div class="achievement-item">
+                <div class="achievement-info">
+                    <div class="achievement-title">First Sighting</div>
+                    <div class="achievement-desc">Logged your first animal spotting.</div>
+                    <div class="achievement-reward">Reward: 50 XP</div>
+                </div>
+                <div class="achievement-tick"></div>
+            </div>
+            <div class="achievement-item">
+                <div class="achievement-info">
+                    <div class="achievement-title">First Sighting</div>
+                    <div class="achievement-desc">Logged your first animal spotting.</div>
+                    <div class="achievement-reward">Reward: 50 XP</div>
+                </div>
+                <div class="achievement-tick"></div>
+            </div>
+            <div class="achievement-item">
+                <div class="achievement-info">
+                    <div class="achievement-title">First Sighting</div>
+                    <div class="achievement-desc">Logged your first animal spotting.</div>
+                    <div class="achievement-reward">Reward: 50 XP</div>
+                </div>
+                <div class="achievement-tick achieved"></div>
+            </div>
+            <div class="achievement-item">
+                <div class="achievement-info">
+                    <div class="achievement-title">First Sighting</div>
+                    <div class="achievement-desc">Logged your first animal spotting.</div>
+                    <div class="achievement-reward">Reward: 50 XP</div>
+                </div>
+                <div class="achievement-tick achieved"></div>
+            </div>
+            <div class="achievement-item">
+                <div class="achievement-info">
+                    <div class="achievement-title">First Sighting</div>
+                    <div class="achievement-desc">Logged your first animal spotting.</div>
+                    <div class="achievement-reward">Reward: 50 XP</div>
+                </div>
+                <div class="achievement-tick achieved"></div>
+            </div>
+        </div>
+        <h2>My Zoo</h2>
+        <div class="myzoo">
+            <input type="text" id="zoo-search" placeholder="Search animals..." class="myzoo-search">
+            <div class="zoo-list">
+                <div class="zoo-item">
+                    <img src="../assets/fox.jpg" alt="Fox" class="zoo-img">
+                    <div class="zoo-info">
+                        <div class="zoo-species">Red Fox</div>
+                        <div class="zoo-latin">Foxy Foxicus</div>
+                        <div class="zoo-group">Mammal</div>
+                    </div>
+                    <div class="zoo-reward">+50XP
+                        <div class="achievement-tick achieved"></div>
+                    </div>
+                </div>
+                <div class="zoo-item">
+                    <img src="../assets/fox.jpg" alt="Fox" class="zoo-img">
+                    <div class="zoo-info">
+                        <div class="zoo-species">Red Fox</div>
+                        <div class="zoo-latin">Foxy Foxicus</div>
+                        <div class="zoo-group">Mammal</div>
+                    </div>
+                    <div class="zoo-reward">+50XP
+                        <div class="achievement-tick achieved"></div>
+                    </div>
+                </div>
+                <div class="zoo-item">
+                    <img src="../assets/fox.jpg" alt="Fox" class="zoo-img">
+                    <div class="zoo-info">
+                        <div class="zoo-species">Red Fox</div>
+                        <div class="zoo-latin">Foxy Foxicus</div>
+                        <div class="zoo-group">Mammal</div>
+                    </div>
+                    <div class="zoo-reward">+50XP
+                        <div class="achievement-tick achieved"></div>
+                    </div>
+                </div>
+                <div class="zoo-item">
+                    <img src="../assets/fox.jpg" alt="Fox" class="zoo-img">
+                    <div class="zoo-info">
+                        <div class="zoo-species">Red Fox</div>
+                        <div class="zoo-latin">Foxy Foxicus</div>
+                        <div class="zoo-group">Mammal</div>
+                    </div>
+                    <div class="zoo-reward">+50XP
+                        <div class="achievement-tick achieved"></div>
+                    </div>
+                </div>
+                <div class="zoo-item">
+                    <img src="../assets/fox.jpg" alt="Fox" class="zoo-img">
+                    <div class="zoo-info">
+                        <div class="zoo-species">Red Fox</div>
+                        <div class="zoo-latin">Foxy Foxicus</div>
+                        <div class="zoo-group">Mammal</div>
+                    </div>
+                    <div class="zoo-reward">+50XP
+                        <div class="achievement-tick achieved"></div>
+                    </div>
+                </div>
+                <div class="zoo-item">
+                    <img src="../assets/fox.jpg" alt="Fox" class="zoo-img">
+                    <div class="zoo-info">
+                        <div class="zoo-species">Red Fox</div>
+                        <div class="zoo-latin">Foxy Foxicus</div>
+                        <div class="zoo-group">Mammal</div>
+                    </div>
+                    <div class="zoo-reward">+50XP
+                        <div class="achievement-tick achieved"></div>
+                    </div>
+                </div>
+                <div class="zoo-item">
+                    <img src="../assets/fox.jpg" alt="Fox" class="zoo-img">
+                    <div class="zoo-info">
+                        <div class="zoo-species">Red Fox</div>
+                        <div class="zoo-latin">Foxy Foxicus</div>
+                        <div class="zoo-group">Mammal</div>
+                    </div>
+                    <div class="zoo-reward">+50XP
+                        <div class="achievement-tick achieved"></div>
+                    </div>
+                </div>
+                <div class="zoo-item">
+                    <img src="../assets/fox.jpg" alt="Fox" class="zoo-img">
+                    <div class="zoo-info">
+                        <div class="zoo-species">Red Fox</div>
+                        <div class="zoo-latin">Foxy Foxicus</div>
+                        <div class="zoo-group">Mammal</div>
+                    </div>
+                    <div class="zoo-reward">+50XP
+                        <div class="achievement-tick achieved"></div>
+                    </div>
+                </div>
+                <div class="zoo-item">
+                    <img src="../assets/fox.jpg" alt="Fox" class="zoo-img">
+                    <div class="zoo-info">
+                        <div class="zoo-species">Red Fox</div>
+                        <div class="zoo-latin">Foxy Foxicus</div>
+                        <div class="zoo-group">Mammal</div>
+                    </div>
+                    <div class="zoo-reward">+50XP
+                        <div class="achievement-tick achieved"></div>
+                    </div>
+                </div>
+                <div class="zoo-item">
+                    <img src="../assets/fox.jpg" alt="Fox" class="zoo-img">
+                    <div class="zoo-info">
+                        <div class="zoo-species">Red Fox</div>
+                        <div class="zoo-latin">Foxy Foxicus</div>
+                        <div class="zoo-group">Mammal</div>
+                    </div>
+                    <div class="zoo-reward">+50XP
+                        <div class="achievement-tick achieved"></div>
+                    </div>
+                </div>
+                <div class="zoo-item">
+                    <img src="../assets/fox.jpg" alt="Fox" class="zoo-img">
+                    <div class="zoo-info">
+                        <div class="zoo-species">Red Fox</div>
+                        <div class="zoo-latin">Foxy Foxicus</div>
+                        <div class="zoo-group">Mammal</div>
+                    </div>
+                    <div class="zoo-reward">+50XP
+                        <div class="achievement-tick achieved"></div>
+                    </div>
+                </div>
+                <div class="zoo-item">
+                    <img src="../assets/fox.jpg" alt="Fox" class="zoo-img">
+                    <div class="zoo-info">
+                        <div class="zoo-species">Red Fox</div>
+                        <div class="zoo-latin">Foxy Foxicus</div>
+                        <div class="zoo-group">Mammal</div>
+                    </div>
+                    <div class="zoo-reward">+50XP
+                        <div class="achievement-tick achieved"></div>
+                    </div>
+                </div>
+                <div class="zoo-item">
+                    <img src="../assets/fox.jpg" alt="Fox" class="zoo-img">
+                    <div class="zoo-info">
+                        <div class="zoo-species">Red Fox</div>
+                        <div class="zoo-latin">Foxy Foxicus</div>
+                        <div class="zoo-group">Mammal</div>
+                    </div>
+                    <div class="zoo-reward">+50XP
+                        <div class="achievement-tick achieved"></div>
+                    </div>
+                </div>
+                <div class="zoo-item">
+                    <img src="../assets/fox.jpg" alt="Fox" class="zoo-img">
+                    <div class="zoo-info">
+                        <div class="zoo-species">Red Fox</div>
+                        <div class="zoo-latin">Foxy Foxicus</div>
+                        <div class="zoo-group">Mammal</div>
+                    </div>
+                    <div class="zoo-reward">+50XP
+                        <div class="achievement-tick achieved"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="edit-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <h3>Edit Profile</h3>
+
+                <label for="edit-title">Title:</label>
+                <select id="edit-title">
+                    <option value="Bird Lover">Bird Lover</option>
+                    <option value="Bird Lover">Bird Lover</option>
+                    <option value="Bird Lover">Bird Lover</option>
+                    <option value="Bird Lover">Bird Lover</option>
+                    <option value="Bird Lover">Bird Lover</option>
+                    <option value="Bird Lover">Bird Lover</option>
+                    <option value="Bird Lover">Bird Lover</option>
+                </select>
+
+                <label for="edit-profile-pic">Profile Picture:</label>
+                <select id="edit-profile-pic">
+                    <option value="../assets/fox.jpg">Red Fox</option>
+                    <option value="../assets/fox.jpg">Red Fox</option>
+                    <option value="../assets/fox.jpg">Red Fox</option>
+                    <option value="../assets/fox.jpg">Red Fox</option>
+                    <option value="../assets/fox.jpg">Red Fox</option>
+                    <option value="../assets/fox.jpg">Red Fox</option>
+                </select>
+                <button id="save-profile">Save</button>
+            </div>
+        </div>
+    </main>
 </body>
+<footer>
+    <div id="footerdiv">
+        <p id="contactdetails">Subscribe to the Newsletter</p>
+    </div>
+
+</footer>
+
 
 </html>
