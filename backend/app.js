@@ -2,7 +2,8 @@ const express = require('express');
 const cors = require('cors');
 
 
-// const logRoutes = require();
+const logRoutes = require('./middleware/logger');
+
 const userRouter = require('./routers/users');
 const animalRouter = require('./routers/animals');
 const achievementRouter = require('./routers/achievements');
@@ -11,7 +12,7 @@ const spotRouter = require('./routers/spottings');
 const app = express();
 app.use(cors());
 app.use(express.json());
-// app.use(logRoutes);
+app.use(logRoutes);
 
 app.get("/", (req, res) => {
     res.json({
