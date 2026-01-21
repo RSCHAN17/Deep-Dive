@@ -2,8 +2,8 @@ const User = require('../../../models/User');
 const db = require('../../../database/connection');
 
 describe('User', () => {
-    beforeEach(() => jest.clearAllMocks())
-    afterAll(() => jest.resetAllMocks())
+    beforeEach(() => jest.clearAllMocks());
+    afterAll(() => jest.resetAllMocks());
 
     describe('getAll', () => {
         it('Returns all user information sorted by total points', async () => {

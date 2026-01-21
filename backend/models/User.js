@@ -1,5 +1,5 @@
 const db = require('../database/connection');
-const Animal = require('./Animal');
+const Family = require('./Family');
 const Achievement = require('./Achievement');
 
 class User{
@@ -73,12 +73,12 @@ class User{
     } 
 
     async getAvailablePFPs(){
-        const response = await db.query("SELECT profile_picture FROM animals WHERE animal_id IN (SELECT animal_id FROM spottings WHERE user_id = $1);", [this.user_id]);
+        const response = await db.query("SELECT profile_picture FROM families WHERE family_id IN (SELECT family_id FROM animals WHERE animal_id IN (SELECT animal_id FROM spottings WHERE user_id = $1));", [this.user_id]);
         return response.rows.map(r => r.profile_picture)
     }
 
-    async setPFP(animal_id){
-        const desired = await Animal.getOneByID(animal_id);
+    async setPFP(family){
+        const desired = await Family.getOneByID(family);
         const response = await db.query("UPDATE users SET current_pfp = $1 WHERE user_id = $2 RETURNING user_id;", [desired.profile_picture, this.user_id]);
         const fresh_pic = response.rows[0].user_id;
         return await User.getOneByID(fresh_pic);

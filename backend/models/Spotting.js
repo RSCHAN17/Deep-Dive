@@ -46,6 +46,14 @@ class Spotting{
         const new_spot = await Spotting.getOneByID(new_id);
         return new_spot;
     }
+
+    static async filterByType(type){
+        const response = await db.query("SELECT * FROM spottings WHERE animal_id IN (SELECT animal_id FROM animals WHERE type = $1);", [type]);
+        if (response.rows.length == 0) {
+            throw new Error("No animal spottings of this typw!")
+        }
+        return response.rows.map(p => new Spotting(p));
+    }
 }
 
 module.exports = Spotting;
