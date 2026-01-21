@@ -22,7 +22,7 @@ async function register(req, res) {
         if (err.message.includes('already taken')) {
             return res.status(409).json({ error: err.message });
         }
-        res.status(500).json({ error: 'Registration failed:' + err.message });
+        res.status(500).json({ error: 'Registration failed: ' + err.message });
     }
 }
 

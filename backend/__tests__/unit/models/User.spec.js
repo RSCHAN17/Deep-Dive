@@ -1,7 +1,7 @@
 const User = require('../../../models/User');
 const db = require('../../../database/connection');
 
-describe('User', () => {
+describe('User Model', () => {
     beforeEach(() => jest.clearAllMocks());
     afterAll(() => jest.resetAllMocks());
 
@@ -64,6 +64,53 @@ describe('User', () => {
             jest.spyOn(db, 'query').mockResolvedValueOnce({ rows: [] });
 
             await expect(User.getOneByUsername('b')).rejects.toThrow("Unable to locate user.");
+        })
+    })
+
+    describe('create', () => {
+        beforeEach(() => {
+            jest.clearAllMocks()
+        })
+
+        it('Creates new user when username and email are valid', async () => {
+            const data = { username: 'dev', password: 'test', email_address: 'test' }
+
+            jest.spyOn(db, 'query')
+            .mockResolvedValueOnce({ rows: [] })
+            .mockResolvedValueOnce({ rows: [] })
+            .mockResolvedValueOnce({ rows: [{ user_id: 1 }] })
+
+            const mockUser = {
+                user_id: 1, username: 'dev', password: 'test', email_address: 'test',  spotting_points: 0.0, achievement_points: 0, challenge_points: 0, total_points: 0, current_pfp: '', current_title: '', daily_streak: 0
+            }
+            jest.spyOn(User, 'getOneByID').mockResolvedValueOnce(mockUser)
+            const result = await User.create(data)
+
+            expect(db.query).toHaveBeenCalledTimes(3)
+            expect(result).toEqual(mockUser)
+            expect(db.query).toHaveBeenNthCalledWith(1, "SELECT * FROM users WHERE email_address = $1;", ['test'])
+            expect(db.query).toHaveBeenNthCalledWith(2, "SELECT * FROM users WHERE username = $1;", ['dev'])
+            expect(db.query).toHaveBeenNthCalledWith(3, "INSERT INTO users (username, password, email_address) VALUES ($1, $2, $3) RETURNING user_id;", ['dev', 'test', 'test'])
+            expect(User.getOneByID).toHaveBeenCalledTimes(1)
+        })
+
+        it('Throws error if email is already taken', async () => {
+            const data = { username: 'dev', password: 'test', email_address: 'test' }
+
+            jest.spyOn(db, 'query')
+            .mockResolvedValueOnce({rows: [1]})
+
+            await expect(User.create(data)).rejects.toThrow('Email address is already taken.')
+        })
+
+        it('Throws error if username is already taken', async () => {
+            const data = { username: 'dev', password: 'test', email_address: 'test' }
+
+            jest.spyOn(db, 'query')
+            .mockResolvedValueOnce({rows: [ ]})
+            .mockResolvedValueOnce({rows: [1]})
+
+            await expect(User.create(data)).rejects.toThrow('Username is already taken.')
         })
     })
 

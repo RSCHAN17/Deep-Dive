@@ -1,7 +1,7 @@
 const Achievement = require('../../../models/Achievement');
 const db = require('../../../database/connection');
 
-describe('Achievement', () => {
+describe('Achievement Model', () => {
     beforeEach(() => jest.clearAllMocks());
     afterAll(() => jest.resetAllMocks());
 
