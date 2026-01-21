@@ -2,6 +2,7 @@ html, body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  overflow-x: hidden;
 }
 .navbar {
   background-color: #333;
@@ -96,9 +97,204 @@ html, body {
 .dropdown:hover .dropdown-content {
   visibility: visible;
 }
+body {
+  margin: 0;
+  font-family: "Roboto Slab", serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #AFC9A6; /* main background */
+  color: #10323A; 
+} 
+
+main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding-right: 20px;
+  padding-left: 20px;
+  align-items: center;
+  
+
+}
+.info {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  margin-top: 10px;
+  margin-bottom: 30px;
+  border-radius: 15px;
+  color:#12464D;
+  font-family:"Roboto Slab", serif;
+}
+
+.landingdiv{
+  display: flex;
+  flex-direction: column;
+  gap:30px;
+}
+
+.landingbuttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #E0FFB1;
+  border-radius: 15px;
+  width: 240px;
+  height: 60px;
+  font-family: "Jockey One", sans-serif;
+  gap:20px;
+  border:0;
+  color:#12464D;
+  font-size: 20px;
+
+}
+
+
+
+
+.challenges{
+  background-color: #E0FFB1;
+  width: 330px;
+  height: 173px;
+  border-radius: 15px;
+  margin-top: 60px;
+  display:flex;
+  flex-wrap: wrap;
+}
+
+.titleorder h2{
+  font-family: "Jockey One", sans-serif;
+  padding: 5px;
+  margin-top: 2px;
+}
+.titleorder {
+  display:flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+.switchwrapper {
+  display: flex;
+  align-items: center;
+  gap:12px;
+  padding: 10px
+}
+.switchlabel{
+  font-size: 14px;
+  font-family: "Roboto Slab",serif;
+  user-select:none;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #A5C89E;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: #E0FFB1;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #36656B;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #36656B;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.challenge-list {
+    width: 100%;
+    max-width: 420px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Single row */
+.challenge-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    background-color: #E0FFB1;
+    border-radius: 12px;
+}
+
+/* Checkbox color */
+.challenge-check {
+    accent-color: #C0392B; /* red by default */
+    width: 18px;
+    height: 18px;
+}
+
+/* Turn green when checked */
+.challenge-check:checked {
+    accent-color: #2ECC71;
+}
+
+/* Description grows */
+.challenge-desc {
+    flex: 1;
+    font-family: "Roboto Slab", serif;
+    font-size: 14px;
+}
+
+/* Reward stays right-aligned */
+.challenge-reward {
+    font-weight: 600;
+    color: #2F6B72;
+    white-space: nowrap;
+}
 
 #footerdiv {
-    position: fixed;
+    position: relative;
     bottom:0;
     left:0;
     background-color: #36656B;

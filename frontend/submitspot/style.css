@@ -2,6 +2,7 @@ html, body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  overflow-x: hidden;
 }
 .navbar {
   background-color: #333;
@@ -35,11 +36,21 @@ html, body {
 body{
   background-color: #A5C89E;
   margin: 0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: "Roboto Slab", serif;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   color: #10323A;
+}
+
+main {
+ flex: 1;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding-left: 20px;
+  padding-right: 20px;
+  align-items: center;
 }
 
 
@@ -171,14 +182,7 @@ input:focus {
   font-family: "Roboto Slab", serif;
 }
 
-main {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  
 
-}
 #footerdiv {
     position: relative;
     bottom:0;

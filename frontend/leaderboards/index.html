@@ -10,6 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Jockey+One&family=Roboto+Slab:wght@100..900&display=swap"
         rel="stylesheet">
+    <script src="script.js" defer></script>
 </head>
 
 <body>
@@ -23,22 +24,162 @@
                 <img id="burger" src="../assets/burgericon.svg" alt="burgericon" width="40px">
             </button>
             <div class="dropdown-content">
-                <button class="dropdown-items">My Account</button>
-                <button class="dropdown-items">About Us</button>
-                <button class="dropdown-items">Spotted Map</button>
-                <button class="dropdown-items">Leaderboards</button>
-
-
+                <button id="dd1" class="dropdown-items">My Account</button>
+                <button id="dd2" class="dropdown-items">About Us</button>
+                <button id="dd3" class="dropdown-items">Spotted Map</button>
+                <button id="dd4" class="dropdown-items">Submit Sighting</button>
             </div>
         </div>
     </div>
-
-    <footer>
-        <div id = "footerdiv">
-            <p id="contactdetails">Subscribe to the Newsletter</p>
+    <main>
+        <div>
+            <div class="leaderboard">
+                <div class="leaderboard-header">
+                    <h2>Leaderboards</h2>
+                    <div class="switchwrapper">
+                        <span class="switchlabel">Monthly</span>
+                        <label class="switch">
+                            <input type="checkbox">
+                            <span class="slider round"></span>
+                        </label>
+                        <span class="switchlabel">All Time</span>
+                    </div>
+                </div>
+                <div class="leaderboard-list">
+                    <div class="leaderboard-list">
+                        <div class="leaderboard-item gold">
+                            <span class="rank">1</span>
+                            <div class="user-info">
+                                <span class="username">RavenSpotter</span>
+                                <span class="user-title">Birdwatching Expert</span>
+                            </div>
+                            <span class="score">1240 XP</span>
+                        </div>
+                        <div class="leaderboard-item silver">
+                            <span class="rank">1</span>
+                            <div class="user-info">
+                                <span class="username">RavenSpotter</span>
+                                <span class="user-title">Birdwatching Expert</span>
+                            </div>
+                            <span class="score">1240 XP</span>
+                        </div>
+                        <div class="leaderboard-item bronze">
+                            <span class="rank">1</span>
+                            <div class="user-info">
+                                <span class="username">RavenSpotter</span>
+                                <span class="user-title">Birdwatching Expert</span>
+                            </div>
+                            <span class="score">1240 XP</span>
+                        </div>
+                        <div class="leaderboard-item">
+                            <span class="rank">1</span>
+                            <div class="user-info">
+                                <span class="username">RavenSpotter</span>
+                                <span class="user-title">Birdwatching Expert</span>
+                            </div>
+                            <span class="score">1240 XP</span>
+                        </div>
+                        <div class="leaderboard-item">
+                            <span class="rank">1</span>
+                            <div class="user-info">
+                                <span class="username">RavenSpotter</span>
+                                <span class="user-title">Birdwatching Expert</span>
+                            </div>
+                            <span class="score">1240 XP</span>
+                        </div>
+                        <div class="leaderboard-item">
+                            <span class="rank">1</span>
+                            <div class="user-info">
+                                <span class="username">RavenSpotter</span>
+                                <span class="user-title">Birdwatching Expert</span>
+                            </div>
+                            <span class="score">1240 XP</span>
+                        </div>
+                        <div class="leaderboard-item">
+                            <span class="rank">1</span>
+                            <div class="user-info">
+                                <span class="username">RavenSpotter</span>
+                                <span class="user-title">Birdwatching Expert</span>
+                            </div>
+                            <span class="score">1240 XP</span>
+                        </div>
+                        <div class="leaderboard-item">
+                            <span class="rank">1</span>
+                            <div class="user-info">
+                                <span class="username">RavenSpotter</span>
+                                <span class="user-title">Birdwatching Expert</span>
+                            </div>
+                            <span class="score">1240 XP</span>
+                        </div>
+                        <div class="leaderboard-item">
+                            <span class="rank">1</span>
+                            <div class="user-info">
+                                <span class="username">RavenSpotter</span>
+                                <span class="user-title">Birdwatching Expert</span>
+                            </div>
+                            <span class="score">1240 XP</span>
+                        </div>
+                        <div class="leaderboard-item">
+                            <span class="rank">1</span>
+                            <div class="user-info">
+                                <span class="username">RavenSpotter</span>
+                                <span class="user-title">Birdwatching Expert</span>
+                            </div>
+                            <span class="score">1240 XP</span>
+                        </div>
+                        <div class="leaderboard-item">
+                            <span class="rank">1</span>
+                            <div class="user-info">
+                                <span class="username">RavenSpotter</span>
+                                <span class="user-title">Birdwatching Expert</span>
+                            </div>
+                            <span class="score">1240 XP</span>
+                        </div>
+                        <div class="leaderboard-item">
+                            <span class="rank">1</span>
+                            <div class="user-info">
+                                <span class="username">RavenSpotter</span>
+                                <span class="user-title">Birdwatching Expert</span>
+                            </div>
+                            <span class="score">1240 XP</span>
+                        </div>
+                        <div class="leaderboard-item">
+                            <span class="rank">1</span>
+                            <div class="user-info">
+                                <span class="username">RavenSpotter</span>
+                                <span class="user-title">Birdwatching Expert</span>
+                            </div>
+                            <span class="score">1240 XP</span>
+                        </div>
+                        <div class="leaderboard-item">
+                            <span class="rank">1</span>
+                            <div class="user-info">
+                                <span class="username">RavenSpotter</span>
+                                <span class="user-title">Birdwatching Expert</span>
+                            </div>
+                            <span class="score">1240 XP</span>
+                        </div>
+                        <div class="leaderboard-item">
+                            <span class="rank">1</span>
+                            <div class="user-info">
+                                <span class="username">RavenSpotter</span>
+                                <span class="user-title">Birdwatching Expert</span>
+                            </div>
+                            <span class="score">1240 XP</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+    </main>
 
-    </footer>
 </body>
+<footer>
+    <div id="footerdiv">
+        <p id="contactdetails">Subscribe to the Newsletter</p>
+    </div>
+
+</footer>
+
 
 </html>
