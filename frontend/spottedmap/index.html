@@ -47,7 +47,7 @@
           <div class="filter-title">Filter</div>
 
           <div class="filter-block">
-            <div class="filter-label">Filter by animal</div>
+            <input id="animalSearch" class="filter-search" type="search" placeholder="Filter by animal" autocomplete="off" />
 
             <label class="filter-range">
               <input id="proximity" type="range" min="0" max="100" value="0" />
@@ -59,7 +59,6 @@
           </div>
 
           <div class="filter-list">
-
             <div class="filter-option">
               <input type="checkbox" class="filter-checkbox" id="filter-myspots" data-filter="mySpots" />
               <label for="filter-myspots" class="checkbox-ui" aria-label="My Spots"></label>
@@ -89,11 +88,13 @@
               <label for="filter-amphibians" class="checkbox-ui" aria-label="Amphibians"></label>
               <span class="filter-text">Amphibians</span>
             </div>
-
           </div>
 
-          <button type="button" class="filter-action submit">Submit Filter</button>
-          <button type="button" class="filter-action clear" id="clearFilters">Clear Filter</button>
+          <div class="filter-actions">
+  <button type="button" class="filter-action submit">Search</button>
+  <button type="button" class="filter-action clear" id="clearFilters">Clear</button>
+</div>
+
         </div>
 
         <p class="placeholder-text">Map</p>
@@ -121,6 +122,18 @@
     const sliderValue = document.getElementById("proximityValue");
     const clearBtn = document.getElementById("clearFilters");
     const checkboxes = Array.from(document.querySelectorAll(".filter-checkbox"));
+    const animalSearch = document.getElementById("animalSearch");
+
+    function updateRangeFill() {
+      const min = Number(slider.min) || 0;
+      const max = Number(slider.max) || 100;
+      const val = Number(slider.value) || 0;
+      const pct = ((val - min) / (max - min)) * 100;
+
+      slider.style.background =
+        `linear-gradient(to right, #36656B 0%, #36656B ${pct}%, #A5C89E ${pct}%, #A5C89E 100%)`; 
+      /* Chrome/Safari: needed to show filled portion - could not find other way currently*/
+    }
 
     btn.addEventListener("click", () => {
       const isOpen = panel.classList.toggle("open");
@@ -130,12 +143,15 @@
 
     slider.addEventListener("input", () => {
       sliderValue.textContent = slider.value;
+      updateRangeFill();
     });
 
     clearBtn.addEventListener("click", () => {
       slider.value = 0;
       sliderValue.textContent = "0";
+      updateRangeFill();
       checkboxes.forEach(cb => (cb.checked = false));
+      animalSearch.value = "";
     });
 
     document.addEventListener("click", (e) => {
@@ -146,6 +162,8 @@
       panel.setAttribute("aria-hidden", "true");
       btn.setAttribute("aria-expanded", "false");
     });
+
+    updateRangeFill();
   </script>
 </body>
 </html>

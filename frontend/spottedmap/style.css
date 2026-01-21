@@ -90,7 +90,6 @@ body {
   visibility: visible;
 }
 
-
 #footerdiv {
   position: fixed;
   bottom: 0;
@@ -112,9 +111,8 @@ body {
   margin: 0;
 }
 
-
 .map-page {
-  padding: 14px 14px 90px; /
+  padding: 14px 14px 90px;
 }
 
 .map-wrap {
@@ -191,7 +189,6 @@ body {
   border-radius: 16px;
   box-shadow: 0 10px 25px rgba(0,0,0,0.2);
   z-index: 10;
-
   opacity: 0;
   pointer-events: none;
   transform: translateY(-6px);
@@ -211,16 +208,53 @@ body {
   margin-bottom: 8px;
 }
 
-.filter-label {
-  font-family: "Roboto Slab", serif;
-  font-size: 13px;
-  color: #12464D;
-  text-align: center;
-  margin-bottom: 6px;
-}
-
 .filter-range input[type="range"] {
   width: 100%;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: 999px;
+  background: #A5C89E;
+  outline: none;
+}
+
+.filter-range input[type="range"]::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: 999px;
+  background: transparent;
+}
+
+.filter-range input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  background: #A5C89E;
+  border: 2px solid #12464D;
+  cursor: pointer;
+  margin-top: -5px;
+}
+
+.filter-range input[type="range"]::-moz-range-track {
+  height: 6px;
+  border-radius: 999px;
+  background: #A5C89E;
+}
+
+.filter-range input[type="range"]::-moz-range-progress {
+  background: #36656B; /* Firefoxcompatibale  */
+  height: 6px;
+  border-radius: 999px;
+}
+
+.filter-range input[type="range"]::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  background: #A5C89E;
+  border: 2px solid #12464D;
+  cursor: pointer;
 }
 
 .filter-range-value {
@@ -245,12 +279,12 @@ body {
   border-radius: 12px;
   background: #A5C89E;
   border: 0;
-  cursor: default;     
+  cursor: default;
   user-select: none;
 }
 
 .filter-option:hover {
-  background: #A5C89E; 
+  background: #A5C89E;
 }
 
 .filter-checkbox {
@@ -258,7 +292,7 @@ body {
   height: 16px;
   margin: 0;
   position: absolute;
-  opacity: 0;        
+  opacity: 0;
 }
 
 .checkbox-ui {
@@ -271,7 +305,7 @@ body {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  cursor: pointer;  
+  cursor: pointer;
 }
 
 .checkbox-ui::after {
@@ -285,7 +319,6 @@ body {
 .filter-checkbox:checked + .checkbox-ui::after {
   display: block;
 }
-
 
 .filter-text {
   font-family: "Roboto Slab", serif;
@@ -311,4 +344,36 @@ body {
 .filter-action.clear {
   background: #A5C89E;
   opacity: 0.9;
+}
+
+.filter-search {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 12px;
+  border: 0px solid #12464D; /* Had to do, if i remove it gives a border?*/
+  background: #A5C89E;
+  color: #12464D;
+  font-family: "Roboto Slab", serif;
+  font-size: 13px;
+  outline: none;
+  margin-bottom: 6px;
+}
+
+.filter-search::placeholder {
+  color: #12464D;
+  opacity: 0.8;
+}
+
+.filter-search:focus {
+  border-color: #36656B;
+}
+
+.filter-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.filter-actions .filter-action {
+  width: 100%;
+  margin: 0;
 }
