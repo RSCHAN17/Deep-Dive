@@ -6,3 +6,5 @@ const spotRouter = Router();
 spotRouter.get('/', spotController.index);
 spotRouter.get('/id/:id', spotController.show);
 spotRouter.post('/new', spotController.create);
+
+module.exports = spotRouter;
