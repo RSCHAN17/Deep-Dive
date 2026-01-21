@@ -1,75 +1,151 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Jockey+One&family=Roboto+Slab:wght@100..900&display=swap"
-        rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Spotted - Map</title>
 
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Jockey+One&family=Roboto+Slab:wght@100..900&display=swap" rel="stylesheet" />
 </head>
 
 <body>
-    <div class="navbar">
-        <a href="#home">
-            <img id="logo" src="../assets/ravenlogo.svg" alt="ravenicon" width="40px">
-        </a>
-        <a id="title" href="#news">Spotted</a>
-        <div class="dropdown">
-            <button class="dropbtn">
-                <img id="burger" src="../assets/burgericon.svg" alt="burgericon" width="40px">
-            </button>
-            <div class="dropdown-content">
-                <button class="dropdown-items">My Account</button>
-                <button class="dropdown-items">About Us</button>
-                <button class="dropdown-items">Spotted Map</button>
-                <button class="dropdown-items">Leaderboards</button>
+  <div class="navbar">
+    <a href="#home">
+      <img id="logo" src="../assets/ravenlogo.svg" alt="ravenicon" width="40px" />
+    </a>
 
+    <a id="title" href="#news">Spotted</a>
 
-            </div>
-        </div>
+    <div class="dropdown">
+      <button class="dropbtn" type="button" aria-label="Open menu">
+        <img id="burger" src="../assets/burgericon.svg" alt="burgericon" width="40px" />
+      </button>
+
+      <div class="dropdown-content">
+        <button class="dropdown-items" type="button">My Account</button>
+        <button class="dropdown-items" type="button">About Us</button>
+        <button class="dropdown-items" type="button">Spotted Map</button>
+        <button class="dropdown-items" type="button">Leaderboards</button>
+      </div>
     </div>
-
-<main class="map-page">
-
-  <div class="map-wrap">
-
-    <div class="map-placeholder">
-
-      <div class="map-filter-overlay">
-        <span class="map-filter-icon" aria-hidden="true"> 
-        <svg xmlns="http://www.w3.org/2000/svg" height="24px" 
-            viewBox="0 -960 960 960" width="24px" 
-            fill= "#12464D">
-            <path d="M440-160q-17 0-28.5-11.5T400-200v-240L168-736q-15-20-4.5-42t36.5-22h560q26 0 36.5 22t-4.5 42L560-440v240q0 17-11.5 28.5T520-160h-80Zm40-308 198-252H282l198 252Zm0 0Z"/></svg> </span>
-            <!-- Change above to button to release dropdown filter -->
-        </div>
-
-      <p class="placeholder-text">Map</p>
-      <p class="coords">Long/Lat</p>
-    </div>
-
-    <p class="last-updated">Last updated</p>
-
-    <div class="chatbot-placeholder">
-      <p class="placeholder-text">Info/chatbot</p>
-    </div>
-
   </div>
 
-</main>
+  <main class="map-page">
+    <div class="map-wrap">
+      <div class="map-placeholder">
 
-    <footer>
-        <div id = "footerdiv">
-            <p id="contactdetails">Subscribe to the Newsletter</p>
+        <button class="map-filter-btn" type="button" aria-label="Open filters" aria-expanded="false">
+          <svg class="map-filter-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" width="22" height="22" aria-hidden="true">
+            <path d="M440-160q-17 0-28.5-11.5T400-200v-240L168-736q-15-20-4.5-42t36.5-22h560q26 0 36.5 22t-4.5 42L560-440v240q0 17-11.5 28.5T520-160h-80Zm40-308 198-252H282l198 252Zm0 0Z"/>
+          </svg>
+        </button>
+
+        <div class="filter-panel" id="filterPanel" aria-hidden="true">
+          <div class="filter-title">Filter</div>
+
+          <div class="filter-block">
+            <div class="filter-label">Filter by animal</div>
+
+            <label class="filter-range">
+              <input id="proximity" type="range" min="0" max="100" value="0" />
+            </label>
+
+            <div class="filter-range-value">
+              Proximity: <span id="proximityValue">0</span> km
+            </div>
+          </div>
+
+          <div class="filter-list">
+
+            <div class="filter-option">
+              <input type="checkbox" class="filter-checkbox" id="filter-myspots" data-filter="mySpots" />
+              <label for="filter-myspots" class="checkbox-ui" aria-label="My Spots"></label>
+              <span class="filter-text">My Spots</span>
+            </div>
+
+            <div class="filter-option">
+              <input type="checkbox" class="filter-checkbox" id="filter-mammals" data-filter="mammals" />
+              <label for="filter-mammals" class="checkbox-ui" aria-label="Mammals"></label>
+              <span class="filter-text">Mammals</span>
+            </div>
+
+            <div class="filter-option">
+              <input type="checkbox" class="filter-checkbox" id="filter-birds" data-filter="birds" />
+              <label for="filter-birds" class="checkbox-ui" aria-label="Birds"></label>
+              <span class="filter-text">Birds</span>
+            </div>
+
+            <div class="filter-option">
+              <input type="checkbox" class="filter-checkbox" id="filter-reptiles" data-filter="reptiles" />
+              <label for="filter-reptiles" class="checkbox-ui" aria-label="Reptiles"></label>
+              <span class="filter-text">Reptiles</span>
+            </div>
+
+            <div class="filter-option">
+              <input type="checkbox" class="filter-checkbox" id="filter-amphibians" data-filter="amphibians" />
+              <label for="filter-amphibians" class="checkbox-ui" aria-label="Amphibians"></label>
+              <span class="filter-text">Amphibians</span>
+            </div>
+
+          </div>
+
+          <button type="button" class="filter-action submit">Submit Filter</button>
+          <button type="button" class="filter-action clear" id="clearFilters">Clear Filter</button>
         </div>
 
-    </footer>
-</body>
+        <p class="placeholder-text">Map</p>
+        <p class="coords">Long/Lat</p>
+      </div>
 
+      <p class="last-updated">Last updated</p>
+
+      <div class="chatbot-placeholder">
+        <p class="placeholder-text">Info/chatbot</p>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div id="footerdiv">
+      <p id="contactdetails">Subscribe to the Newsletter</p>
+    </div>
+  </footer>
+
+  <script>
+    const panel = document.getElementById("filterPanel");
+    const btn = document.querySelector(".map-filter-btn");
+    const slider = document.getElementById("proximity");
+    const sliderValue = document.getElementById("proximityValue");
+    const clearBtn = document.getElementById("clearFilters");
+    const checkboxes = Array.from(document.querySelectorAll(".filter-checkbox"));
+
+    btn.addEventListener("click", () => {
+      const isOpen = panel.classList.toggle("open");
+      panel.setAttribute("aria-hidden", String(!isOpen));
+      btn.setAttribute("aria-expanded", String(isOpen));
+    });
+
+    slider.addEventListener("input", () => {
+      sliderValue.textContent = slider.value;
+    });
+
+    clearBtn.addEventListener("click", () => {
+      slider.value = 0;
+      sliderValue.textContent = "0";
+      checkboxes.forEach(cb => (cb.checked = false));
+    });
+
+    document.addEventListener("click", (e) => {
+      if (!panel.classList.contains("open")) return;
+      if (panel.contains(e.target) || btn.contains(e.target)) return;
+
+      panel.classList.remove("open");
+      panel.setAttribute("aria-hidden", "true");
+      btn.setAttribute("aria-expanded", "false");
+    });
+  </script>
+</body>
 </html>
