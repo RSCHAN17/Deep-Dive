@@ -1,4 +1,5 @@
-DROP TABLE IF EXISTS challenges;
+DROP TABLE IF EXISTS challenges cascade;
+DROP TABLE IF EXISTS challenge_user_complete cascade;
 DROP TABLE IF EXISTS achievement_user_complete;
 DROP TABLE IF EXISTS achievements;
 DROP TABLE IF EXISTS animals cascade;
@@ -12,6 +13,7 @@ CREATE TABLE users (
     email_address VARCHAR(75) UNIQUE NOT NULL,
     spotting_points FLOAT,
     achievement_points INT,
+    challenge_points INT,
     total_points INT,
     current_pfp VARCHAR(255),
     current_title VARCHAR(80),
@@ -69,5 +71,16 @@ CREATE TABLE challenges (
     id INT GENERATED ALWAYS AS IDENTITY,
     challenge_name VARCHAR(50) NOT NULL,
     challenge_description VARCHAR(255) NOT NULL,
+    points INT NOT NULL,
     PRIMARY KEY (id)
+);
+
+CREATE TABLE challenge_user_complete (
+    id INT GENERATED ALWAYS AS IDENTITY, 
+    user_id INT NOT NULL,
+    challenge_id INT NOT NULL,
+    challenge_score INT NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (challenge_id) REFERENCES challenges(id),
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
 );

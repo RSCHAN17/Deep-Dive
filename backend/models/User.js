@@ -2,14 +2,15 @@ const db = require('../database/connection');
 const Animal = require('./Animal');
 
 class User{
-    constructor({user_id, username, password, email_address, spotting_points, achievement_points, total_points, current_pfp, current_title, daily_streak}) {
+    constructor({user_id, username, password, email_address, spotting_points, achievement_points, challenge_points, total_points, current_pfp, current_title, daily_streak}) {
         this.user_id = user_id;
         this.username = username;
         this.password = password;
         this.email_address = email_address;
         this.spotting_points = spotting_points || 0.0;
         this.achievement_points = achievement_points || 0;
-        this.total_points = Math.ceil(this.spotting_points) + this.achievement_points;
+        this.challenge_points = challenge_points || 0;
+        this.total_points = Math.ceil(this.spotting_points) + this.achievement_points + this.challenge_points;
         this.current_pfp = current_pfp || '';
         this.current_title = current_title || '';
         this.daily_streak = daily_streak || 0;
@@ -59,7 +60,10 @@ class User{
         const achievement_response = await db.query("SELECT COALESCE(SUM(value),0) FROM achievements WHERE achievement_id IN (SELECT achievement_id FROM achievement_user_complete WHERE user_id = $1);", [id]);
         const achievement_score = achievement_response.rows[0].coalesce;
 
-        const total_points = Math.ceil(spot_score) + achievement_score;
+        const challenge_response = await db.query("SELECT COALESCE(SUM(challenge_score),0) FROM challenge_user_complete WHERE user_id = $1;", [id]);
+        const challenge_score = challenge_response.rows[0].coalesce;
+
+        const total_points = Math.ceil(spot_score) + achievement_score + challenge_score;
         console.log(total_points);
         const response = await db.query("UPDATE users SET spotting_points = $1, achievement_points = $2, total_points = $3 WHERE user_id = $4 RETURNING user_id;", [spot_score, achievement_score, total_points, id]);
         const player_id = response.rows[0].user_id;
