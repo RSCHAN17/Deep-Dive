@@ -31,6 +31,71 @@ describe('Animal Model', () => {
 
             jest.spyOn(db, 'query').mockResolvedValueOnce({ rows: [mockAnimal] })
             const result = await Animal.getOneByID(1)
+
+            expect(result).toBeInstanceOf(Animal)
+            expect(result.name).toBe('a')
+            expect(result.family_id).toBe(1)
+            expect(db.query).toHaveBeenCalledWith("SELECT * FROM animals WHERE animal_id = $1;", [1])
+        })
+
+        it('Throws error when animal not found', async () =>{
+             jest.spyOn(db, 'query').mockResolvedValueOnce({ rows: [] });
+
+            await expect(Animal.getOneByID(9999)).rejects.toThrow("Unable to locate animal.");
+        
+        })
+    })
+
+    describe('getOneByName', () => {
+        it('Returns animal on successful db query', async () => {
+            const mockAnimal = {animal_id: 1, name: 'a', type: 'a', capture_points: 10, pack_bonus_mult: 1.1, description: 'a', fun_fact: 'x', zoo_image: 'a', species: 'a', family_id:1}
+
+            jest.spyOn(db, 'query').mockResolvedValueOnce({ rows: [mockAnimal] })
+            const result = await Animal.getOneByName('a')
+
+            expect(result).toBeInstanceOf(Animal)
+            expect(result.name).toBe('a')
+            expect(result.family_id).toBe(1)
+            expect(db.query).toHaveBeenCalledWith("SELECT * FROM animals WHERE name = $1;", ['a'])
+        })
+
+        it('Throws error when animal not found', async () =>{
+             jest.spyOn(db, 'query').mockResolvedValueOnce({ rows: [] });
+
+            await expect(Animal.getOneByName('b')).rejects.toThrow("Unable to locate animal.");
+        
+        })
+    })
+
+    describe('create', () => {
+        beforeEach(() =>{
+            jest.clearAllMocks()
+        })
+
+        it('Creates new animal when name not in use', async () => {
+            const data = {name: 'a', type: 'a', capture_points: 1, pack_bonus_mult: 2, description: 'a', fun_fact: 'a', zoo_image: 'a', species: 'a', family_id: 1 }
+
+            jest.spyOn(db, 'query')
+            .mockResolvedValueOnce({ rows: [] })
+            .mockResolvedValueOnce({ rows: [{ animal_id: 1 }] })
+
+            const mockAnimal = {animal_id: 1, name: 'a', type: 'a', capture_points: 1, pack_bonus_mult: 2, description: 'a', fun_fact: 'a', zoo_image: 'a', species: 'a', family_id: 1 }
+
+            jest.spyOn(Animal, 'getOneByID').mockResolvedValueOnce(mockAnimal)
+            const result = await Animal.create(data);
+
+            expect(db.query).toHaveBeenCalledTimes(2)
+            expect(result).toEqual(mockAnimal)
+            expect(db.query).toHaveBeenNthCalledWith(1, "SELECT * FROM animals WHERE name = $1", ['a'])
+            expect(db.query).toHaveBeenNthCalledWith(2, "INSERT INTO animals (name, type, capture_points, pack_bonus_mult, description, fun_fact, zoo_image, species, family_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING animal_id;", ['a', 'a', 1, 2, 'a', 'a', 'a', 'a', 1])
+            expect(Animal.getOneByID).toHaveBeenCalledTimes(1)
+        })
+
+        it('Throws error if name already taken', async () => {
+            const data = {name: 'a', type: 'a', capture_points: 1, pack_bonus_mult: 2, description: 'a', fun_fact: 'a', zoo_image: 'a', species: 'a', family_id: 1 }
+            jest.spyOn(db, 'query').mockResolvedValueOnce({ rows: [1] })
+
+            await expect(Animal.create(data)).rejects.toThrow('Animal already exists.')
         })
     })
 })
