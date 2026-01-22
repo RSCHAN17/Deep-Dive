@@ -87,7 +87,7 @@ async function getPFP(req, res) {
     try {
         let id = req.params.id;
         const user = await User.updatePointsByID(id);
-        let profiles_available = user.getAvailablePFPs();
+        let profiles_available = await user.getAvailablePFPs();
         res.status(200).send(profiles_available);
     } catch (err) {
         res.status(500).json({ error: err.message })
@@ -99,7 +99,7 @@ async function setPFP(req, res){
         let id = req.params.id;
         let animal_id = req.body;
         const user = await User.updatePointsByID(id);
-        new_face = user.setPFP(animal_id);
+        let new_face = await user.setPFP(animal_id);
         res.status(202).json(new_face);
     } catch (err) {
         res.status(404).json({ error: err.message })
@@ -110,7 +110,7 @@ async function getTitle(req, res) {
     try {
         let id = req.params.id;
         const user = await User.getOneByID(id);
-        let titles_available = user.getAvailableTitles();
+        let titles_available =await user.getAvailableTitles();
         res.status(200).send(titles_available);
     } catch (err) {
         res.status(500).json({ error: err.message })
@@ -122,7 +122,7 @@ async function setTitle(req, res){
         let id = req.params.id;
         let achievement_id = req.body;
         const user = await User.updatePointsByID(id);
-        new_title = user.setTitle(achievement_id);
+        let new_title = await user.setTitle(achievement_id);
         res.status(202).json(new_title);
     } catch (err) {
         res.status(404).json({ error: err.message })
