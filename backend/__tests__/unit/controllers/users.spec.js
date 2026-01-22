@@ -131,7 +131,7 @@ describe('User Controller', () =>{
             expect(bcrypt.compare).toHaveBeenCalledWith('test', 'test')
             expect(jwt.sign).toHaveBeenCalledWith({ user_id: 1, username: 'dev' }, process.env.SECRET_TOKEN, {expiresIn: 3600}, expect.any(Function))
             expect(res.status).toHaveBeenCalledWith(200)
-            expect(res.json).toHaveBeenCalledWith({ success: true, token: 'mocktoken', user: { username: 'dev', email_address: 'test' } })
+            expect(res.json).toHaveBeenCalledWith({ success: true, token: 'mocktoken', user: { user_id: 1, username: 'dev', email_address: 'test' } })
         })
     })
 
