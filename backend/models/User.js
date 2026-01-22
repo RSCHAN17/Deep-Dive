@@ -95,7 +95,7 @@ class User{
     async getAvailableTitles() {
         let response = []
         if (this.username === 'dev') {
-            response = await db.query("SELECT title FROM acheivements;");
+            response = await db.query("SELECT title FROM achievements;");
         } else {
             response = await db.query("SELECT title FROM achievements WHERE achievement_id IN (SELECT achievement_id FROM achievement_user_complete WHERE user_id = $1);", [this.user_id]);
         }
