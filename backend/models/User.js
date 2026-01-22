@@ -96,6 +96,12 @@ class User{
         const fresh_title = response.rows[0].user_id;
         return await User.getOneByID(fresh_title);
     }
+
+    async changePassword(newPassword){
+        const response = await db.query("UPDATE users SET password = $1 WHERE user_id = $2 RETURNING user_id;", [newPassword, this.user_id]);
+        const ID = response.rows[0].user_id;
+        return await User.getOneByID(ID);
+    }
 }
 
 module.exports = User;

@@ -116,7 +116,7 @@ describe('Spotting Model', () => {
                 animal_id: 1, 
                 animal_count: 2, 
                 location: (2,54), 
-                spot_points: 4,
+                spot_points: 2,
                 image_url: 'a'
             }
             jest.spyOn(Spotting, 'getOneByID').mockResolvedValueOnce(mockSpot)
@@ -126,7 +126,7 @@ describe('Spotting Model', () => {
             expect(result).toEqual(mockSpot)
             expect(db.query).toHaveBeenNthCalledWith(1, "SELECT capture_points FROM animals WHERE animal_id = $1;", [1])
             expect(db.query).toHaveBeenNthCalledWith(2, "SELECT pack_bonus_mult FROM animals WHERE animal_id = $1;", [1])
-            expect(db.query).toHaveBeenNthCalledWith(3, "INSERT INTO spottings (date_time, user_id, animal_id, animal_count, location, spot_points, image_url) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING spot_id;", ['2026-01-21 15:03:21', 1, 1, 2, (2,54), 4, 'a'])
+            expect(db.query).toHaveBeenNthCalledWith(3, "INSERT INTO spottings (date_time, user_id, animal_id, animal_count, location, spot_points, image_url) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING spot_id;", ['2026-01-21 15:03:21', 1, 1, 2, (2,54), 2, 'a'])
             expect(Spotting.getOneByID).toHaveBeenCalledTimes(1)
         })
 
