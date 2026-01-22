@@ -25,3 +25,55 @@ dropDown3.addEventListener("click", () => {
 dropDown4.addEventListener("click", () => {
     window.location.href = "../leaderboards/index.html"
 })
+
+const savedUsername = localStorage.getItem("prefillUsername")
+const usernameInput = document.querySelector("#username")
+
+if (savedUsername && usernameInput) {
+    usernameInput.value = savedUsername
+    localStorage.removeItem("prefillUsername")
+}
+
+const API_BASE = "https://spotting-api.onrender.com"
+
+const passwordInput = document.querySelector("#password")
+const submitBtn = document.querySelector("#submit")
+
+submitBtn.addEventListener("click", async () => {
+    const username = usernameInput.value.trim()
+    const password = passwordInput.value
+
+    if (!username || !password) {
+        alert("Please enter username and password")
+        return
+    }
+
+    submitBtn.disabled = true
+
+    try {
+        const res = await fetch(`${API_BASE}/users/login`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username, password })
+        })
+
+        const data = await res.json().catch(() => null)
+
+        if (!res.ok) {
+            const errMsg =
+                (data && (data.error || data.message)) ||
+                `Login failed (HTTP ${res.status})`
+            alert(errMsg)
+            return
+        }
+
+        localStorage.setItem("currentUser", JSON.stringify(data))
+        window.location.href = "../landingpage/index.html"
+
+    } catch (err) {
+        console.error(err)
+        alert("Network error")
+    } finally {
+        submitBtn.disabled = false
+    }
+})
