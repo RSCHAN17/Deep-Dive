@@ -129,6 +129,18 @@ describe('User Model', () => {
             expect(result).toEqual(['a', 'b', 'c'])
             expect(db.query).toHaveBeenCalledWith("SELECT * FROM families WHERE family_id IN (SELECT family_id FROM animals WHERE animal_id IN (SELECT animal_id FROM spottings WHERE user_id = $1));", [mockUser.user_id])
         })
+
+        it('Returns all profile pictures for dev', async () => {
+            const families = [{profile_picture: 'a'}, {profile_picture: 'b'}, {profile_picture: 'c'}]
+
+            jest.spyOn(db, 'query').mockResolvedValueOnce({rows: families})
+            const mockUser = new User({user_id: 1, username: 'dev', password: 'd', email_address: 'ab', spotting_points: 3, achievement_points: 44, challenge_points: 3, total_points: 50, current_pfp: 'a', current_title: 'a', daily_streak: 4})
+            const result = await mockUser.getAvailablePFPs()
+
+            expect(db.query).toHaveBeenCalledTimes(1)
+            expect(result).toEqual(['a', 'b', 'c'])
+            expect(db.query).toHaveBeenCalledWith("SELECT * FROM families;")
+        })
     })
 
     describe('getAvailableTitles', () => {
@@ -142,6 +154,18 @@ describe('User Model', () => {
             expect(db.query).toHaveBeenCalledTimes(1)
             expect(result).toEqual(['a', 'b', 'c'])
             expect(db.query).toHaveBeenCalledWith("SELECT title FROM achievements WHERE achievement_id IN (SELECT achievement_id FROM achievement_user_complete WHERE user_id = $1);", [mockUser.user_id])
+        })
+
+        it('Returns all titles for dev', async () => {
+            const titles = [{title: 'a'}, {title: 'b'}, {title: 'c'}]
+
+            jest.spyOn(db, 'query').mockResolvedValueOnce({rows: titles})
+            const mockUser = new User({user_id: 1, username: 'dev', password: 'd', email_address: 'ab', spotting_points: 3, achievement_points: 44, challenge_points: 3, total_points: 50, current_pfp: 'a', current_title: 'a', daily_streak: 4})
+            const result = await mockUser.getAvailableTitles()
+
+            expect(db.query).toHaveBeenCalledTimes(1)
+            expect(result).toEqual(['a', 'b', 'c'])
+            expect(db.query).toHaveBeenCalledWith("SELECT title FROM acheivements;")
         })
     })
 
