@@ -53,7 +53,7 @@ async function login(req, res) {
             res.status(200).json({
                 success: true,
                 token: token,
-                user: {username: user.username, email_address: user.email_address}
+                user: {user_id: user.user_id, username: user.username, email_address: user.email_address}
             });
         }
 
