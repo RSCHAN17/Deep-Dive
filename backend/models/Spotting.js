@@ -40,7 +40,7 @@ class Spotting{
         if (point_response.rows.length != 1 || mult_response.rows.length != 1) {
             throw new Error("Unable to locate animal.")
         }
-        const spot_score = point_response.rows[0].capture_points * Math.pow(mult_response.rows[0].pack_bonus_mult, animal_count);
+        const spot_score = point_response.rows[0].capture_points * Math.pow(mult_response.rows[0].pack_bonus_mult, animal_count-1);
         let response = await db.query("INSERT INTO spottings (date_time, user_id, animal_id, animal_count, location, spot_points, image_url) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING spot_id;", [date_time, user_id, animal_id, animal_count, location, spot_score, image_url]);
         const new_id = response.rows[0].spot_id;
         const new_spot = await Spotting.getOneByID(new_id);
