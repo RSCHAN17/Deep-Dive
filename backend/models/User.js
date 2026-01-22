@@ -74,7 +74,7 @@ class User{
 
 
     async getAvailablePFPs(){
-        const response = await db.query("SELECT profile_picture FROM families WHERE family_id IN (SELECT family_id FROM animals WHERE animal_id IN (SELECT animal_id FROM spottings WHERE user_id = $1));", [this.user_id]);
+        const response = await db.query("SELECT * FROM families WHERE family_id IN (SELECT family_id FROM animals WHERE animal_id IN (SELECT animal_id FROM spottings WHERE user_id = $1));", [this.user_id]);
         return response.rows.map(r => r.profile_picture)
     }
 
