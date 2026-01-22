@@ -132,8 +132,13 @@ async function setTitle(req, res){
 async function updatePassword(req, res) {
     try {
         let id = req.params.id;
-        let newPass = req.body;
+        let { currentPassword, newPass } = req.body;
         const user = await User.updatePointsByID(id);
+
+        const match = await bcrypt.compare(currentPassword, user.password)
+        if (!match) {
+            throw new Error('Old password is not correct!')
+        }
 
         const salt = await bcrypt.genSalt(parseInt(process.env.BCRYPT_SALT_ROUNDS));
 
@@ -141,7 +146,7 @@ async function updatePassword(req, res) {
         const hashPassword = await bcrypt.hash(newPass, salt);
         const result = await user.updatePassword(hashPassword);
 
-        res.status(214).json(result);
+        res.status(201).json(result);
     } catch (err) {
         res.status(404).json({ error: err.message })
     }
