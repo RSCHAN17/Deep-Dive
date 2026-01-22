@@ -1,5 +1,6 @@
 const { Router } = require('express');
 
+const authenticator = require('../middleware/authenticator');
 const achController = require('../controllers/achievements');
 const achRouter = Router();
 

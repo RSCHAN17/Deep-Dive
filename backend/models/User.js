@@ -72,6 +72,7 @@ class User{
         return player;
     } 
 
+
     async getAvailablePFPs(){
         const response = await db.query("SELECT profile_picture FROM families WHERE family_id IN (SELECT family_id FROM animals WHERE animal_id IN (SELECT animal_id FROM spottings WHERE user_id = $1));", [this.user_id]);
         return response.rows.map(r => r.profile_picture)
@@ -94,6 +95,12 @@ class User{
         const response = await db.query("UPDATE users SET current_title = $1 WHERE user_id = $2 RETURNING user_id;", [desired.title, this.user_id]);
         const fresh_title = response.rows[0].user_id;
         return await User.getOneByID(fresh_title);
+    }
+
+    async changePassword(newPassword){
+        const response = await db.query("UPDATE users SET password = $1 WHERE user_id = $2 RETURNING user_id;", [newPassword, this.user_id]);
+        const ID = response.rows[0].user_id;
+        return await User.getOneByID(ID);
     }
 }
 
