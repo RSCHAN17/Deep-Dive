@@ -1,15 +1,16 @@
 const { Router } = require('express');
 
 const userController = require('../controllers/users');
+const authenticator = require('../middleware/authenticator');
 const userRouter = Router();
 
 userRouter.post("/register", userController.register);
 userRouter.post("/login", userController.login);
 userRouter.get("/", userController.index);
 userRouter.get("/id/:id", userController.show);
-userRouter.get("/pics/:id", userController.getPFP);
-userRouter.patch("/pics/:id", userController.setPFP);
-userRouter.get("/title/:id", userController.getTitle);
-userRouter.patch("/title/:id", userController.setTitle);
+userRouter.get("/pics/:id",authenticator, userController.getPFP);
+userRouter.patch("/pics/:id", authenticator,userController.setPFP);
+userRouter.get("/title/:id",authenticator, userController.getTitle);
+userRouter.patch("/title/:id", authenticator,userController.setTitle);
 
 module.exports = userRouter;
