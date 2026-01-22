@@ -1,5 +1,8 @@
 const User = require('../../../models/User');
+const Family = require('../../../models/Family');
 const db = require('../../../database/connection');
+const { getOneByID } = require('../../../models/Family');
+const Achievement = require('../../../models/Achievement');
 
 describe('User Model', () => {
     beforeEach(() => jest.clearAllMocks());
@@ -114,4 +117,85 @@ describe('User Model', () => {
         })
     })
 
+    describe('getAvailablePFPs', () => {
+        it('Returns all available profile pictures', async () => {
+            const families = [{profile_picture: 'a'}, {profile_picture: 'b'}, {profile_picture: 'c'}]
+
+            jest.spyOn(db, 'query').mockResolvedValueOnce({rows: families})
+            const mockUser = new User({user_id: 1, username: 'a', password: 'd', email_address: 'ab', spotting_points: 3, achievement_points: 44, challenge_points: 3, total_points: 50, current_pfp: 'a', current_title: 'a', daily_streak: 4})
+            const result = await mockUser.getAvailablePFPs()
+
+            expect(db.query).toHaveBeenCalledTimes(1)
+            expect(result).toEqual(['a', 'b', 'c'])
+            expect(db.query).toHaveBeenCalledWith("SELECT * FROM families WHERE family_id IN (SELECT family_id FROM animals WHERE animal_id IN (SELECT animal_id FROM spottings WHERE user_id = $1));", [mockUser.user_id])
+        })
+    })
+
+    describe('getAvailableTitles', () => {
+        it('Returns all available titles', async () => {
+            const titles = [{title: 'a'}, {title: 'b'}, {title: 'c'}]
+
+            jest.spyOn(db, 'query').mockResolvedValueOnce({rows: titles})
+            const mockUser = new User({user_id: 1, username: 'a', password: 'd', email_address: 'ab', spotting_points: 3, achievement_points: 44, challenge_points: 3, total_points: 50, current_pfp: 'a', current_title: 'a', daily_streak: 4})
+            const result = await mockUser.getAvailableTitles()
+
+            expect(db.query).toHaveBeenCalledTimes(1)
+            expect(result).toEqual(['a', 'b', 'c'])
+            expect(db.query).toHaveBeenCalledWith("SELECT title FROM achievements WHERE achievement_id IN (SELECT achievement_id FROM achievement_user_complete WHERE user_id = $1);", [mockUser.user_id])
+        })
+    })
+
+    describe('setPFP', () => {
+        it('Updates new profile picture and returns the user', async () => {
+            const family = { profile_picture: 'b' }
+            const oldUser = new User({user_id: 1, username: 'a', password: 'd', email_address: 'ab', spotting_points: 3, achievement_points: 44, challenge_points: 3, total_points: 50, current_pfp: 'a', current_title: 'a', daily_streak: 4})
+            const newUser = new User({user_id: 1, username: 'a', password: 'd', email_address: 'ab', spotting_points: 3, achievement_points: 44, challenge_points: 3, total_points: 50, current_pfp: 'b', current_title: 'a', daily_streak: 4})
+
+            jest.spyOn(Family, 'getOneByID').mockResolvedValueOnce(family)
+            jest.spyOn(db, 'query').mockResolvedValueOnce({rows: [{user_id: 1}]})
+            jest.spyOn(User, 'getOneByID').mockResolvedValueOnce(newUser)
+
+            const result = await oldUser.setPFP(family)
+
+            expect(result.current_pfp).toEqual('b')
+            expect(db.query).toHaveBeenCalledTimes(1)
+            expect(db.query).toHaveBeenCalledWith("UPDATE users SET current_pfp = $1 WHERE user_id = $2 RETURNING user_id;", [family.profile_picture, oldUser.user_id])
+
+        })
+    })
+
+    describe('setTitle', () => {
+        it('Updates new title and returns the user', async () => {
+            const newTitle = { title: 'w' }
+            const oldUser = new User({user_id: 1, username: 'a', password: 'd', email_address: 'ab', spotting_points: 3, achievement_points: 44, challenge_points: 3, total_points: 50, current_pfp: 'b', current_title: 'a', daily_streak: 4})
+            const newUser = new User({user_id: 1, username: 'a', password: 'd', email_address: 'ab', spotting_points: 3, achievement_points: 44, challenge_points: 3, total_points: 50, current_pfp: 'b', current_title: 'w', daily_streak: 4})
+
+            jest.spyOn(Achievement, 'getOneByID').mockResolvedValueOnce(newTitle)
+            jest.spyOn(db, 'query').mockResolvedValueOnce({rows: [{user_id: 1}]})
+            jest.spyOn(User, 'getOneByID').mockResolvedValueOnce(newUser)
+
+            const result = await oldUser.setTitle(newTitle)
+
+            expect(result.current_title).toEqual('w')
+            expect(db.query).toHaveBeenCalledTimes(1)
+            expect(db.query).toHaveBeenCalledWith("UPDATE users SET current_title = $1 WHERE user_id = $2 RETURNING user_id;", [newTitle.title, oldUser.user_id])
+
+        })
+    })
+
+    describe('changePassword', () => {
+        it('Updates password and returns the user', async () => {
+            const oldUser = new User({user_id: 1, username: 'a', password: 'd', email_address: 'ab', spotting_points: 3, achievement_points: 44, challenge_points: 3, total_points: 50, current_pfp: 'b', current_title: 'a', daily_streak: 4})
+            const newUser = new User({user_id: 1, username: 'a', password: 'z', email_address: 'ab', spotting_points: 3, achievement_points: 44, challenge_points: 3, total_points: 50, current_pfp: 'b', current_title: 'a', daily_streak: 4})
+
+            jest.spyOn(db, 'query').mockResolvedValueOnce({rows: [{user_id: 1}]})
+            jest.spyOn(User, 'getOneByID').mockResolvedValueOnce(newUser)
+
+            const result = await oldUser.changePassword('z')
+
+            expect(result.password).toEqual('z')
+            expect(db.query).toHaveBeenCalledTimes(1)
+            expect(db.query).toHaveBeenCalledWith("UPDATE users SET password = $1 WHERE user_id = $2 RETURNING user_id;", ['z', oldUser.user_id])
+        })
+    })
 })

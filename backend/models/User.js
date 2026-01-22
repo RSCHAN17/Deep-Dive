@@ -74,7 +74,12 @@ class User{
 
 
     async getAvailablePFPs(){
-        const response = await db.query("SELECT * FROM families WHERE family_id IN (SELECT family_id FROM animals WHERE animal_id IN (SELECT animal_id FROM spottings WHERE user_id = $1));", [this.user_id]);
+        let response = [];
+        if (this.username === 'dev'){
+            response = await db.query('SELECT * FROM families;');
+        } else {
+            response = await db.query("SELECT * FROM families WHERE family_id IN (SELECT family_id FROM animals WHERE animal_id IN (SELECT animal_id FROM spottings WHERE user_id = $1));", [this.user_id]);
+        }
         return response.rows.map(r => r.profile_picture)
     }
 
@@ -86,7 +91,12 @@ class User{
     }
 
     async getAvailableTitles() {
-        const response = await db.query("SELECT title FROM achievements WHERE achievement_id IN (SELECT achievement_id FROM achievement_user_complete WHERE user_id = $1);", [this.user_id]);
+        let response = []
+        if (this.username === 'dev') {
+            response = await db.query("SELECT title FROM acheivements;");
+        } else {
+            response = await db.query("SELECT title FROM achievements WHERE achievement_id IN (SELECT achievement_id FROM achievement_user_complete WHERE user_id = $1);", [this.user_id]);
+        }
         return response.rows.map(r => r.title);
     }
 
