@@ -58,6 +58,7 @@ submitBtn.addEventListener("click", async () => {
         })
 
         const data = await res.json().catch(() => null)
+        console.log("Login response data:", data);
 
         if (!res.ok) {
             const errMsg =
@@ -66,8 +67,18 @@ submitBtn.addEventListener("click", async () => {
             alert(errMsg)
             return
         }
-
+        const currentUser = {
+            user_id:data.user.user_id,
+            username: data.user.username,
+            token: data.token
+        }
+        
         localStorage.setItem("currentUser", JSON.stringify(data))
+        localStorage.setItem("token", data.token)
+        localStorage.setItem("user_id", data.user.user_id)
+
+
+ 
         window.location.href = "../landingpage/index.html"
 
     } catch (err) {
@@ -77,3 +88,9 @@ submitBtn.addEventListener("click", async () => {
         submitBtn.disabled = false
     }
 })
+
+const signUpBtn = document.getElementById("signupbtn")
+signUpBtn.addEventListener('click', () => {
+    window.location.href=("../registerpage/index.html")
+})
+
