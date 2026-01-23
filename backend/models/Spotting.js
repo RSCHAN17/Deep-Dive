@@ -4,7 +4,7 @@ class Spotting{
     constructor({spot_id, date_time, username, animal_name, animal_count, location, spot_points, image_url}){
         this.spot_id = spot_id;
         this.date_time = date_time;
-        this.userna = username;
+        this.username = username;
         this.animal_name = animal_name;
         this.animal_count = animal_count;
         this.location = location;
