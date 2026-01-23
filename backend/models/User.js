@@ -1,6 +1,7 @@
 const db = require('../database/connection');
 const Family = require('./Family');
 const Achievement = require('./Achievement');
+const Animal = require('./Animal');
 
 class User{
     constructor({user_id, username, password, email_address, spotting_points, achievement_points, challenge_points, total_points, current_pfp, current_title, daily_streak}) {
@@ -114,6 +115,11 @@ class User{
         const response = await db.query("UPDATE users SET password = $1 WHERE user_id = $2 RETURNING user_id;", [newPassword, this.user_id]);
         const ID = response.rows[0].user_id;
         return await User.getOneByID(ID);
+    }
+
+    async getZoo() {
+        const response = await db.query("SELECT * FROM animals WHERE name IN (SELECT animal_name IN spottings WHERE username = $1);", [this.username])
+        return response.rows.map(r => new Animal(r))
     }
 }
 
