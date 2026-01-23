@@ -3,6 +3,7 @@ const Family = require('../../../models/Family');
 const db = require('../../../database/connection');
 const { getOneByID } = require('../../../models/Family');
 const Achievement = require('../../../models/Achievement');
+const Animal = require('../../../models/Animal')
 
 describe('User Model', () => {
     beforeEach(() => jest.clearAllMocks());
@@ -126,8 +127,8 @@ describe('User Model', () => {
             const result = await mockUser.getAvailablePFPs()
 
             expect(db.query).toHaveBeenCalledTimes(1)
-            expect(result).toEqual(['a', 'b', 'c'])
-            expect(db.query).toHaveBeenCalledWith("SELECT * FROM families WHERE family_id IN (SELECT family_id FROM animals WHERE animal_id IN (SELECT animal_id FROM spottings WHERE user_id = $1));", [mockUser.user_id])
+            expect(result).toEqual([{profile_picture: 'a'}, {profile_picture: 'b'}, {profile_picture: 'c'}])
+            expect(db.query).toHaveBeenCalledWith("SELECT * FROM families WHERE family_id IN (SELECT family_id FROM animals WHERE animal_id IN (SELECT animal_id FROM spottings WHERE username = $1));", [mockUser.username])
         })
 
         it('Returns all profile pictures for dev', async () => {
@@ -138,7 +139,7 @@ describe('User Model', () => {
             const result = await mockUser.getAvailablePFPs()
 
             expect(db.query).toHaveBeenCalledTimes(1)
-            expect(result).toEqual(['a', 'b', 'c'])
+            expect(result).toEqual([{profile_picture: 'a'}, {profile_picture: 'b'}, {profile_picture: 'c'}])
             expect(db.query).toHaveBeenCalledWith("SELECT * FROM families;")
         })
     })
@@ -165,7 +166,7 @@ describe('User Model', () => {
 
             expect(db.query).toHaveBeenCalledTimes(1)
             expect(result).toEqual(['a', 'b', 'c'])
-            expect(db.query).toHaveBeenCalledWith("SELECT title FROM acheivements;")
+            expect(db.query).toHaveBeenCalledWith("SELECT title FROM achievements;")
         })
     })
 
@@ -215,11 +216,28 @@ describe('User Model', () => {
             jest.spyOn(db, 'query').mockResolvedValueOnce({rows: [{user_id: 1}]})
             jest.spyOn(User, 'getOneByID').mockResolvedValueOnce(newUser)
 
-            const result = await oldUser.changePassword('z')
+            const result = await oldUser.updatePassword('z')
 
             expect(result.password).toEqual('z')
             expect(db.query).toHaveBeenCalledTimes(1)
             expect(db.query).toHaveBeenCalledWith("UPDATE users SET password = $1 WHERE user_id = $2 RETURNING user_id;", ['z', oldUser.user_id])
+        })
+    })
+
+    describe('getZoo', () => {
+        it('returns all animals that the user has spotted', async () => {
+            const mockUser = new User({user_id: 1, username: 'a', password: 'd', email_address: 'ab', spotting_points: 3, achievement_points: 44, challenge_points: 3, total_points: 50, current_pfp: 'b', current_title: 'a', daily_streak: 4})
+            const mockAnimals = [
+                {animal_id: 1, name: 'a', type: 'a', capture_points: 10, pack_bonus_mult: 1.1, description: 'a', fun_fact: 'x', zoo_image: 'a', species: 'a', family_id:1},
+                {animal_id: 2, name: 'b', type: 'a', capture_points: 5, pack_bonus_mult: 1.35, description: 'b', fun_fact: 'y', zoo_image: 'b', species: 'b', family_id:2},
+                {animal_id: 3, name: 'c', type: 'b', capture_points: 12, pack_bonus_mult: 1.1, description: 'c', fun_fact: 'z', zoo_image: 'c', species: 'c', family_id:2}
+            ]
+
+            jest.spyOn(db, 'query').mockResolvedValueOnce({rows: mockAnimals})
+
+            const result = await mockUser.getZoo();
+
+            expect(result).toEqual(mockAnimals)
         })
     })
 })

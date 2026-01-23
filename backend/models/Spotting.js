@@ -35,8 +35,8 @@ class Spotting{
 
     static async create(data){
         const {date_time, username, animal_name, animal_count, location, image_url} = data;
-        const point_response = await db.query("SELECT capture_points FROM animals WHERE animal_name = $1;", [animal_name]);
-        const mult_response = await db.query("SELECT pack_bonus_mult FROM animals WHERE animal_name = $1;", [animal_name]);
+        const point_response = await db.query("SELECT capture_points FROM animals WHERE name = $1;", [animal_name]);
+        const mult_response = await db.query("SELECT pack_bonus_mult FROM animals WHERE name = $1;", [animal_name]);
         if (point_response.rows.length != 1 || mult_response.rows.length != 1) {
             throw new Error("Unable to locate animal.")
         }
@@ -48,7 +48,7 @@ class Spotting{
     }
 
     static async filterByType(type){
-        const response = await db.query("SELECT * FROM spottings WHERE animal_name IN (SELECT animal_name FROM animals WHERE type = $1);", [type]);
+        const response = await db.query("SELECT * FROM spottings WHERE animal_name IN (SELECT name FROM animals WHERE type = $1);", [type]);
         if (response.rows.length == 0) {
             throw new Error("No animal spottings of this type!")
         }
