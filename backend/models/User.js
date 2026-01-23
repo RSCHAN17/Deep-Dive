@@ -118,7 +118,7 @@ class User{
     }
 
     async getZoo() {
-        const response = await db.query("SELECT * FROM animals WHERE name IN (SELECT animal_name IN spottings WHERE username = $1);", [this.username])
+        const response = await db.query("SELECT * FROM animals WHERE name IN (SELECT animal_name FROM spottings WHERE username = $1);", [this.username])
         return response.rows.map(r => new Animal(r))
     }
 }
