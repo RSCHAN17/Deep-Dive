@@ -80,7 +80,7 @@ console.log("TOKEN on profile page:", TOKEN)
 editBtn.addEventListener("click", () => {
     modal.style.display = "flex";
     loadProfileOptions(TOKEN.user_id); // dynamically populate dropdowns
-
+console.log("Opening edit modal for user:", TOKEN.user_id);
     // Only attach listener once
     const form = document.querySelector("#changepassword");
     const message = document.querySelector("#password-message");
@@ -142,6 +142,8 @@ editBtn.addEventListener("click", () => {
 async function loadProfileOptions(userId) {
     const pfpSelect = document.getElementById("edit-profile-pic");
     const titleSelect = document.getElementById("edit-title")
+    console.log("pfpSelect:", pfpSelect);
+console.log("titleSelect:", titleSelect);
     try {
         // Fetch profile pictures from API
         const pfpResponse = await fetch(`https://spotting-api.onrender.com/users/pics/${userId}`, {
@@ -178,17 +180,28 @@ async function loadProfileOptions(userId) {
             });
         }
         pfpSelect.onchange = () => {
-            const mainProfileImg = document.querySelector(".accinfo .profile-pic");
-            const base64String = pfpSelect.value.trim();
+    const mainProfileImg = document.querySelector(".accinfo .profile-pic");
+    if (!mainProfileImg) return;
 
-            // Add the data prefix if it's missing
-            if (base64String.startsWith('data:image')) {
-                mainProfileImg.src = base64String;
-            } else {
-                // Assuming the API returns PNG. Use 'data:image/jpeg;base64,' if they are JPEGs.
-                mainProfileImg.src = `data:image/png;base64,${base64String}`;
-            }
-        };
+    let base64String = pfpSelect.value.trim();
+    console.log("Selected PFP value:", base64String);
+console.log("mainProfileImg found?", mainProfileImg);
+    // If it already starts with data:image, use it directly
+    if (base64String.startsWith("data:image")) {
+        mainProfileImg.src = base64String;
+       
+mainProfileImg.onload = () => console.log("Profile pic updated!");
+    } else if (base64String.length > 0) {
+        mainProfileImg.src = `data:image/png;base64,${base64String}`;
+    } else {
+        console.warn("Profile picture value is empty");
+    }
+};
+if (pfpSelect.options.length > 0) {
+    pfpSelect.selectedIndex = 0;
+    pfpSelect.onchange();
+}
+
         const titleResponse = await fetch(`https://spotting-api.onrender.com/users/title/${userId}`, {
             headers: { "Authorization": `Bearer ${TOKEN.token}` }
         });
@@ -213,12 +226,15 @@ async function loadProfileOptions(userId) {
 const saveBtn = document.getElementById("save-profile");
 const profileMessage = document.getElementById("profile-message");
 
-saveBtn.addEventListener("click", async () => {
+saveBtn.addEventListener("click", async (e) => {
+   e.preventDefault();
+    
     const selectedTitle = document.getElementById("edit-title").value;
     const selectedPFP = document.getElementById("edit-profile-pic").value;
     const userId = TOKEN.user_id;
 
     try {
+        // Update title
         if (selectedTitle) {
             const titleResp = await fetch(`https://spotting-api.onrender.com/users/title/${userId}`, {
                 method: "PATCH",
@@ -228,11 +244,14 @@ saveBtn.addEventListener("click", async () => {
                 },
                 body: JSON.stringify({ current_title: selectedTitle })
             });
-            const titleData = await titleResp.json();
-            if (!titleResp.ok) throw new Error(titleData.error || "Failed to update title.");
+            if (!titleResp.ok) {
+                const errorData = await titleResp.json();
+                throw new Error(errorData.error || "Failed to update title.");
+            }
             document.querySelector(".usertitle").textContent = selectedTitle;
         }
 
+        // Update profile picture
         if (selectedPFP) {
             const pfpResp = await fetch(`https://spotting-api.onrender.com/users/pics/${userId}`, {
                 method: "PATCH",
@@ -242,12 +261,16 @@ saveBtn.addEventListener("click", async () => {
                 },
                 body: JSON.stringify({ current_pfp: selectedPFP })
             });
-            const pfpData = await pfpResp.json();
-            if (!pfpResp.ok) throw new Error(pfpData.error || "Failed to update profile pic.");
-            const finalSrc = selectedPFP.startsWith('data:image')
-                ? selectedPFP
-                : `data:image/png;base64,${selectedPFP}`;
-            document.querySelector(".profile-pic").src = finalSrc;
+            if (!pfpResp.ok) {
+                const errorData = await pfpResp.json();
+                throw new Error(errorData.error || "Failed to update profile pic.");
+            }
+
+            // Directly use selectedPFP; it already includes data:image prefix
+            const profileImgEl = document.querySelector(".profile-pic");
+            profileImgEl.src = selectedPFP;
+
+            console.log("Profile pic updated:", profileImgEl.src);
         }
 
         profileMessage.textContent = "Profile updated successfully!";
@@ -256,6 +279,7 @@ saveBtn.addEventListener("click", async () => {
     } catch (err) {
         profileMessage.textContent = err.message;
         profileMessage.style.color = "red";
+        console.error("Error saving profile:", err);
     }
 });
 
@@ -371,7 +395,7 @@ async function loadMyZoo() {
                 </div>
 
                 <div class="zoo-reward">
-                    ${spotted ? '+50XP' : ''}
+                    ${spotted ? '' : ''}
                     <div class="achievement-tick ${spotted ? 'achieved' : ''}"></div>
                 </div>
             `;
@@ -403,9 +427,144 @@ zooSearchInput.addEventListener("input", () => {
         item.style.display = matches ? "flex" : "none";
     });
 });
+async function loadAccountInfo() {
+    try {
+        const userId = TOKEN.user_id;
+        const username = TOKEN.username;
+
+        // 1️⃣ Fetch basic user info
+        const userRes = await fetch(`https://spotting-api.onrender.com/users/id/${userId}`, {
+            headers: { Authorization: `Bearer ${TOKEN.token}` }
+        });
+
+        if (!userRes.ok) throw new Error("Failed to fetch user info");
+        const user = await userRes.json();
+
+        console.log("User info:", user);
+
+        // Profile pic
+        const profilePic = document.querySelector(".accinfo .profile-pic");
+        if (user.current_pfp) profilePic.src = user.current_pfp;
+
+        // Username & title
+        const usernameEl = document.querySelector(".accinfo .username");
+        const usertitleEl = document.querySelector(".accinfo .usertitle");
+        if (usernameEl) usernameEl.textContent = user.username || "Username";
+        if (usertitleEl) usertitleEl.textContent = user.current_title || "Wildlife Spotter";
+
+        // Level, XP, progress
+        const levelStrong = document.querySelector(".accinfo .level-row strong");
+        const progressFill = document.querySelector(".accinfo .progress-fill");
+        const xpText = document.querySelector(".accinfo .xp-text");
+        if (levelStrong) levelStrong.textContent = user.level || 1;
+        if (progressFill && user.xp != null && user.next_level_xp != null) {
+            const percent = Math.min((user.xp / user.next_level_xp) * 100, 100);
+            progressFill.style.width = percent + "%";
+        }
+        if (xpText && user.xp != null && user.next_level_xp != null) {
+            xpText.textContent = `${user.xp} / ${user.next_level_xp}XP`;
+        }
+
+        // 2️⃣ Fetch total spottings
+        const spottingsRes = await fetch(`https://spotting-api.onrender.com/spottings/filter/user/${username}`, {
+            headers: { Authorization: `Bearer ${TOKEN.token}` }
+        });
+        let spottings = [];
+        if (spottingsRes.ok) {
+            spottings = await spottingsRes.json();
+        } else {
+            console.warn("Failed to fetch spottings");
+        }
+
+        // 3️⃣ Fetch distinct species for zoo
+        const zooRes = await fetch(`https://spotting-api.onrender.com/users/zoo/${userId}`, {
+            headers: { Authorization: `Bearer ${TOKEN.token}` }
+        });
+        let zoo = [];
+        if (zooRes.ok) {
+            zoo = await zooRes.json();
+        } else {
+            console.warn("Failed to fetch zoo");
+        }
+
+        // Update stats in DOM
+        const statRows = document.querySelectorAll(".accinfo .user-stats .stat-row strong");
+        if (statRows.length >= 2) {
+            statRows[0].textContent = zoo.length;       // distinct species
+            statRows[1].textContent = spottings.length; // total spottings
+        }
+
+    } catch (err) {
+        console.error("Error loading account info:", err);
+    }
+}
+
+async function loadAchievements() {
+    const achList = document.querySelector(".achlist");
+    if (!achList) return;
+
+    try {
+        // Fetch all achievements
+        const res = await fetch(`https://spotting-api.onrender.com/achievements`, {
+            headers: {
+                Authorization: `Bearer ${TOKEN.token}`
+            }
+        });
+
+        if (!res.ok) throw new Error("Failed to fetch achievements");
+
+        const achievements = await res.json();
+        console.log("Achievements:", achievements);
+
+        // Clear existing list
+        achList.innerHTML = "";
+
+        // Loop through achievements and create DOM elements
+        achievements.forEach(ach => {
+            const item = document.createElement("div");
+            item.className = "achievement-item";
+
+            const info = document.createElement("div");
+            info.className = "achievement-info";
+
+            // Title
+            const title = document.createElement("div");
+            title.className = "achievement-title";
+            title.textContent = ach.title || "Untitled";
+
+            // Description
+            const desc = document.createElement("div");
+            desc.className = "achievement-desc";
+            desc.textContent = ach.achievement_description || "";
+
+            // Reward
+            const reward = document.createElement("div");
+            reward.className = "achievement-reward";
+            reward.textContent = `Reward: ${ach.value || 0} XP`;
+
+            info.append(title, desc, reward);
+
+            // Tick (achieved or not)
+            const tick = document.createElement("div");
+            if (ach.achieved) {
+                tick.className = "achievement-tick achieved"; // green tick
+            }
+
+            item.append(info, tick);
+            achList.appendChild(item);
+        });
+
+    } catch (err) {
+        console.error("Error loading achievements:", err);
+        achList.innerHTML = "<p>Failed to load achievements.</p>";
+    }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     loadMySpottings();
     loadMyZoo();
+    loadAccountInfo();
+    loadAchievements();
 
 } 
     );
