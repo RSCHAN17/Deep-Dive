@@ -448,7 +448,22 @@
                     <option value="../assets/fox.jpg">Red Fox</option>
                     <option value="../assets/fox.jpg">Red Fox</option>
                 </select>
+                <h3>Change Your Password</h3>
+                <form id="changepassword">
+                    <label for="current-password">Current Password:</label>
+                    <input type="password" id="current-password" autocomplete="current-password">
+
+                    <label for="new-password">New Password:</label>
+                    <input type="password" id="new-password" autocomplete="new-password">
+                    
+                    <label for="confirm-password">Confirm New Password:</label>
+                    <input type="password" id="confirm-password">
+                </form>
+
+                <p id="password-message"></p>
+
                 <button id="save-profile">Save</button>
+                <p id="profile-message"></p>
             </div>
         </div>
     </main>
