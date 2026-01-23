@@ -152,8 +152,9 @@ async function updatePassword(req, res) {
     }
 }
 
-async function getZoo(id) {
+async function getZoo(req, res) {
     try {
+        id = req.params.id;
         const user = await User.getOneByID(id)
         const zoo = await user.getZoo()
         res.status(200).json(zoo)
