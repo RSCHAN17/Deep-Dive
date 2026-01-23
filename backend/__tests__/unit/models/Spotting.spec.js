@@ -8,9 +8,9 @@ describe('Spotting Model', () => {
     describe('getAll', () => {
         it('Returns all Spottings', async () =>{
             const testSpottings = [
-                {spot_id: 1, date_time: 1, user_id: 2, animal_id: 3, animal_count: 1, location: 'a', spot_points: 3, image_url: 'c'},
-                {spot_id: 2, date_time: 2, user_id: 2, animal_id: 5, animal_count: 1, location: 'a', spot_points: 3, image_url: 'a'},
-                {spot_id: 3, date_time: 3, user_id: 1, animal_id: 3, animal_count: 2, location: 'a', spot_points: 4, image_url: 'a'}
+                {spot_id: 1, date_time: 1, username: 'b', animal_name: 'c', animal_count: 1, location: 'a', spot_points: 3, image_url: 'c'},
+                {spot_id: 2, date_time: 2, username: 'b', animal_name: 'e', animal_count: 1, location: 'a', spot_points: 3, image_url: 'a'},
+                {spot_id: 3, date_time: 3, username: 'a', animal_name: 'c', animal_count: 2, location: 'a', spot_points: 4, image_url: 'a'}
             ]
             jest.spyOn(db, 'query').mockResolvedValueOnce({ rows: testSpottings })
 
@@ -18,20 +18,20 @@ describe('Spotting Model', () => {
 
             expect(results).toHaveLength(3)
             expect(results[0]).toHaveProperty('date_time')
-            expect(results[0].user_id).toBe(2)
+            expect(results[0].animal_count).toEqual(1)
             expect(db.query).toHaveBeenCalledWith("SELECT * FROM spottings;")
         })
     })
 
     describe('getOneByID', () => {
         it('Returns spotting on successful db query', async () => {
-            const testSpotting = {spot_id: 1, date_time: 1, user_id: 2, animal_id: 3, animal_count: 1, location: 'a', spot_points: 3, image_url: 'c'}
+            const testSpotting = {spot_id: 1, date_time: 1, username: 'b', animal_name: 'c', animal_count: 1, location: 'a', spot_points: 3, image_url: 'c'}
 
             jest.spyOn(db, 'query').mockResolvedValueOnce({rows: [testSpotting]})
 
             const result = await Spotting.getOneByID(1)
             expect(result).toBeInstanceOf(Spotting)
-            expect(result.animal_id).toBe(3)
+            expect(result.animal_name).toEqual('c')
             expect(result.image_url).toBe('c')
             expect(db.query).toHaveBeenCalledWith("SELECT * FROM spottings WHERE spot_id = $1;", [1])
         })
@@ -46,32 +46,32 @@ describe('Spotting Model', () => {
     describe('filterByUser', () => {
         it('Returns spottings from specific user on successful db query', async () => {
             const mockSpots = [
-                {spot_id: 1, date_time: 1, user_id: 2, animal_id: 3, animal_count: 1, location: 'a', spot_points: 3, image_url: 'c'},
-                {spot_id: 2, date_time: 1, user_id: 1, animal_id: 3, animal_count: 1, location: 'a', spot_points: 3, image_url: 'c'},
-                {spot_id: 3, date_time: 1, user_id: 1, animal_id: 3, animal_count: 1, location: 'a', spot_points: 3, image_url: 'c'}
+                {spot_id: 1, date_time: 1, username: 'b', animal_name: 'c', animal_count: 1, location: 'a', spot_points: 3, image_url: 'c'},
+                {spot_id: 2, date_time: 1, username: 'a', animal_name: 'c', animal_count: 1, location: 'a', spot_points: 3, image_url: 'c'},
+                {spot_id: 3, date_time: 1, username: 'a', animal_name: 'c', animal_count: 1, location: 'a', spot_points: 3, image_url: 'c'}
             ]
 
             jest.spyOn(db, 'query').mockResolvedValueOnce({ rows: [mockSpots[1], mockSpots[2]] })
-            const result = await Spotting.filterByUser(1)
+            const result = await Spotting.filterByUser('a')
 
             expect(result).toHaveLength(2)
             expect(result[0]).toHaveProperty('animal_count')
-            expect(result[0].user_id).toBe(1)
-            expect(db.query).toHaveBeenCalledWith("SELECT * FROM spottings WHERE user_id = $1;", [1])
+            expect(result[1].animal_name).toBe('c')
+            expect(db.query).toHaveBeenCalledWith("SELECT * FROM spottings WHERE username = $1;", ['a'])
         })
 
         it('Throws error when no spottings from that user', async () => {
             jest.spyOn(db, 'query').mockResolvedValueOnce({ rows: [] })
-            await expect(Spotting.filterByUser(999)).rejects.toThrow("No animal spottings from this user!")
+            await expect(Spotting.filterByUser('z')).rejects.toThrow("No animal spottings from this user!")
         })
     })
 
     describe('filterByType', () => {
         it('Returns spottings of animals of the same type', async () => {
             const mockSpots = [
-                {spot_id: 1, date_time: 1, user_id: 2, animal_id: 3, animal_count: 1, location: 'a', spot_points: 3, image_url: 'c'},
-                {spot_id: 2, date_time: 1, user_id: 1, animal_id: 82, animal_count: 1, location: 'a', spot_points: 3, image_url: 'c'},
-                {spot_id: 3, date_time: 1, user_id: 1, animal_id: 1, animal_count: 1, location: 'a', spot_points: 3, image_url: 'c'}
+                {spot_id: 1, date_time: 1, username: 'b', animal_name: 'c', animal_count: 1, location: 'a', spot_points: 3, image_url: 'c'},
+                {spot_id: 2, date_time: 1, username: 'a', animal_id: 'z', animal_count: 1, location: 'a', spot_points: 3, image_url: 'c'},
+                {spot_id: 3, date_time: 1, username: 'a', animal_id: 'a', animal_count: 1, location: 'a', spot_points: 3, image_url: 'c'}
             ]
 
             jest.spyOn(db, 'query').mockResolvedValueOnce({ rows: [mockSpots[0], mockSpots[2]] })
@@ -79,8 +79,8 @@ describe('Spotting Model', () => {
 
             expect(result).toHaveLength(2)
             expect(result[0]).toHaveProperty('location')
-            expect(result[0].animal_id).toBe(3)
-            expect(db.query).toHaveBeenCalledWith("SELECT * FROM spottings WHERE animal_id IN (SELECT animal_id FROM animals WHERE type = $1);", ['rabbit'])
+            expect(result[0].animal_name).toBe('c')
+            expect(db.query).toHaveBeenCalledWith("SELECT * FROM spottings WHERE animal_name IN (SELECT name FROM animals WHERE type = $1);", ['rabbit'])
         })
 
         it('Throws error when no spottings of that type', async () => {
@@ -97,8 +97,8 @@ describe('Spotting Model', () => {
         it('Creates spot if animal is found and calculates score', async () => {
             const data = {
                 date_time: '2026-01-21 15:03:21',
-                user_id: 1,
-                animal_id: 1, 
+                username: 'a',
+                animal_name: 'a', 
                 animal_count: 2, 
                 location: (2,54), 
                 image_url: 'a'
@@ -112,8 +112,8 @@ describe('Spotting Model', () => {
             const mockSpot = {
                 spot_id: 1,
                 date_time: '2026-01-21 15:03:21',
-                user_id: 1,
-                animal_id: 1, 
+                username: 'a',
+                animal_name: 'a', 
                 animal_count: 2, 
                 location: (2,54), 
                 spot_points: 2,
@@ -124,9 +124,9 @@ describe('Spotting Model', () => {
 
             expect(db.query).toHaveBeenCalledTimes(3)
             expect(result).toEqual(mockSpot)
-            expect(db.query).toHaveBeenNthCalledWith(1, "SELECT capture_points FROM animals WHERE animal_id = $1;", [1])
-            expect(db.query).toHaveBeenNthCalledWith(2, "SELECT pack_bonus_mult FROM animals WHERE animal_id = $1;", [1])
-            expect(db.query).toHaveBeenNthCalledWith(3, "INSERT INTO spottings (date_time, user_id, animal_id, animal_count, location, spot_points, image_url) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING spot_id;", ['2026-01-21 15:03:21', 1, 1, 2, (2,54), 2, 'a'])
+            expect(db.query).toHaveBeenNthCalledWith(1, "SELECT capture_points FROM animals WHERE name = $1;", ['a'])
+            expect(db.query).toHaveBeenNthCalledWith(2, "SELECT pack_bonus_mult FROM animals WHERE name = $1;", ['a'])
+            expect(db.query).toHaveBeenNthCalledWith(3, "INSERT INTO spottings (date_time, username, animal_name, animal_count, location, spot_points, image_url) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING spot_id;", ['2026-01-21 15:03:21', 'a', 'a', 2, (2,54), 2, 'a'])
             expect(Spotting.getOneByID).toHaveBeenCalledTimes(1)
         })
 
