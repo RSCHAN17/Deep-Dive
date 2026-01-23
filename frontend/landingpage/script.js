@@ -1,3 +1,12 @@
+const TOKEN = {
+    token: localStorage.getItem("token"),
+    user_id: localStorage.getItem("user_id")
+};
+
+if (!TOKEN.token || !TOKEN.user_id) {
+    console.error("User is not logged in!");
+    // optionally redirect to login page
+}
 const homeBtn = document.querySelector("#logo")
 const homeBtn2 = document.querySelector("#title")
 
@@ -39,3 +48,4 @@ mapBtn.addEventListener("click", () => {
 submitBtn.addEventListener("click", () => {
     window.location.href = "../submitspot/index.html"
 })
+console.log("TOKEN on profile page:", TOKEN)
