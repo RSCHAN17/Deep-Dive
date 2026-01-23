@@ -31,7 +31,7 @@ html, body {
 
 #title {
     font-family: "Jockey One", sans-serif;
-    color: #E0FFB1;
+    color: #F5F1C4;
     font-size: 35px;
     padding-bottom: 18px;
 }
@@ -62,7 +62,7 @@ html, body {
   grid-template-columns:repeat(2,1fr);
   gap:16px;
   position: absolute;
-  background-color: #E0FFB1;
+  background-color: #F5F1C4;
   top:100%;
   left: 0;
   right: 0;
@@ -105,7 +105,7 @@ body {
   /* min-height: 100vh; */
   display: flex;
   flex-direction: column;
-  background-color: #AFC9A6; 
+  background-color: #F5F1C4; 
   color: #10323A; 
 } 
 
@@ -141,7 +141,8 @@ select, input{
 }
 
 #edit-location{
-  background-color: #E0FFB1;
+  background-color: #A5C89E;
+;
   border-radius:15px;
   border:0px;
   font-family: "Jockey One", sans-serif;
@@ -150,7 +151,7 @@ select, input{
   
 }
 .accinfo {
-  background-color:#E0FFB1;
+  background-color:#A5C89E;
   border-radius: 15px;
   height: 200px;
   width:320px;
@@ -181,7 +182,7 @@ select, input{
   border: none;
   border-radius: 8px;
   background-color: #36656B;
-  color: #E0FFB1;
+  color: #F5F2D7;
   cursor: pointer;
   font-family: "Roboto Slab", serif;
 }
@@ -263,13 +264,13 @@ select, input{
   gap:1px
 }
 .sightinglist {
-  background-color:#E0FFB1;
+  background-color:#A5C89E;
   border-radius: 15px;
   height: 310px;
   width:330px;
 }
 .sightinglist, .zoo-list {
-  background-color: #E0FFB1;
+  background-color: #36656B;
   border-radius: 15px;
   height: 310px;
   width: 330px;
@@ -344,13 +345,13 @@ select, input{
 }
 
 .achlist {
-   background-color:#E0FFB1;
+   background-color:#F5F1C4;
   border-radius: 15px;
   height: 310px;
   width:330px;
 }
 .achlist {
-  background-color: #E0FFB1;
+  background-color: #36656B;
   border-radius: 15px;
   height: 310px;
   width: 330px;
@@ -425,7 +426,7 @@ select, input{
   background-color: #F44336; 
 }
 .myzoo {
-  background-color:#E0FFB1;
+  background-color:#F5F1C4;
   border-radius: 15px;
   height: 310px;
   width:330px;
@@ -451,7 +452,7 @@ select, input{
 
 /* Modal box */
 .modal-content {
-  background-color: #E0FFB1;
+  background-color: #F5F1C4;
   border-radius: 15px;
   padding: 20px;
   width: 320px;
@@ -479,12 +480,12 @@ h3 {
 
 
 /* Save button */
-#save-profile {
+#save-profile, #change-password-btn {
   padding: 6px 12px;
   border: none;
   border-radius: 8px;
   background-color: #36656B;
-  color: #E0FFB1;
+  color: #F5F1C4;
   cursor: pointer;
   font-family: "Roboto Slab", serif;
   margin-top: 10px;
@@ -501,9 +502,17 @@ h3 {
     justify-content: center;
 }
 #contactdetails {
-    color: #E0FFB1;
+    color: #F5F1C4;
     display:flex;
     align-items: center;
     justify-content: center;
     font-family: "Roboto Slab", serif;
+}
+#signout{
+  border-radius: 15px;
+  background-color: #A5C89E;
+  border:0;
+  font-family: "Jockey One", sans-serif;
+  width: 80%;
+  margin-top: 10px;
 }

@@ -1,13 +1,17 @@
 const TOKEN = {
     token: localStorage.getItem("token"),
-    user_id: localStorage.getItem("user_id")
+    user_id: localStorage.getItem("user_id"),
+    username: localStorage.getItem("username")
 };
 
 if (!TOKEN.token || !TOKEN.user_id) {
     console.error("User is not logged in!");
     // optionally redirect to login page
 }
-
+document.querySelector('#signout').addEventListener('click', () => {
+    localStorage.removeItem('token');
+    window.location.assign('./../loginpage/index.html')
+})
 function getUsernameFromToken(token) {
     try {
         const payloadBase64 = token.split(".")[1];
@@ -62,72 +66,82 @@ const closeBtn = modal.querySelector(".close-btn");
 
 
 closeBtn.addEventListener("click", () => {
-  modal.style.display = "none";
+    modal.style.display = "none";
 });
 
 
 window.addEventListener("click", (e) => {
-  if (e.target === modal) {
-    modal.style.display = "none";
-  }
+    if (e.target === modal) {
+        modal.style.display = "none";
+    }
 });
 
 console.log("TOKEN on profile page:", TOKEN)
 editBtn.addEventListener("click", () => {
     modal.style.display = "flex";
     loadProfileOptions(TOKEN.user_id); // dynamically populate dropdowns
-});
 
+    // Only attach listener once
+    const form = document.querySelector("#changepassword");
+    const message = document.querySelector("#password-message");
+    if (form && !form.dataset.listenerAttached) {
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
 
+            const currentInput = document.getElementById('current-password');
+            const newInput = document.getElementById('new-password');
+            const confirmInput = document.getElementById('confirm-password');
 
-const form = document.querySelector("#changepassword")
-const message = document.querySelector("#password-message")
+            if (!currentInput || !newInput || !confirmInput) {
+                console.error("Password inputs not found");
+                return;
+            }
 
-form.addEventListener('submit', async (e) => {
-  e.preventDefault();
+            const currentPassword = currentInput.value;
+            const newPassword = newInput.value;
+            const confirmPassword = confirmInput.value;
 
-  const currentPassword = document.getElementById('current-password').value;
-  const newPassword = document.getElementById('new-password').value;
-  const confirmPassword = document.getElementById('confirm-password').value;
+            console.log("inputs:", { currentPassword, newPassword, confirmPassword });
 
-  if(newPassword !== confirmPassword) {
-    message.textContent = "New passwords don't match"
-    message.style.color = "red"
-    return
-  }
+            if (newPassword !== confirmPassword) {
+                message.textContent = "New passwords don't match";
+                message.style.color = "red";
+                return;
+            }
 
-  try {
-  
+            try {
+                const response = await fetch(`https://spotting-api.onrender.com/users/update/${TOKEN.user_id}`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${TOKEN.token}`
+                    },
+                    body: JSON.stringify({ currentPassword, newPassword })
+                });
 
-    const response = await fetch(`https://spotting-api.onrender.com/users/password`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${TOKEN.token}`
-      },
-      body: JSON.stringify({
-        currentPassword,
-        newPass
-      })
-    });
-    const data = await response.json()
-    if(!response.ok) {
-      throw new Error(data.error || "Password update failed.")
+                let data = {};
+                if (response.headers.get("content-type")?.includes("application/json")) {
+                    data = await response.json();
+                }
+
+                if (!response.ok) throw new Error(data.error || "Password update failed.");
+
+                message.textContent = "Password updated successfully.";
+                message.style.color = "green";
+                form.reset();
+                modal.style.display = "none";
+            } catch (err) {
+                message.textContent = err.message;
+                message.style.color = "red";
+            }
+        });
+
+        form.dataset.listenerAttached = "true"; // prevent double listener
     }
-    message.textContent = "Password updated successfully."
-    message.style.color = "green"
-
-    form.reset()
-  } catch(err){
-    message.textContent = err.message
-    message.style.color ="red"
-  }
-})
-
-
+});
 async function loadProfileOptions(userId) {
     const pfpSelect = document.getElementById("edit-profile-pic");
-const titleSelect = document.getElementById("edit-title")
+    const titleSelect = document.getElementById("edit-title")
     try {
         // Fetch profile pictures from API
         const pfpResponse = await fetch(`https://spotting-api.onrender.com/users/pics/${userId}`, {
@@ -140,54 +154,51 @@ const titleSelect = document.getElementById("edit-title")
         console.log("pfps:", pfps); // Debug log to check API response
 
         // Ensure we have an array
-        const picsArray = Array.isArray(pfps) ? pfps : [];
-
-        // Clear existing options
+        // Clear existing options first
         pfpSelect.innerHTML = "";
 
         // Handle empty array
-        if (picsArray.length === 0) {
+        if (!pfps.length) {
             const option = document.createElement("option");
             option.textContent = "No profile pictures available";
             option.disabled = true;
             pfpSelect.appendChild(option);
-            return;
+        } else {
+            pfps.forEach((pfp, index) => {
+                if (!pfp?.profile_picture) return;
+
+                const option = document.createElement("option");
+
+                // trim to remove spaces/newlines
+                const imgValue = pfp.profile_picture.trim();
+
+                option.value = imgValue;
+                option.textContent = pfp.common_name || `Custom Image ${index + 1}`;
+                pfpSelect.appendChild(option);
+            });
         }
+        pfpSelect.onchange = () => {
+            const mainProfileImg = document.querySelector(".accinfo .profile-pic");
+            const base64String = pfpSelect.value.trim();
 
-        // Loop over array safely
-        picsArray.forEach(pfp => {
-            // Determine the actual path
-            let pfpPath = typeof pfp === "string" ? pfp : pfp?.url;
-            let pfpName = typeof pfp === "string" ? null : pfp?.name;
-
-            if (!pfpPath) return; // Skip invalid entries
-
-            const option = document.createElement("option");
-            option.value = pfpPath;
-
-            // Determine display name
-            if (pfpPath.startsWith("data:image/")) {
-                option.textContent = pfpName || "Custom Image";
+            // Add the data prefix if it's missing
+            if (base64String.startsWith('data:image')) {
+                mainProfileImg.src = base64String;
             } else {
-                const name = pfpPath.split("/").pop().split(".")[0];
-                option.textContent = pfpName || name.charAt(0).toUpperCase() + name.slice(1);
+                // Assuming the API returns PNG. Use 'data:image/jpeg;base64,' if they are JPEGs.
+                mainProfileImg.src = `data:image/png;base64,${base64String}`;
             }
-
-            pfpSelect.appendChild(option);
-        });
-        
-
-        
+        };
         const titleResponse = await fetch(`https://spotting-api.onrender.com/users/title/${userId}`, {
             headers: { "Authorization": `Bearer ${TOKEN.token}` }
         });
         if (!titleResponse.ok) throw new Error("Failed to load titles");
         const titles = await titleResponse.json();
 
-        
+
         titleSelect.innerHTML = "";
 
-        
+
         titles.forEach(title => {
             const option = document.createElement("option");
             option.value = title;
@@ -233,7 +244,10 @@ saveBtn.addEventListener("click", async () => {
             });
             const pfpData = await pfpResp.json();
             if (!pfpResp.ok) throw new Error(pfpData.error || "Failed to update profile pic.");
-            document.querySelector(".profile-pic").src = selectedPFP;
+            const finalSrc = selectedPFP.startsWith('data:image')
+                ? selectedPFP
+                : `data:image/png;base64,${selectedPFP}`;
+            document.querySelector(".profile-pic").src = finalSrc;
         }
 
         profileMessage.textContent = "Profile updated successfully!";
@@ -244,3 +258,71 @@ saveBtn.addEventListener("click", async () => {
         profileMessage.style.color = "red";
     }
 });
+
+
+async function loadMySpottings() {
+    const list = document.getElementById("sighting-list");
+    list.innerHTML = "";
+
+    try {
+        const res = await fetch(
+            `https://spotting-api.onrender.com/spottings/filter/user/${TOKEN.username}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${TOKEN.token}`
+                }
+            }
+        );
+
+        if (!res.ok) throw new Error("Failed to load spottings");
+
+        const spottings = await res.json();
+
+        if (!spottings.length) {
+            list.innerHTML = "<p>No sightings yet.</p>";
+            return;
+        }
+
+        spottings.forEach(s => {
+            const item = document.createElement("div");
+            item.className = "sighting-item";
+
+            const img = document.createElement("img");
+            img.className = "sighting-img";
+            img.src = s.image_url || "../assets/fox.jpg";
+            img.alt = s.animal_name;
+
+            const info = document.createElement("div");
+            info.className = "sighting-info";
+
+            info.innerHTML = `
+                <div class="sighting-species">${capitalize(s.animal_name)}</div>
+                <div class="sighting-location">${s.location}</div>
+                <div class="sighting-date">${formatDate(s.date_time)}</div>
+            `;
+
+            item.append(img, info);
+            list.appendChild(item);
+        });
+
+    } catch (err) {
+        console.error("Error loading spottings:", err);
+        list.innerHTML = "<p>Error loading sightings.</p>";
+    }
+}
+function formatDate(date) {
+    return new Date(date).toLocaleDateString("en-GB", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric"
+    });
+}
+
+function capitalize(str) {
+    if (!str) return "";
+    return str
+        .split(" ")
+        .map(w => w[0].toUpperCase() + w.slice(1))
+        .join(" ");
+}
+document.addEventListener("DOMContentLoaded", loadMySpottings);

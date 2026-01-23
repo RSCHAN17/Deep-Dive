@@ -35,7 +35,7 @@
         <h2>My Account</h2>
         <div class="accinfo">
             <div class="user-left">
-                <img src="../assets/ravenlogo.svg" alt="Profile picture" class="profile-pic">
+                <img class="profile-pic" src="../assets/ravenlogo.svg" alt="Profile picture">
                 <button class="edit-profile">Edit</button>
             </div>
 
@@ -68,9 +68,10 @@
                 </div>
             </div>
         </div>
+        <button id="signout">Click here to sign out</button>
         <h2>My Sightings</h2>
-        <div class="sightinglist">
-            <div class="sighting-item">
+        <div class="sightinglist" id="sighting-list">
+            <!-- <div class="sighting-item">
                 <img src="../assets/fox.jpg" alt="Fox" class="sighting-img">
 
                 <div class="sighting-info">
@@ -78,106 +79,7 @@
                     <div class="sighting-location">New Forest</div>
                     <div class="sighting-date">12 Jan 2026</div>
                 </div>
-            </div>
-            <div class="sighting-item">
-                <img src="../assets/fox.jpg" alt="Fox" class="sighting-img">
-
-                <div class="sighting-info">
-                    <div class="sighting-species">Red Fox</div>
-                    <div class="sighting-location">New Forest</div>
-                    <div class="sighting-date">12 Jan 2026</div>
-                </div>
-            </div>
-            <div class="sighting-item">
-                <img src="../assets/fox.jpg" alt="Fox" class="sighting-img">
-
-                <div class="sighting-info">
-                    <div class="sighting-species">Red Fox</div>
-                    <div class="sighting-location">New Forest</div>
-                    <div class="sighting-date">12 Jan 2026</div>
-                </div>
-            </div>
-            <div class="sighting-item">
-                <img src="../assets/fox.jpg" alt="Fox" class="sighting-img">
-
-                <div class="sighting-info">
-                    <div class="sighting-species">Red Fox</div>
-                    <div class="sighting-location">New Forest</div>
-                    <div class="sighting-date">12 Jan 2026</div>
-                </div>
-            </div>
-            <div class="sighting-item">
-                <img src="../assets/fox.jpg" alt="Fox" class="sighting-img">
-
-                <div class="sighting-info">
-                    <div class="sighting-species">Red Fox</div>
-                    <div class="sighting-location">New Forest</div>
-                    <div class="sighting-date">12 Jan 2026</div>
-                </div>
-            </div>
-            <div class="sighting-item">
-                <img src="../assets/fox.jpg" alt="Fox" class="sighting-img">
-
-                <div class="sighting-info">
-                    <div class="sighting-species">Red Fox</div>
-                    <div class="sighting-location">New Forest</div>
-                    <div class="sighting-date">12 Jan 2026</div>
-                </div>
-            </div>
-            <div class="sighting-item">
-                <img src="../assets/fox.jpg" alt="Fox" class="sighting-img">
-
-                <div class="sighting-info">
-                    <div class="sighting-species">Red Fox</div>
-                    <div class="sighting-location">New Forest</div>
-                    <div class="sighting-date">12 Jan 2026</div>
-                </div>
-            </div>
-            <div class="sighting-item">
-                <img src="../assets/fox.jpg" alt="Fox" class="sighting-img">
-
-                <div class="sighting-info">
-                    <div class="sighting-species">Red Fox</div>
-                    <div class="sighting-location">New Forest</div>
-                    <div class="sighting-date">12 Jan 2026</div>
-                </div>
-            </div>
-            <div class="sighting-item">
-                <img src="../assets/fox.jpg" alt="Fox" class="sighting-img">
-
-                <div class="sighting-info">
-                    <div class="sighting-species">Red Fox</div>
-                    <div class="sighting-location">New Forest</div>
-                    <div class="sighting-date">12 Jan 2026</div>
-                </div>
-            </div>
-            <div class="sighting-item">
-                <img src="../assets/fox.jpg" alt="Fox" class="sighting-img">
-
-                <div class="sighting-info">
-                    <div class="sighting-species">Red Fox</div>
-                    <div class="sighting-location">New Forest</div>
-                    <div class="sighting-date">12 Jan 2026</div>
-                </div>
-            </div>
-            <div class="sighting-item">
-                <img src="../assets/fox.jpg" alt="Fox" class="sighting-img">
-
-                <div class="sighting-info">
-                    <div class="sighting-species">Red Fox</div>
-                    <div class="sighting-location">New Forest</div>
-                    <div class="sighting-date">12 Jan 2026</div>
-                </div>
-            </div>
-            <div class="sighting-item">
-                <img src="../assets/fox.jpg" alt="Fox" class="sighting-img">
-
-                <div class="sighting-info">
-                    <div class="sighting-species">Red Fox</div>
-                    <div class="sighting-location">New Forest</div>
-                    <div class="sighting-date">12 Jan 2026</div>
-                </div>
-            </div>
+            </div> -->
         </div>
 
         <h2>Achievement List</h2>
@@ -427,7 +329,7 @@
             <div class="modal-content">
                 <span class="close-btn">&times;</span>
                 <h3>Edit Profile</h3>
-
+<form id="edit-profile-form">
                 <label for="edit-title">Title:</label>
                 <select id="edit-title">
                     <option value="Bird Lover">Bird Lover</option>
@@ -448,6 +350,8 @@
                     <option value="../assets/fox.jpg">Red Fox</option>
                     <option value="../assets/fox.jpg">Red Fox</option>
                 </select>
+<button type="submit" id="save-profile">Save Profile</button>
+                </form>
                 <h3>Change Your Password</h3>
                 <form id="changepassword">
                     <label for="current-password">Current Password:</label>
@@ -455,15 +359,16 @@
 
                     <label for="new-password">New Password:</label>
                     <input type="password" id="new-password" autocomplete="new-password">
-                    
+
                     <label for="confirm-password">Confirm New Password:</label>
                     <input type="password" id="confirm-password">
+                    <button id="change-password-btn">Save</button>
+                    <p id="profile-message"></p>
                 </form>
 
                 <p id="password-message"></p>
 
-                <button id="save-profile">Save</button>
-                <p id="profile-message"></p>
+
             </div>
         </div>
     </main>
