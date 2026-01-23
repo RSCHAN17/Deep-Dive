@@ -152,6 +152,16 @@ async function updatePassword(req, res) {
     }
 }
 
+async function getZoo(id) {
+    try {
+        const user = await User.getOneByID(id)
+        const zoo = await user.getZoo()
+        res.status(200).json(zoo)
+    } catch (err) {
+        res.status(404).json({ error: err.message })
+    }
+}
+
 module.exports = { 
     register,
     login,
@@ -161,5 +171,6 @@ module.exports = {
     setPFP,
     getTitle,
     setTitle,
-    updatePassword
+    updatePassword,
+    getZoo
 }
