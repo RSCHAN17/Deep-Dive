@@ -12,22 +12,22 @@ CREATE TABLE users (
     username VARCHAR(50) UNIQUE NOT NULL,
     password VARCHAR(60) NOT NULL,
     email_address VARCHAR(75) UNIQUE NOT NULL,
-    spotting_points FLOAT,
-    achievement_points INT,
-    challenge_points INT,
-    total_points INT,
-    current_pfp VARCHAR(255),
+    spotting_points FLOAT DEFAULT 0.0,
+    achievement_points INT DEFAULT 0,
+    challenge_points INT DEFAULT 0,
+    total_points INT DEFAULT 0,
+    current_pfp TEXT,
     current_title VARCHAR(80),
     daily_streak INT,
     PRIMARY KEY (user_id)
 );
 
 CREATE TABLE families (
-    id INT GENERATED ALWAYS AS IDENTITY,
+    family_id INT GENERATED ALWAYS AS IDENTITY,
     family_name VARCHAR(50),
     common_name VARCHAR(50),
-    profile_picture VARCHAR (255),
-    PRIMARY KEY (id)
+    profile_picture TEXT,
+    PRIMARY KEY (family_id)
 );
 
 CREATE TABLE animals (
@@ -38,11 +38,11 @@ CREATE TABLE animals (
     pack_bonus_mult FLOAT NOT NULL,
     description VARCHAR(255) NOT NULL,
     fun_fact VARCHAR(255),
-    zoo_image VARCHAR(255),
+    zoo_image TEXT,
     species VARCHAR(255) UNIQUE NOT NULL,
     family_id INT NOT NULL,
     PRIMARY KEY (animal_id),
-    FOREIGN KEY (family_id) REFERENCES families(id)
+    FOREIGN KEY (family_id) REFERENCES families(family_id)
 );
 
 
@@ -50,15 +50,15 @@ CREATE TABLE animals (
 CREATE TABLE spottings (
     spot_id INT GENERATED ALWAYS AS IDENTITY,
     date_time TIMESTAMP NOT NULL,
-    user_id INT NOT NULL,
-    animal_id INT NOT NULL,
+    username VARCHAR(255) NOT NULL,
+    animal_name VARCHAR(50) NOT NULL,
     animal_count INT NOT NULL,
-    location POINT NOT NULL,
+    location VARCHAR(255) NOT NULL,
     spot_points FLOAT,
-    image_url VARCHAR(255) NOT NULL,
+    image_url TEXT NOT NULL,
     PRIMARY KEY (spot_id),
-    FOREIGN KEY (user_id) REFERENCES users(user_id),
-    FOREIGN KEY (animal_id) REFERENCES animals(animal_id)
+    FOREIGN KEY (username) REFERENCES users(username),
+    FOREIGN KEY (animal_name) REFERENCES animals(name)
 );
 
 CREATE TABLE achievements (

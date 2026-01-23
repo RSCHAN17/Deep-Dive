@@ -55,7 +55,8 @@ class User{
     }
 
     static async updatePointsByID(id){
-        const spot_response = await db.query("SELECT COALESCE(SUM(spot_points),0) FROM spottings WHERE user_id = $1;", [id]);
+        const user = await User.getOneByID(id)
+        const spot_response = await db.query("SELECT COALESCE(SUM(spot_points),0) FROM spottings WHERE username = $1;", [user.username]);
         const spot_score = spot_response.rows[0].coalesce;
 
         const achievement_response = await db.query("SELECT COALESCE(SUM(value),0) FROM achievements WHERE achievement_id IN (SELECT achievement_id FROM achievement_user_complete WHERE user_id = $1);", [id]);
@@ -78,7 +79,7 @@ class User{
         if (this.username === 'dev'){
             response = await db.query('SELECT * FROM families;');
         } else {
-            response = await db.query("SELECT * FROM families WHERE family_id IN (SELECT family_id FROM animals WHERE animal_id IN (SELECT animal_id FROM spottings WHERE user_id = $1));", [this.user_id]);
+            response = await db.query("SELECT * FROM families WHERE family_id IN (SELECT family_id FROM animals WHERE animal_id IN (SELECT animal_id FROM spottings WHERE username = $1));", [this.username]);
         }
         return response.rows;
         

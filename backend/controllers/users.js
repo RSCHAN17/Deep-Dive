@@ -132,7 +132,7 @@ async function setTitle(req, res){
 async function updatePassword(req, res) {
     try {
         let id = req.params.id;
-        let { currentPassword, newPass } = req.body;
+        let { currentPassword, newPassword } = req.body;
         const user = await User.updatePointsByID(id);
 
         const match = await bcrypt.compare(currentPassword, user.password)
@@ -143,7 +143,7 @@ async function updatePassword(req, res) {
         const salt = await bcrypt.genSalt(parseInt(process.env.BCRYPT_SALT_ROUNDS));
 
         // hash password
-        const hashPassword = await bcrypt.hash(newPass, salt);
+        const hashPassword = await bcrypt.hash(newPassword, salt);
         const result = await user.updatePassword(hashPassword);
 
         res.status(201).json(result);
