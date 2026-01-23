@@ -325,4 +325,87 @@ function capitalize(str) {
         .map(w => w[0].toUpperCase() + w.slice(1))
         .join(" ");
 }
-document.addEventListener("DOMContentLoaded", loadMySpottings);
+
+
+async function loadMyZoo() {
+    const zooList = document.querySelector(".zoo-list");
+    zooList.innerHTML = "";
+
+    try {
+        const [allAnimalsRes, userZooRes] = await Promise.all([
+            fetch("https://spotting-api.onrender.com/animals"),
+            fetch(`https://spotting-api.onrender.com/users/zoo/${TOKEN.user_id}`, {
+                headers: {
+                    Authorization: `Bearer ${TOKEN.token}`
+                }
+            })
+        ]);
+
+        if (!allAnimalsRes.ok || !userZooRes.ok) {
+            throw new Error("Failed to load zoo data");
+        }
+
+        const allAnimals = await allAnimalsRes.json();
+        const userZoo = await userZooRes.json();
+
+        // Create a lookup set of spotted animals
+        const spottedSet = new Set(
+            userZoo.map(a => a.name.toLowerCase())
+        );
+
+        allAnimals.forEach(animal => {
+            const spotted = spottedSet.has(animal.name.toLowerCase());
+
+            const item = document.createElement("div");
+            item.className = "zoo-item";
+
+            item.innerHTML = `
+                <img src="${animal.image_url || '../assets/fox.jpg'}"
+                     alt="${animal.name}"
+                     class="zoo-img">
+
+                <div class="zoo-info">
+                    <div class="zoo-species">${capitalize(animal.name)}</div>
+                    <div class="zoo-latin">${animal.species || ''}</div>
+                    <div class="zoo-group">${animal.type || ''}</div>
+                </div>
+
+                <div class="zoo-reward">
+                    ${spotted ? '+50XP' : ''}
+                    <div class="achievement-tick ${spotted ? 'achieved' : ''}"></div>
+                </div>
+            `;
+
+            zooList.appendChild(item);
+        });
+
+    } catch (err) {
+        console.error("Error loading MyZoo:", err);
+        zooList.innerHTML = "<p>Failed to load zoo.</p>";
+    }
+}
+const zooSearchInput = document.getElementById("zoo-search");
+
+zooSearchInput.addEventListener("input", () => {
+    const query = zooSearchInput.value.toLowerCase().trim();
+    const zooItems = document.querySelectorAll(".zoo-item");
+
+    zooItems.forEach(item => {
+        const species = item.querySelector(".zoo-species")?.textContent.toLowerCase() || "";
+        const latin = item.querySelector(".zoo-latin")?.textContent.toLowerCase() || "";
+        const group = item.querySelector(".zoo-group")?.textContent.toLowerCase() || "";
+
+        const matches =
+            species.includes(query) ||
+            latin.includes(query) ||
+            group.includes(query);
+
+        item.style.display = matches ? "flex" : "none";
+    });
+});
+document.addEventListener("DOMContentLoaded", () => {
+    loadMySpottings();
+    loadMyZoo();
+
+} 
+    );

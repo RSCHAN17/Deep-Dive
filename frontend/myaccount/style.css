@@ -305,6 +305,9 @@ select, input{
   flex-direction: column;
   justify-content: space-between;
   font-size: 12px;
+  flex:1;
+  min-width: 0
+
 }
 
 
@@ -322,7 +325,7 @@ select, input{
 .zoo-reward{
   display: flex;
   align-items: flex-end;
-  padding-left: 115px;
+  padding-left: 0px;
   font-family: "Roboto Slab", serif;
   font-size: 11px;
   color:#12464D;
