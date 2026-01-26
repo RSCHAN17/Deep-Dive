@@ -1,5 +1,5 @@
 const db = require('../database/connection');
-const User = require('./User')
+
 
 class Achievement{
     constructor({achievement_id, achievement_name, achievement_description, value, title}){
@@ -49,8 +49,7 @@ class Achievement{
             }
         }
         
-        const user = await User.getOneByID(user_id);
-        return user;
+        return user_id;
     }
 }
 

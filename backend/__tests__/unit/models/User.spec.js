@@ -199,11 +199,11 @@ describe('User Model', () => {
             jest.spyOn(db, 'query').mockResolvedValueOnce({rows: [{user_id: 1}]})
             jest.spyOn(User, 'getOneByID').mockResolvedValueOnce(newUser)
 
-            const result = await oldUser.setTitle(newTitle)
+            const result = await oldUser.setTitle(newTitle.title)
 
             expect(result.current_title).toEqual('w')
             expect(db.query).toHaveBeenCalledTimes(1)
-            expect(db.query).toHaveBeenCalledWith("UPDATE users SET current_title = $1 WHERE user_id = $2 RETURNING user_id;", [newTitle.title, oldUser.user_id])
+            expect(db.query).toHaveBeenCalledWith("UPDATE users SET current_title = $1 WHERE user_id = $2 RETURNING user_id;", ['w', oldUser.user_id])
 
         })
     })
