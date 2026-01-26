@@ -56,7 +56,8 @@ class User{
     }
 
     static async updatePointsByID(id){
-        const user = await Achievement.checkGet(id);
+        const user_id = await Achievement.checkGet(id);
+        const user = await User.getOneByID(user_id);
         // previously ^^ This just got by id, but we want to check achievements are got
         const spot_response = await db.query("SELECT COALESCE(SUM(spot_points),0) FROM spottings WHERE username = $1;", [user.username]);
         const spot_score = spot_response.rows[0].coalesce;
@@ -89,8 +90,7 @@ class User{
     }
 
     async setPFP(family){
-        const desired = await Family.getOneByID(family);
-        const response = await db.query("UPDATE users SET current_pfp = $1 WHERE user_id = $2 RETURNING user_id;", [desired.profile_picture, this.user_id]);
+        const response = await db.query("UPDATE users SET current_pfp = $1 WHERE user_id = $2 RETURNING user_id;", [family, this.user_id]);
         const fresh_pic = response.rows[0].user_id;
         return await User.getOneByID(fresh_pic);
     }
