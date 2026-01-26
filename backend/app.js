@@ -29,6 +29,6 @@ app.use("/users", userRouter);
 app.use("/animals", animalRouter);
 app.use("/achievements", achievementRouter);
 app.use("/spottings", spotRouter);
-app.use("/challenges")
+app.use("/challenges", challengesRouter)
 
 module.exports = app;
