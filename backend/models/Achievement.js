@@ -38,7 +38,7 @@ class Achievement{
 
                 let family_id = await db.query("SELECT family_id FROM families WHERE UPPER(common_name) = UPPER($1);", [family])
 
-                let response = await db.query("SELECT * FROM spottings WHERE animal_name IN (SELECT name FROM animals WHERE family_id = $1;", [family_id])
+                let response = await db.query("SELECT * FROM spottings WHERE animal_name IN (SELECT name FROM animals WHERE family_id = $1);", [family_id])
 
                 if (response.rows.length >= numberOf){
                     if (!alreadyThere(user_id, allAchievements[i])){
