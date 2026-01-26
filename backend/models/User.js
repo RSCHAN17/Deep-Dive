@@ -56,7 +56,8 @@ class User{
     }
 
     static async updatePointsByID(id){
-        const user = await User.getOneByID(id)
+        const user = await Achievement.checkGet(id);
+        // previously ^^ This just got by id, but we want to check achievements are got
         const spot_response = await db.query("SELECT COALESCE(SUM(spot_points),0) FROM spottings WHERE username = $1;", [user.username]);
         const spot_score = spot_response.rows[0].coalesce;
 
@@ -104,9 +105,8 @@ class User{
         return response.rows.map(r => r.title);
     }
 
-    async setTitle(achievement_id) {
-        const desired = await Achievement.getOneByID(achievement_id);
-        const response = await db.query("UPDATE users SET current_title = $1 WHERE user_id = $2 RETURNING user_id;", [desired.title, this.user_id]);
+    async setTitle(title) {
+        const response = await db.query("UPDATE users SET current_title = $1 WHERE user_id = $2 RETURNING user_id;", [title, this.user_id]);
         const fresh_title = response.rows[0].user_id;
         return await User.getOneByID(fresh_title);
     }
@@ -118,7 +118,7 @@ class User{
     }
 
     async getZoo() {
-        const response = await db.query("SELECT * FROM animals WHERE name IN (SELECT animal_name IN spottings WHERE username = $1);", [this.username])
+        const response = await db.query("SELECT * FROM animals WHERE name IN (SELECT animal_name FROM spottings WHERE username = $1);", [this.username])
         return response.rows.map(r => new Animal(r))
     }
 }
