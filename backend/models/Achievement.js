@@ -30,10 +30,16 @@ class Achievement{
         let current_achievement;
         
         const allAchievements = await Achievement.getAll()
+
+        console.log(allAchievements[0]);
+
         for (let i = 0; i < allAchievements.length; i ++){
             current_achievement = allAchievements[i]
+            //console.log(current_achievement);
+
             if (!alreadyThere(user_id, current_achievement.achievement_id)){
-                console.log(current_achievement.achievement_id);
+
+                //console.log(current_achievement.achievement_id);
                 let description = current_achievement.achievement_description;
                 // determine type of achievement
                 if (description.includes('family')){
@@ -62,6 +68,7 @@ class Achievement{
 }
 
 async function alreadyThere(user_id, achievement_id) {
+    //console.log(achievement_id);
     const response = await db.query("SELECT * FROM achievement_user_complete WHERE user_id = $1 AND achievement_id = $2;", [user_id, achievement_id]);
     if (response.rows.length != 1) {
         return false;
