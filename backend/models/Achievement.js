@@ -37,12 +37,12 @@ class Achievement{
                 if (description.includes('family')){
                     // this is a family based achievement!
                     let splitText = description.split('the ');
-                    let family = splitText[splitText.length - 1].split(" family")[0]
+                    let familySplit = splitText[splitText.length - 1].split(" family")[0]
                     
                     splitText = description.split(" ")
                     let numberOf = parseInt(splitText[1])
 
-                    let family_response = await db.query("SELECT family_id FROM families WHERE UPPER(common_name) = UPPER($1);", [family])
+                    let family_response = await db.query("SELECT family_id FROM families WHERE UPPER(common_name) = UPPER($1);", [familySplit])
                     let family_id = family_response.rows[0].family_id
 
                     let response = await db.query("SELECT * FROM spottings WHERE username IN (SELECT username FROM users WHERE user_id = $1) AND animal_name IN (SELECT name FROM animals WHERE family_id = $2);", [user_id, family_id])
