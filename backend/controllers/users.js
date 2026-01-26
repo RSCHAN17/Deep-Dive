@@ -75,6 +75,7 @@ async function index(req, res) {
 
 async function show (req, res) {
     try {
+        console.log('step 1');
         let id = req.params.id;
         const user = await User.updatePointsByID(id);
         res.status(200).json(user);

@@ -29,7 +29,7 @@ class Achievement{
         let newResponse;
         let current_achievement;
         
-        console.log('Hello World');
+        console.log('step 3');
 
         const allAchievements = await Achievement.getAll()
         console.log(allAchievements);
