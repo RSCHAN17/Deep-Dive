@@ -32,13 +32,14 @@ class Achievement{
         for (let i = 0; i < allAchievements.length; i ++){
             current_achievement = allAchievements[i]
             if (!alreadyThere(user_id, current_achievement.achievement_id)){
+                let description = current_achievement.achievement_description;
                 // determine type of achievement
-                if (current_achievement.achievement_description.includes('family')){
+                if (description.includes('family')){
                     // this is a family based achievement!
-                    let splitText = current_achievement.achievement_description.split('the ');
+                    let splitText = description.split('the ');
                     let family = splitText[splitText.length - 1].split(" family")[0]
                     
-                    splitText = current_achievement.achievement_description.split(" ")
+                    splitText = description.split(" ")
                     let numberOf = parseInt(splitText[1])
 
                     let family_response = await db.query("SELECT family_id FROM families WHERE UPPER(common_name) = UPPER($1);", [family])
@@ -51,24 +52,7 @@ class Achievement{
                     }
                 }
             }
-            // determine which type of achievement it is
-            // if (allAchievements[i].achievement_description.includes('family')){
-            //     // family related achievement:::
-            //     let splitText = allAchievements[i].achievement_description.split("the ")
-            //     let family = splitText[splitText.length - 1].split(" family")[0]
-            //     let numberOf = parseInt(splitText[0].split(" ")[1])
 
-            //     let family_id = await db.query("SELECT family_id FROM families WHERE UPPER(common_name) = UPPER($1);", [family])
-
-            //     let response = await db.query("SELECT * FROM spottings WHERE animal_name IN (SELECT name FROM animals WHERE family_id = $1);", [family_id.rows[0].family_id])
-
-            //     if (response.rows.length >= numberOf){
-            //         if (!alreadyThere(user_id, allAchievements[i])){
-            //             newResponse = await db.query("INSERT INTO achievement_user_complete (user_id, achievement_id) VALUES ($1, $2) RETURNING user_id);", [user_id,achievement_id]);
-                        
-            //         }
-            //     }
-            // }
         }
         
         return user_id;
