@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
     async function fetchChallenges() {
         try {
             // Replace with your real API endpoint
-            const res = await fetch("https://spotting-api.onrender.com/users/challenges");
+            const res = await fetch("https://spotting-api.onrender.com/challenges");
             if (!res.ok) throw new Error("Failed to fetch challenges");
             const challenges = await res.json();
             allChallenges = challenges;
@@ -88,9 +88,9 @@ document.addEventListener("DOMContentLoaded", () => {
     function getFilteredChallenges(isWeekly) {
         let filtered;
         if (isWeekly) {
-            filtered = allChallenges.filter(ch => ch.reward > WEEKLY_THRESHOLD);
+            filtered = allChallenges.filter(ch => ch.points > WEEKLY_THRESHOLD);
         } else {
-            filtered = allChallenges.filter(ch => ch.reward <= WEEKLY_THRESHOLD);
+            filtered = allChallenges.filter(ch => ch.points <= WEEKLY_THRESHOLD);
         }
         return filtered.slice(0, MAX_DISPLAY); // only show first 2
     }
@@ -104,8 +104,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
             item.innerHTML = `
                 <input type="checkbox" class="challenge-check">
-                <span class="challenge-desc">${ch.desc}</span>
-                <span class="challenge-reward">+${ch.reward} XP</span>
+                <span class="challenge-desc">${ch.challenge_description}</span>
+                <span class="challenge-reward">+${ch.points} XP</span>
             `;
             challengeList.appendChild(item);
         });

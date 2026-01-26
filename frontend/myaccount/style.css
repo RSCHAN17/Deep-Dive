@@ -153,7 +153,7 @@ select, input{
 .accinfo {
   background-color:#A5C89E;
   border-radius: 15px;
-  height: 200px;
+  height: 160px;
   width:320px;
   display: flex;
 
@@ -219,7 +219,7 @@ select, input{
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 12px;
+  font-size: 16px;
   padding-right: 15px;
 }
 .stat-row span, .level-row span {
@@ -260,7 +260,7 @@ select, input{
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  font-size: 12px;
+  font-size: 16px;
   gap:1px
 }
 .sightinglist {
@@ -452,7 +452,10 @@ select, input{
   justify-content: center;
   align-items: center;
 }
-
+#total-xp{
+  font-size: 20px;
+  font-family:"Roboto Slab", sans-serif;
+}
 /* Modal box */
 .modal-content {
   background-color: #F5F1C4;
