@@ -39,19 +39,19 @@ const sliderValue = document.getElementById("proximityValue");
 const clearBtn = document.getElementById("clearFilters");
 const chips = Array.from(document.querySelectorAll(".filter-chip"));
 
-// Open/close panel
+
 btn.addEventListener("click", () => {
   const isOpen = panel.classList.toggle("open");
   panel.setAttribute("aria-hidden", String(!isOpen));
   btn.setAttribute("aria-expanded", String(isOpen));
 });
 
-// Slider live value
+
 slider.addEventListener("input", () => {
   sliderValue.textContent = slider.value;
 });
 
-// Multi-select chips
+
 chips.forEach(chip => {
   chip.addEventListener("click", () => {
     chip.classList.toggle("selected");
@@ -60,7 +60,7 @@ chips.forEach(chip => {
   });
 });
 
-// Clear filters to defaults
+
 clearBtn.addEventListener("click", () => {
   slider.value = 0;
   sliderValue.textContent = "0";
@@ -71,7 +71,7 @@ clearBtn.addEventListener("click", () => {
   });
 });
 
-// (Optional) Close panel if you click outside it
+
 document.addEventListener("click", (e) => {
   if (!panel.classList.contains("open")) return;
   if (panel.contains(e.target) || btn.contains(e.target)) return;

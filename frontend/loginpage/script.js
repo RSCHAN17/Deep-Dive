@@ -76,6 +76,7 @@ submitBtn.addEventListener("click", async () => {
         localStorage.setItem("currentUser", JSON.stringify(data))
         localStorage.setItem("token", data.token)
         localStorage.setItem("user_id", data.user.user_id)
+        localStorage.setItem("username", data.user.username)
 
 
  

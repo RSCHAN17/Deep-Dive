@@ -21,7 +21,7 @@ html, body {
 .navbar a {
   float: left;
   font-size: 16px;
-  color: white;
+  color: #F5F1C4;
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
@@ -29,7 +29,7 @@ html, body {
 
 #title {
     font-family: "Jockey One", sans-serif;
-    color: #E0FFB1;
+    color: #F5F1C4;
     font-size: 35px;
     padding-bottom: 18px;
 }
@@ -44,7 +44,7 @@ html, body {
   font-size:16px;
   border: none;
   outline: none;
-  color: white;
+  color: #F5F1C4;
   padding: 19px 16px;
   background-color: inherit;
   font-family: inherit; 
@@ -52,7 +52,7 @@ html, body {
 }
 
 .dropdown:hover .dropbtn {
-  background-color: #12464D;
+  background-color: #36656B;
 }
 
 .dropdown-content {
@@ -60,7 +60,7 @@ html, body {
   grid-template-columns:repeat(2,1fr);
   gap:16px;
   position: absolute;
-  background-color: #E0FFB1;
+  background-color: #36656B;
   top:100%;
   left: 0;
   right: 0;
@@ -72,7 +72,7 @@ html, body {
 
 .dropdown-content a {
   float: none;
-  color: black;
+  color: #36656B;
   padding: 20px 16px;
   text-decoration: none;
   display: block;
@@ -86,12 +86,12 @@ html, body {
     padding:10px;
     margin:10px;
     font-family: "Jockey One", sans-serif;
-    color: #12464D;
+    color: #36656B;
 
 }
 
 .dropdown-content a:hover {
-  background-color: #ddd;
+  background-color: #A5C89E;
 }
 
 .dropdown:hover .dropdown-content {
@@ -103,8 +103,8 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: #AFC9A6; /* main background */
-  color: #10323A; 
+  background-color: #F5F1C4;
+  color: #36656B; 
 } 
 
 main {
@@ -125,7 +125,7 @@ main {
   margin-top: 10px;
   margin-bottom: 30px;
   border-radius: 15px;
-  color:#12464D;
+  color:#36656B;
   font-family:"Roboto Slab", serif;
 }
 
@@ -140,35 +140,34 @@ main {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #E0FFB1;
+  background-color: #A5C89E;
   border-radius: 15px;
   width: 240px;
   height: 60px;
   font-family: "Jockey One", sans-serif;
   gap:20px;
   border:0;
-  color:#12464D;
+  color:#36656B;
   font-size: 20px;
 
 }
 
-
-
-
 .challenges{
-  background-color: #E0FFB1;
+  background-color: #36656B;
   width: 330px;
-  height: 173px;
+  height:260px;
   border-radius: 15px;
   margin-top: 60px;
   display:flex;
   flex-wrap: wrap;
+  margin-bottom: 20px;
 }
 
 .titleorder h2{
   font-family: "Jockey One", sans-serif;
   padding: 5px;
   margin-top: 2px;
+  color: #F5F1C4;
 }
 .titleorder {
   display:flex;
@@ -192,16 +191,15 @@ main {
   font-size: 14px;
   font-family: "Roboto Slab",serif;
   user-select:none;
+  color: #F5F1C4;
 }
 
-/* Hide default HTML checkbox */
 .switch input {
   opacity: 0;
   width: 0;
   height: 0;
 }
 
-/* The slider */
 .slider {
   position: absolute;
   cursor: pointer;
@@ -221,7 +219,7 @@ main {
   width: 26px;
   left: 4px;
   bottom: 4px;
-  background-color: #E0FFB1;
+  background-color: #F5F1C4;
   -webkit-transition: .4s;
   transition: .4s;
 }
@@ -240,7 +238,6 @@ input:checked + .slider:before {
   transform: translateX(26px);
 }
 
-/* Rounded sliders */
 .slider.round {
   border-radius: 34px;
 }
@@ -254,42 +251,44 @@ input:checked + .slider:before {
     max-width: 420px;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 12px; /* space between each challenge box */
+    padding: 16px; /* space between the green boxes and the blue background edges */
+    box-sizing: border-box; /* include padding in width */
+   
 }
 
-/* Single row */
 .challenge-item {
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 10px 14px;
-    background-color: #E0FFB1;
+    background-color: #A5C89E;
     border-radius: 12px;
+    width: 100%; /* make it stretch to full container width */
+    padding: 12px 16px; /* top/bottom 12px, left/right 16px */
+    box-sizing: border-box; /* ensures padding is included in width */
+    min-height: 60px; /* makes boxes thicker */
 }
 
-/* Checkbox color */
 .challenge-check {
-    accent-color: #C0392B; /* red by default */
+    accent-color: #C0392B;
     width: 18px;
     height: 18px;
 }
 
-/* Turn green when checked */
 .challenge-check:checked {
     accent-color: #2ECC71;
 }
 
-/* Description grows */
 .challenge-desc {
     flex: 1;
     font-family: "Roboto Slab", serif;
     font-size: 14px;
+    color: #36656B;
 }
 
-/* Reward stays right-aligned */
 .challenge-reward {
     font-weight: 600;
-    color: #2F6B72;
+    color: #36656B;
     white-space: nowrap;
 }
 
@@ -305,9 +304,10 @@ input:checked + .slider:before {
     justify-content: center;
 }
 #contactdetails {
-    color: #E0FFB1;
+    color: #F5F1C4;
     display:flex;
     align-items: center;
     justify-content: center;
     font-family: "Roboto Slab", serif;
 }
+

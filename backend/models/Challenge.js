@@ -1,9 +1,15 @@
 const db = require('../database/connection');
 
 class Challenge{
-    constructor({id, challenge_name, challenge_description, points}){
-        this.id = id;
-        this.challenge_name = challenge_name;
-        this.challenge_description
+    constructor({challenge_id,challenge_desc,challenge_reward}){
+        this.challenge_id = challenge_id;
+        this.challenge_desc = challenge_desc;
+        this.challenge_reward = challenge_reward;
+    }
+    static async getAll(){
+        const response = await db.query("SELECT * FROM challenges;")
+        return response.rows.map(a => new Challenge(a));
     }
 }
+
+module.exports = Challenge

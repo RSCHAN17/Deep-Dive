@@ -6,7 +6,7 @@ html, body {
 }
 
 body {
-  background-color: #AFC9A6;
+  background-color: #F5F1C4;
 }
 
 .navbar {
@@ -25,7 +25,7 @@ body {
 .navbar a {
   float: left;
   font-size: 16px;
-  color: white;
+  color: #F5F1C4;
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
@@ -33,7 +33,7 @@ body {
 
 #title {
   font-family: "Jockey One", sans-serif;
-  color: #E0FFB1;
+  color: #F5F1C4;
   font-size: 35px;
   padding-bottom: 18px;
 }
@@ -48,7 +48,7 @@ body {
   font-size: 16px;
   border: none;
   outline: none;
-  color: white;
+  color: #F5F1C4;
   padding: 19px 16px;
   background-color: inherit;
   font-family: inherit;
@@ -57,7 +57,7 @@ body {
 }
 
 .dropdown:hover .dropbtn {
-  background-color: #12464D;
+  background-color: #36656B;
 }
 
 .dropdown-content {
@@ -65,7 +65,7 @@ body {
   grid-template-columns: repeat(2, 1fr);
   gap: 16px;
   position: absolute;
-  background-color: #E0FFB1;
+  background-color: #36656B;
   top: 100%;
   left: 0;
   right: 0;
@@ -82,7 +82,7 @@ body {
   padding: 10px;
   margin: 10px;
   font-family: "Jockey One", sans-serif;
-  color: #12464D;
+  color: #36656B;
   cursor: pointer;
 }
 
@@ -103,7 +103,7 @@ body {
 }
 
 #contactdetails {
-  color: #E0FFB1;
+  color: #F5F1C4;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -133,8 +133,9 @@ body {
 
 .placeholder-text {
   font-family: "Roboto Slab", serif;
-  color: #12464D;
+  color: #36656B;
   margin: 0;
+  pointer-events: none;
 }
 
 .coords {
@@ -143,15 +144,16 @@ body {
   right: 12px;
   font-family: "Roboto Slab", serif;
   font-size: 14px;
-  color: #12464D;
+  color: #36656B;
   margin: 0;
+  pointer-events: none;
 }
 
 .last-updated {
   margin: 10px 2px 10px;
   font-family: "Jockey One", sans-serif;
   font-size: 18px;
-  color: #12464D;
+  color: #36656B;
 }
 
 .info-box {
@@ -162,7 +164,7 @@ body {
   padding: 12px;
   box-sizing: border-box;
   gap: 16px;
-  background: #E0FFB1;
+  background: #A5C89E;
 }
 
 .left {
@@ -182,9 +184,9 @@ body {
   margin: 0 0 8px 0;
   font-size: 22px;
   font-family: "Jockey One", serif;
-  color:#36656B
-  
+  color: #36656B;
 }
+
 .icons {
   display: flex;
   gap: 6px;
@@ -197,6 +199,7 @@ body {
   font-size: 14px;
   line-height: 1;
 }
+
 .left img {
   width: 100%;
   height: auto;
@@ -211,12 +214,10 @@ body {
   flex-direction: column;
   gap: 20px;
   padding-top: 10px;
-  background-color: #A5C89E;
+  background-color: #36656B;
   border-radius: 15px;
   margin-top: 45px;
   margin-bottom: -5px;
-  
-
 }
 
 .right p {
@@ -224,15 +225,14 @@ body {
   font-size: 14px;
   padding-left: 10px;
   font-family: "Roboto Slab", sans-serif;
-  color:#36656B
+  color: #F5F1C4;
 }
-
 
 .map-filter-btn {
   position: absolute;
   top: 12px;
   left: 12px;
-  z-index: 5;
+  z-index: 11;
   border: 0;
   background: transparent;
   padding: 6px;
@@ -240,7 +240,7 @@ body {
 }
 
 .map-filter-icon {
-  fill: #12464D;
+  fill: #36656B;
   display: block;
 }
 
@@ -250,7 +250,7 @@ body {
   left: 0;
   width: 170px;
   padding: 10px;
-  background: #E0FFB1;
+  background: #36656B;
   border-radius: 16px;
   box-shadow: 0 10px 25px rgba(0,0,0,0.2);
   z-index: 10;
@@ -268,7 +268,7 @@ body {
 .filter-title {
   font-family: "Jockey One", sans-serif;
   font-size: 18px;
-  color: #12464D;
+  color: #F5F1C4;
   text-align: center;
   margin-bottom: 8px;
 }
@@ -296,7 +296,7 @@ body {
   height: 16px;
   border-radius: 999px;
   background: #A5C89E;
-  border: 2px solid #12464D;
+  border: 2px solid #F5F1C4;
   cursor: pointer;
   margin-top: -5px;
 }
@@ -308,7 +308,7 @@ body {
 }
 
 .filter-range input[type="range"]::-moz-range-progress {
-  background: #36656B; /* Firefoxcompatibale  */
+  background: #A5C89E;
   height: 6px;
   border-radius: 999px;
 }
@@ -318,14 +318,14 @@ body {
   height: 16px;
   border-radius: 999px;
   background: #A5C89E;
-  border: 2px solid #12464D;
+  border: 2px solid #F5F1C4;
   cursor: pointer;
 }
 
 .filter-range-value {
   font-family: "Roboto Slab", serif;
   font-size: 11px;
-  color: #12464D;
+  color: #F5F1C4;
   text-align: center;
   margin: 5px 0 8px;
 }
@@ -388,7 +388,7 @@ body {
 .filter-text {
   font-family: "Roboto Slab", serif;
   font-size: 13px;
-  color: #12464D;
+  color: #36656B;
 }
 
 .filter-action {
@@ -397,7 +397,7 @@ body {
   border-radius: 12px;
   padding: 8px 10px;
   font-family: "Jockey One", sans-serif;
-  color: #12464D;
+  color: #36656B;
   cursor: pointer;
 }
 
@@ -415,9 +415,9 @@ body {
   width: 100%;
   padding: 8px 10px;
   border-radius: 12px;
-  border: 0px solid #12464D; /* Had to do, if i remove it gives a border?*/
+  border: 0;
   background: #A5C89E;
-  color: #12464D;
+  color: #36656B;
   font-family: "Roboto Slab", serif;
   font-size: 13px;
   outline: none;
@@ -425,20 +425,19 @@ body {
 }
 
 .filter-search::placeholder {
-  color: #12464D;
+  color: #36656B;
   opacity: 0.8;
-}
-
-.filter-search:focus {
-  border-color: #36656B;
 }
 
 .filter-actions {
   display: flex;
   gap: 8px;
+  position: relative;
+  z-index: 20;
 }
 
 .filter-actions .filter-action {
   width: 100%;
   margin: 0;
 }
+
