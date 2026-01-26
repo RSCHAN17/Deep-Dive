@@ -26,27 +26,49 @@ class Achievement{
     static async checkGet(user_id){
 
         let newResponse;
+        let current_achievement;
         
         const allAchievements = await Achievement.getAll()
         for (let i = 0; i < allAchievements.length; i ++){
-            // determine which type of achievement it is
-            if (allAchievements[i].achievement_description.includes('family')){
-                // family related achievement:::
-                let splitText = allAchievements[i].achievement_description.split("the ")
-                let family = splitText[splitText.length - 1].split(" family")[0]
-                let numberOf = parseInt(splitText[0].split(" ")[1])
+            current_achievement = allAchievements[i]
+            if (!alreadyThere(user_id, current_achievement.achievement_id)){
+                // determine type of achievement
+                if (current_achievement.achievement_description.includes('family')){
+                    // this is a family based achievement!
+                    let splitText = current_achievement.achievement_description.split('the ');
+                    let family = splitText[splitText.length - 1].split(" family")[0]
+                    
+                    splitText = current_achievement.achievement_description.split(" ")
+                    let numberOf = parseInt(splitText[1])
 
-                let family_id = await db.query("SELECT family_id FROM families WHERE UPPER(common_name) = UPPER($1);", [family])
+                    let family_response = await db.query("SELECT family_id FROM families WHERE UPPER(common_name) = UPPER($1);", [family])
+                    let family_id = family_response.rows[0].family_id
 
-                let response = await db.query("SELECT * FROM spottings WHERE animal_name IN (SELECT name FROM animals WHERE family_id = $1);", [family_id.rows[0].family_id])
+                    let response = await db.query("SELECT * FROM spottings WHERE username IN (SELECT username FROM users WHERE user_id = $1) AND animal_name IN (SELECT name FROM animals WHERE family_id = $2);", [user_id, family_id])
 
-                if (response.rows.length >= numberOf){
-                    if (!alreadyThere(user_id, allAchievements[i])){
-                        newResponse = await db.query("INSERT INTO achievement_user_complete (user_id, achievement_id) VALUES ($1, $2) RETURNING user_id);", [user_id,achievement_id]);
-                        
+                    if (response.rows.length >= numberOf){
+                        newResponse = await db.query("INSERT INTO achievement_user_complete (user_id, achievement_id) VALUES ($1, $2) RETURNING user_id;", [user_id, current_achievement.achievement_id])
                     }
                 }
             }
+            // determine which type of achievement it is
+            // if (allAchievements[i].achievement_description.includes('family')){
+            //     // family related achievement:::
+            //     let splitText = allAchievements[i].achievement_description.split("the ")
+            //     let family = splitText[splitText.length - 1].split(" family")[0]
+            //     let numberOf = parseInt(splitText[0].split(" ")[1])
+
+            //     let family_id = await db.query("SELECT family_id FROM families WHERE UPPER(common_name) = UPPER($1);", [family])
+
+            //     let response = await db.query("SELECT * FROM spottings WHERE animal_name IN (SELECT name FROM animals WHERE family_id = $1);", [family_id.rows[0].family_id])
+
+            //     if (response.rows.length >= numberOf){
+            //         if (!alreadyThere(user_id, allAchievements[i])){
+            //             newResponse = await db.query("INSERT INTO achievement_user_complete (user_id, achievement_id) VALUES ($1, $2) RETURNING user_id);", [user_id,achievement_id]);
+                        
+            //         }
+            //     }
+            // }
         }
         
         return user_id;
