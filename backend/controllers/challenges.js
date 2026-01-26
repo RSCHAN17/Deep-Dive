@@ -8,3 +8,5 @@ async function index(req, res) {
         res.status(500).json({ error: err.message })
     }
 }
+
+module.exports = { index }

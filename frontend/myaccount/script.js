@@ -209,7 +209,7 @@ saveBtn.addEventListener("click", async (e) => {
     const selectedTitle = document.getElementById("edit-title").value;
     const selectedPFP = document.getElementById("edit-profile-pic").value;
     const userId = TOKEN.user_id;
-
+ console.log(selectedPFP);
     try {
         
         if (selectedTitle) {
