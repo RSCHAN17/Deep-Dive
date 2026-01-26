@@ -6,7 +6,6 @@ const TOKEN = {
 
 if (!TOKEN.token || !TOKEN.user_id) {
     console.error("User is not logged in!");
-    // optionally redirect to login page
 }
 document.querySelector('#signout').addEventListener('click', () => {
     localStorage.removeItem('token');
@@ -79,9 +78,9 @@ window.addEventListener("click", (e) => {
 console.log("TOKEN on profile page:", TOKEN)
 editBtn.addEventListener("click", () => {
     modal.style.display = "flex";
-    loadProfileOptions(TOKEN.user_id); // dynamically populate dropdowns
-console.log("Opening edit modal for user:", TOKEN.user_id);
-    // Only attach listener once
+    loadProfileOptions(TOKEN.user_id);
+    console.log("Opening edit modal for user:", TOKEN.user_id);
+
     const form = document.querySelector("#changepassword");
     const message = document.querySelector("#password-message");
     if (form && !form.dataset.listenerAttached) {
@@ -136,16 +135,16 @@ console.log("Opening edit modal for user:", TOKEN.user_id);
             }
         });
 
-        form.dataset.listenerAttached = "true"; // prevent double listener
+        form.dataset.listenerAttached = "true"; 
     }
 });
 async function loadProfileOptions(userId) {
     const pfpSelect = document.getElementById("edit-profile-pic");
     const titleSelect = document.getElementById("edit-title")
     console.log("pfpSelect:", pfpSelect);
-console.log("titleSelect:", titleSelect);
+    console.log("titleSelect:", titleSelect);
     try {
-        // Fetch profile pictures from API
+        
         const pfpResponse = await fetch(`https://spotting-api.onrender.com/users/pics/${userId}`, {
             headers: { "Authorization": `Bearer ${TOKEN.token}` }
         });
@@ -153,13 +152,12 @@ console.log("titleSelect:", titleSelect);
         if (!pfpResponse.ok) throw new Error("Failed to load profile pictures");
 
         const pfps = await pfpResponse.json();
-        console.log("pfps:", pfps); // Debug log to check API response
+        console.log("pfps:", pfps); 
 
-        // Ensure we have an array
-        // Clear existing options first
+       
         pfpSelect.innerHTML = "";
 
-        // Handle empty array
+      
         if (!pfps.length) {
             const option = document.createElement("option");
             option.textContent = "No profile pictures available";
@@ -171,7 +169,7 @@ console.log("titleSelect:", titleSelect);
 
                 const option = document.createElement("option");
 
-                // trim to remove spaces/newlines
+                
                 const imgValue = pfp.profile_picture.trim();
 
                 option.value = imgValue;
@@ -179,28 +177,7 @@ console.log("titleSelect:", titleSelect);
                 pfpSelect.appendChild(option);
             });
         }
-        pfpSelect.onchange = () => {
-    const mainProfileImg = document.querySelector(".accinfo .profile-pic");
-    if (!mainProfileImg) return;
 
-    let base64String = pfpSelect.value.trim();
-    console.log("Selected PFP value:", base64String);
-console.log("mainProfileImg found?", mainProfileImg);
-    // If it already starts with data:image, use it directly
-    if (base64String.startsWith("data:image")) {
-        mainProfileImg.src = base64String;
-       
-mainProfileImg.onload = () => console.log("Profile pic updated!");
-    } else if (base64String.length > 0) {
-        mainProfileImg.src = `data:image/png;base64,${base64String}`;
-    } else {
-        console.warn("Profile picture value is empty");
-    }
-};
-if (pfpSelect.options.length > 0) {
-    pfpSelect.selectedIndex = 0;
-    pfpSelect.onchange();
-}
 
         const titleResponse = await fetch(`https://spotting-api.onrender.com/users/title/${userId}`, {
             headers: { "Authorization": `Bearer ${TOKEN.token}` }
@@ -227,14 +204,14 @@ const saveBtn = document.getElementById("save-profile");
 const profileMessage = document.getElementById("profile-message");
 
 saveBtn.addEventListener("click", async (e) => {
-   e.preventDefault();
-    
+    e.preventDefault();
+
     const selectedTitle = document.getElementById("edit-title").value;
     const selectedPFP = document.getElementById("edit-profile-pic").value;
     const userId = TOKEN.user_id;
 
     try {
-        // Update title
+        
         if (selectedTitle) {
             const titleResp = await fetch(`https://spotting-api.onrender.com/users/title/${userId}`, {
                 method: "PATCH",
@@ -251,28 +228,30 @@ saveBtn.addEventListener("click", async (e) => {
             document.querySelector(".usertitle").textContent = selectedTitle;
         }
 
-        // Update profile picture
+        
         if (selectedPFP) {
-            const pfpResp = await fetch(`https://spotting-api.onrender.com/users/pics/${userId}`, {
-                method: "PATCH",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${TOKEN.token}`
-                },
-                body: JSON.stringify({ current_pfp: selectedPFP })
-            });
+            const pfpResp = await fetch(
+                `https://spotting-api.onrender.com/users/pics/${userId}`,
+                {
+                    method: "PATCH",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${TOKEN.token}`
+                    },
+                    body: JSON.stringify({ current_pfp: selectedPFP })
+                }
+            );
+
             if (!pfpResp.ok) {
-                const errorData = await pfpResp.json();
-                throw new Error(errorData.error || "Failed to update profile pic.");
+                const err = await pfpResp.json();
+                throw new Error(err.error || "Failed to update profile picture.");
             }
-
-            // Directly use selectedPFP; it already includes data:image prefix
-            const profileImgEl = document.querySelector(".profile-pic");
-            profileImgEl.src = selectedPFP;
-
-            console.log("Profile pic updated:", profileImgEl.src);
         }
 
+       
+        await loadAccountInfo();
+
+        modal.style.display = "none"
         profileMessage.textContent = "Profile updated successfully!";
         profileMessage.style.color = "green";
         modal.style.display = "none";
@@ -372,7 +351,7 @@ async function loadMyZoo() {
         const allAnimals = await allAnimalsRes.json();
         const userZoo = await userZooRes.json();
 
-        // Create a lookup set of spotted animals
+        
         const spottedSet = new Set(
             userZoo.map(a => a.name.toLowerCase())
         );
@@ -432,7 +411,7 @@ async function loadAccountInfo() {
         const userId = TOKEN.user_id;
         const username = TOKEN.username;
 
-        // 1️⃣ Fetch basic user info
+       
         const userRes = await fetch(`https://spotting-api.onrender.com/users/id/${userId}`, {
             headers: { Authorization: `Bearer ${TOKEN.token}` }
         });
@@ -442,17 +421,17 @@ async function loadAccountInfo() {
 
         console.log("User info:", user);
 
-        // Profile pic
+        
         const profilePic = document.querySelector(".accinfo .profile-pic");
         if (user.current_pfp) profilePic.src = user.current_pfp;
 
-        // Username & title
+       
         const usernameEl = document.querySelector(".accinfo .username");
         const usertitleEl = document.querySelector(".accinfo .usertitle");
         if (usernameEl) usernameEl.textContent = user.username || "Username";
         if (usertitleEl) usertitleEl.textContent = user.current_title || "Wildlife Spotter";
 
-        // Level, XP, progress
+        
         const levelStrong = document.querySelector(".accinfo .level-row strong");
         const progressFill = document.querySelector(".accinfo .progress-fill");
         const xpText = document.querySelector(".accinfo .xp-text");
@@ -465,7 +444,7 @@ async function loadAccountInfo() {
             xpText.textContent = `${user.xp} / ${user.next_level_xp}XP`;
         }
 
-        // 2️⃣ Fetch total spottings
+        
         const spottingsRes = await fetch(`https://spotting-api.onrender.com/spottings/filter/user/${username}`, {
             headers: { Authorization: `Bearer ${TOKEN.token}` }
         });
@@ -476,7 +455,7 @@ async function loadAccountInfo() {
             console.warn("Failed to fetch spottings");
         }
 
-        // 3️⃣ Fetch distinct species for zoo
+        
         const zooRes = await fetch(`https://spotting-api.onrender.com/users/zoo/${userId}`, {
             headers: { Authorization: `Bearer ${TOKEN.token}` }
         });
@@ -487,11 +466,11 @@ async function loadAccountInfo() {
             console.warn("Failed to fetch zoo");
         }
 
-        // Update stats in DOM
+        
         const statRows = document.querySelectorAll(".accinfo .user-stats .stat-row strong");
         if (statRows.length >= 2) {
-            statRows[0].textContent = zoo.length;       // distinct species
-            statRows[1].textContent = spottings.length; // total spottings
+            statRows[0].textContent = zoo.length;      
+            statRows[1].textContent = spottings.length; 
         }
 
     } catch (err) {
@@ -504,7 +483,7 @@ async function loadAchievements() {
     if (!achList) return;
 
     try {
-        // Fetch all achievements
+        
         const res = await fetch(`https://spotting-api.onrender.com/achievements`, {
             headers: {
                 Authorization: `Bearer ${TOKEN.token}`
@@ -516,10 +495,10 @@ async function loadAchievements() {
         const achievements = await res.json();
         console.log("Achievements:", achievements);
 
-        // Clear existing list
+       
         achList.innerHTML = "";
 
-        // Loop through achievements and create DOM elements
+        
         achievements.forEach(ach => {
             const item = document.createElement("div");
             item.className = "achievement-item";
@@ -527,27 +506,27 @@ async function loadAchievements() {
             const info = document.createElement("div");
             info.className = "achievement-info";
 
-            // Title
+            
             const title = document.createElement("div");
             title.className = "achievement-title";
             title.textContent = ach.title || "Untitled";
 
-            // Description
+           
             const desc = document.createElement("div");
             desc.className = "achievement-desc";
             desc.textContent = ach.achievement_description || "";
 
-            // Reward
+            
             const reward = document.createElement("div");
             reward.className = "achievement-reward";
             reward.textContent = `Reward: ${ach.value || 0} XP`;
 
             info.append(title, desc, reward);
 
-            // Tick (achieved or not)
+            
             const tick = document.createElement("div");
             if (ach.achieved) {
-                tick.className = "achievement-tick achieved"; // green tick
+                tick.className = "achievement-tick achieved"; 
             }
 
             item.append(info, tick);
@@ -566,5 +545,5 @@ document.addEventListener("DOMContentLoaded", () => {
     loadAccountInfo();
     loadAchievements();
 
-} 
-    );
+}
+);

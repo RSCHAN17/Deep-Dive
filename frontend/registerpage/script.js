@@ -69,7 +69,7 @@ submitBtn.addEventListener("click", async () => {
             return
         }
 
-        // this should redirect to login + fill username (NOT password)
+        
         localStorage.setItem("prefillUsername", username)
 
         window.location.href = "../loginpage/index.html"
