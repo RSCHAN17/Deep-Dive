@@ -6,5 +6,6 @@ const achRouter = Router();
 
 achRouter.get('/', achController.index);
 achRouter.get('/id/:id', achController.show);
+achRouter.get('/check/:id', achController.checkGet)
 
 module.exports = achRouter;

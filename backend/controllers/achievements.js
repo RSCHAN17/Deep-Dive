@@ -19,4 +19,14 @@ async function show(req, res) {
     }
 }
 
-module.exports = { index, show }
+async function checkGet(req, res) {
+    try {
+        let id = req.params.id;
+        const result = await Achievement.checkGet(id)
+        res.status(200).json(result)
+    } catch (err) {
+        res.status(500).json({ error: err.message })
+    }
+}
+
+module.exports = { index, show, checkGet }
