@@ -33,7 +33,7 @@ class Achievement{
         for (let i = 0; i < allAchievements.length; i ++){
             current_achievement = allAchievements[i]
             if (!alreadyThere(user_id, current_achievement.achievement_id)){
-                console.log(current_achievement.achievement_description);
+                console.log(current_achievement.achievement_id);
                 let description = current_achievement.achievement_description;
                 // determine type of achievement
                 if (description.includes('family')){
