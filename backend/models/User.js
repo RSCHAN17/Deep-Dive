@@ -59,7 +59,7 @@ class User{
         console.log('step 2');
         const user_id = await Achievement.checkGet(id);
         console.log('step 4');
-        const user = await User.getOneByID(user_id);
+        const user = await User.getOneByID(parseInt(user_id));
         console.log('step 5');
         // previously ^^ This just got by id, but we want to check achievements are got
         const spot_response = await db.query("SELECT COALESCE(SUM(spot_points),0) FROM spottings WHERE username = $1;", [user.username]);
