@@ -31,7 +31,7 @@ class Achievement{
         const allAchievements = await Achievement.getAll()
         for (let i = 0; i < allAchievements.length; i ++){
             current_achievement = allAchievements[i]
-            console.log(current_achievement);
+            console.log(current_achievement.achievement_id);
             if (!alreadyThere(user_id, current_achievement.achievement_id)){
                 let description = current_achievement.achievement_description;
                 console.log(description);
