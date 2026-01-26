@@ -34,17 +34,17 @@ class Achievement{
             console.log(current_achievement.achievement_id);
             if (!alreadyThere(user_id, current_achievement.achievement_id)){
                 let description = current_achievement.achievement_description;
-                console.log(description);
+                //console.log(description);
                 // determine type of achievement
                 if (description.includes('family')){
                     // this is a family based achievement!
                     let splitText = description.split('the ');
                     let familySplit = splitText[splitText.length - 1].split(" family")[0]
-                    console.log(familySplit);
+                    //console.log(familySplit);
 
                     splitText = description.split(" ")
                     let numberOf = parseInt(splitText[1])
-                    console.log(numberOf);
+                    //console.log(numberOf);
 
                     let family_response = await db.query("SELECT family_id FROM families WHERE UPPER(common_name) = UPPER($1);", [familySplit])
                     let family_id = family_response.rows[0].family_id
