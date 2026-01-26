@@ -20,7 +20,7 @@ html, body {
 .navbar a {
   float: left;
   font-size: 16px;
-  color: white;
+  color: #F5F1C4;
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
@@ -28,7 +28,7 @@ html, body {
 
 #title {
     font-family: "Jockey One", sans-serif;
-    color: #E0FFB1;
+    color: #F5F1C4;
     font-size: 35px;
     padding-bottom: 18px;
 }
@@ -43,7 +43,7 @@ html, body {
   font-size:16px;
   border: none;
   outline: none;
-  color: white;
+  color: #F5F1C4;
   padding: 19px 16px;
   background-color: inherit;
   font-family: inherit; 
@@ -51,7 +51,7 @@ html, body {
 }
 
 .dropdown:hover .dropbtn {
-  background-color: #12464D;
+  background-color: #36656B;
 }
 
 .dropdown-content {
@@ -59,7 +59,7 @@ html, body {
   grid-template-columns:repeat(2,1fr);
   gap:16px;
   position: absolute;
-  background-color: #E0FFB1;
+  background-color: #36656B;
   top:100%;
   left: 0;
   right: 0;
@@ -71,7 +71,7 @@ html, body {
 
 .dropdown-content a {
   float: none;
-  color: black;
+  color: #36656B;
   padding: 20px 16px;
   text-decoration: none;
   display: block;
@@ -85,12 +85,12 @@ html, body {
     padding:10px;
     margin:10px;
     font-family: "Jockey One", sans-serif;
-    color: #12464D;
+    color: #36656B;
 
 }
 
 .dropdown-content a:hover {
-  background-color: #ddd;
+  background-color: #A5C89E;
 }
 
 .dropdown:hover .dropdown-content {
@@ -107,31 +107,23 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: #AFC9A6; /* main background */
-  color: #10323A; 
+  background-color: #F5F1C4;
+  color: #36656B; 
 } 
-
-
-
-/* Main layout */
 
 main {
   flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
-  
-
 }
-
-/*Login box*/
 
 .login-box {
   width: 100%;
   height: 33%;
   max-width: 320px;
   padding: 20px;
-  background-color: #D8FFB8;
+  background-color: #A5C89E;
   border-radius: 18px;
   box-shadow: 0 10px 25px rgba(148, 52, 111, 0.15);
   display: flex;
@@ -143,21 +135,21 @@ main {
   text-align: center;
   margin-top: 0;
   font-family: "Jockey One", sans-serif;
+  color: #36656B;
 }
-
-/* Form elements */
 
 input {
   padding: 10px 12px;
   font-size: 16px;
   border-radius: 999px;
-  border: none;
-  background-color: #A9C8A0;
+  border: 0px solid #36656B;
+  background-color: #F5F1C4;
   font-family: "Roboto Slab", serif;
+  color: #36656B;
 }
 
 input:focus {
-  outline: 2px solid #2F6B72;
+  outline: 2px solid #36656B;
 }
 
 #submit {
@@ -165,8 +157,8 @@ input:focus {
   font-size: 16px;
   border-radius: 999px;
   border: none;
-  background-color: #2F6B72;
-  color: #E8FFC9;
+  background-color: #36656B;
+  color: #F5F1C4;
   cursor: pointer;
   font-family: "Roboto Slab", serif;
 }
@@ -175,8 +167,6 @@ button:hover {
   opacity: 0.9;
 }
 
-/*Links */
-
 .signup {
   text-align: right;
   font-size: 14px;
@@ -184,7 +174,7 @@ button:hover {
 }
 
 .signup p {
-  color: #10323A;
+  color: #36656B;
   text-decoration: none;
   font-weight: 600;
 }
@@ -192,7 +182,6 @@ button:hover {
 .signup a:hover {
   text-decoration: underline;
 }
-
 
 #footerdiv {
     position: relative;
@@ -206,7 +195,7 @@ button:hover {
     justify-content: center;
 }
 #contactdetails {
-    color: #E0FFB1;
+    color: #F5F1C4;
     display:flex;
     align-items: center;
     justify-content: center;
