@@ -25,9 +25,9 @@ class Achievement{
 
     static async checkGet(user_id){
 
-        let newResponse = { rows: [{ user_id: user_id }] };
+        let newResponse;
         
-        allAchievements = Achievement.getAll()
+        const allAchievements = Achievement.getAll()
         for (let i = 0; i < allAchievements.length; i ++){
             // determine which type of achievement it is
             if (allAchievements[i].achievement_description.includes('family')){
@@ -49,8 +49,7 @@ class Achievement{
             }
         }
         
-        const newID = newResponse.rows[0].user_id;
-        const user = await User.getOneByID(newID);
+        const user = await User.getOneByID(user_id);
         return user;
     }
 }
