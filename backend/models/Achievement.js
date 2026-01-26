@@ -27,7 +27,7 @@ class Achievement{
 
         let newResponse;
         
-        const allAchievements = Achievement.getAll()
+        const allAchievements = await Achievement.getAll()
         for (let i = 0; i < allAchievements.length; i ++){
             // determine which type of achievement it is
             if (allAchievements[i].achievement_description.includes('family')){
