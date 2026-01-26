@@ -97,7 +97,7 @@ async function getPFP(req, res) {
 async function setPFP(req, res){
     try {
         let id = req.params.id;
-        let animal_id = req.body;
+        let animal_id = req.body.current_pfp;
         const user = await User.updatePointsByID(id);
         let new_face = await user.setPFP(animal_id);
         res.status(202).json(new_face);
@@ -120,7 +120,7 @@ async function getTitle(req, res) {
 async function setTitle(req, res){
     try {
         let id = req.params.id;
-        let achievement_id = req.body;
+        let achievement_id = req.body.current_title;
         const user = await User.updatePointsByID(id);
         let new_title = await user.setTitle(achievement_id);
         res.status(202).json(new_title);
