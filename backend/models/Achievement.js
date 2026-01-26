@@ -29,10 +29,13 @@ class Achievement{
         let newResponse;
         let current_achievement;
         
+        console.log('Hello World');
+
         const allAchievements = await Achievement.getAll()
+        console.log(allAchievements);
 
         for (let i = 0; i < allAchievements.length; i ++){
-            current_achievement = allAchievements[0][i]
+            current_achievement = allAchievements[i]
             //console.log(current_achievement);
 
             if (!alreadyThere(user_id, current_achievement.achievement_id)){
