@@ -14,7 +14,7 @@ class Family{
     }
 
     static async getOneByID(id){
-        const response = await db.query("SELECT * FROM family WHERE family_id = $1;", [id]);
+        const response = await db.query("SELECT * FROM families WHERE family_id = $1;", [id]);
         if (response.rows.length != 1){
             throw new Error("Unable to locate family.");
         }
