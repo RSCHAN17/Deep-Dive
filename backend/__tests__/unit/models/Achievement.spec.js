@@ -44,4 +44,25 @@ describe('Achievement Model', () => {
             await expect(Achievement.getOneByID(999)).rejects.toThrow("Unable to locate achievement")
         })
     })
+
+    describe('checkGet', () => {
+        it('Works', async () => {
+            const achievements = [
+                {achievement_id: 1, achievement_name: 'a', achievement_description: 'Upload 2 spottings within the deer family.', value: 1, title: 'c'},
+                {achievement_id: 2, achievement_name: 'b', achievement_description: 'Upload 5 spottings within the deer family.', value: 2, title: 'b'},
+                {achievement_id: 3, achievement_name: 'c', achievement_description: 'Discover 10 unique animals.', value: 3, title: 'a'}
+            ]
+
+            jest.spyOn(Achievement, 'getAll').mockResolvedValueOnce(achievements)
+            jest.spyOn(db, 'query')
+            .mockResolvedValueOnce({ rows: [] })
+            .mockResolvedValueOnce(1)
+            .mockResolvedValueOnce({ rows: [1,2,3,4] })
+            .mockResolvedValueOnce(1)
+
+            const result = await Achievement.checkGet(1);
+
+            expect(db.query).toHaveBeenCalledTimes(4);
+        })
+    })
 })

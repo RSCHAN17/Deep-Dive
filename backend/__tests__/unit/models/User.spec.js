@@ -172,7 +172,7 @@ describe('User Model', () => {
 
     describe('setPFP', () => {
         it('Updates new profile picture and returns the user', async () => {
-            const family = { profile_picture: 'b' }
+            const family = 'b'
             const oldUser = new User({user_id: 1, username: 'a', password: 'd', email_address: 'ab', spotting_points: 3, achievement_points: 44, challenge_points: 3, total_points: 50, current_pfp: 'a', current_title: 'a', daily_streak: 4})
             const newUser = new User({user_id: 1, username: 'a', password: 'd', email_address: 'ab', spotting_points: 3, achievement_points: 44, challenge_points: 3, total_points: 50, current_pfp: 'b', current_title: 'a', daily_streak: 4})
 
@@ -184,7 +184,7 @@ describe('User Model', () => {
 
             expect(result.current_pfp).toEqual('b')
             expect(db.query).toHaveBeenCalledTimes(1)
-            expect(db.query).toHaveBeenCalledWith("UPDATE users SET current_pfp = $1 WHERE user_id = $2 RETURNING user_id;", [family.profile_picture, oldUser.user_id])
+            expect(db.query).toHaveBeenCalledWith("UPDATE users SET current_pfp = $1 WHERE user_id = $2 RETURNING user_id;", [family, oldUser.user_id])
 
         })
     })

@@ -493,7 +493,7 @@ async function loadAchievements() {
         if (!res.ok) throw new Error("Failed to fetch achievements");
 
         const achievements = await res.json();
-        console.log("Achievements:", achievements);
+        //console.log("Achievements:", achievements);
 
        
         achList.innerHTML = "";
