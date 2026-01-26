@@ -31,16 +31,20 @@ class Achievement{
         const allAchievements = await Achievement.getAll()
         for (let i = 0; i < allAchievements.length; i ++){
             current_achievement = allAchievements[i]
+            console.log(current_achievement);
             if (!alreadyThere(user_id, current_achievement.achievement_id)){
                 let description = current_achievement.achievement_description;
+                console.log(description);
                 // determine type of achievement
                 if (description.includes('family')){
                     // this is a family based achievement!
                     let splitText = description.split('the ');
                     let familySplit = splitText[splitText.length - 1].split(" family")[0]
-                    
+                    console.log(familySplit);
+
                     splitText = description.split(" ")
                     let numberOf = parseInt(splitText[1])
+                    console.log(numberOf);
 
                     let family_response = await db.query("SELECT family_id FROM families WHERE UPPER(common_name) = UPPER($1);", [familySplit])
                     let family_id = family_response.rows[0].family_id
