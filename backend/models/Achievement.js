@@ -1,3 +1,4 @@
+const { all } = require('../app');
 const db = require('../database/connection');
 
 
@@ -31,20 +32,17 @@ class Achievement{
         const allAchievements = await Achievement.getAll()
         for (let i = 0; i < allAchievements.length; i ++){
             current_achievement = allAchievements[i]
-            console.log(current_achievement.achievement_id);
             if (!alreadyThere(user_id, current_achievement.achievement_id)){
+                console.log(current_achievement);
                 let description = current_achievement.achievement_description;
-                //console.log(description);
                 // determine type of achievement
                 if (description.includes('family')){
                     // this is a family based achievement!
                     let splitText = description.split('the ');
                     let familySplit = splitText[splitText.length - 1].split(" family")[0]
-                    //console.log(familySplit);
-
+   
                     splitText = description.split(" ")
                     let numberOf = parseInt(splitText[1])
-                    //console.log(numberOf);
 
                     let family_response = await db.query("SELECT family_id FROM families WHERE UPPER(common_name) = UPPER($1);", [familySplit])
                     let family_id = family_response.rows[0].family_id
@@ -64,7 +62,7 @@ class Achievement{
 }
 
 async function alreadyThere(user_id, achievement_id) {
-    const response = await db.query("SELECT * FROM achievement_user_complete WHERE user_id = $1 AND achievement_id = $2;", [user_id, achievement_id])
+    const response = await db.query("SELECT * FROM achievement_user_complete WHERE user_id = $1 AND achievement_id = $2;", [user_id, achievement_id]);
     if (response.rows.length != 1) {
         return false;
     } else {
