@@ -80,8 +80,9 @@ class Achievement{
                     let splitText = description.split(' ');
                     if (splitText[1] == 'your') {
                         numberOf = 1;
+                    } else {
+                        numberOf = parseInt(splitText[1])
                     }
-                    numberOf = parseInt(splitText[1])
                     
                     let response = await db.query("SELECT * FROM spottings WHERE username IN (SELECT username FROM users WHERE user_id = $1);", [user_id])
                     if (response.rows.length >= numberOf){
