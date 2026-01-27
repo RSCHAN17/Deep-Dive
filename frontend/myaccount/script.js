@@ -9,7 +9,7 @@ if (!TOKEN.token || !TOKEN.user_id) {
 }
 document.querySelector('#signout').addEventListener('click', () => {
     localStorage.removeItem('token');
-    window.location.assign('./../loginpage/index.html')
+    window.location.href = ('./../loginpage/index.html')
 })
 function getUsernameFromToken(token) {
     try {
@@ -135,7 +135,7 @@ editBtn.addEventListener("click", () => {
             }
         });
 
-        form.dataset.listenerAttached = "true"; 
+        form.dataset.listenerAttached = "true";
     }
 });
 async function loadProfileOptions(userId) {
@@ -144,7 +144,7 @@ async function loadProfileOptions(userId) {
     console.log("pfpSelect:", pfpSelect);
     console.log("titleSelect:", titleSelect);
     try {
-        
+
         const pfpResponse = await fetch(`https://spotting-api.onrender.com/users/pics/${userId}`, {
             headers: { "Authorization": `Bearer ${TOKEN.token}` }
         });
@@ -152,12 +152,12 @@ async function loadProfileOptions(userId) {
         if (!pfpResponse.ok) throw new Error("Failed to load profile pictures");
 
         const pfps = await pfpResponse.json();
-        console.log("pfps:", pfps); 
+        console.log("pfps:", pfps);
 
-       
+
         pfpSelect.innerHTML = "";
 
-      
+
         if (!pfps.length) {
             const option = document.createElement("option");
             option.textContent = "No profile pictures available";
@@ -169,7 +169,7 @@ async function loadProfileOptions(userId) {
 
                 const option = document.createElement("option");
 
-                
+
                 const imgValue = pfp.profile_picture.trim();
 
                 option.value = imgValue;
@@ -209,9 +209,9 @@ saveBtn.addEventListener("click", async (e) => {
     const selectedTitle = document.getElementById("edit-title").value;
     const selectedPFP = document.getElementById("edit-profile-pic").value;
     const userId = TOKEN.user_id;
- console.log(selectedPFP);
+    console.log(selectedPFP);
     try {
-        
+
         if (selectedTitle) {
             const titleResp = await fetch(`https://spotting-api.onrender.com/users/title/${userId}`, {
                 method: "PATCH",
@@ -228,7 +228,7 @@ saveBtn.addEventListener("click", async (e) => {
             document.querySelector(".usertitle").textContent = selectedTitle;
         }
 
-        
+
         if (selectedPFP) {
             const pfpResp = await fetch(
                 `https://spotting-api.onrender.com/users/pics/${userId}`,
@@ -248,7 +248,7 @@ saveBtn.addEventListener("click", async (e) => {
             }
         }
 
-       
+
         await loadAccountInfo();
 
         modal.style.display = "none"
@@ -351,7 +351,7 @@ async function loadMyZoo() {
         const allAnimals = await allAnimalsRes.json();
         const userZoo = await userZooRes.json();
 
-        
+
         const spottedSet = new Set(
             userZoo.map(a => a.name.toLowerCase())
         );
@@ -411,7 +411,7 @@ async function loadAccountInfo() {
         const userId = TOKEN.user_id;
         const username = TOKEN.username;
 
-       
+
         const userRes = await fetch(`https://spotting-api.onrender.com/users/id/${userId}`, {
             headers: { Authorization: `Bearer ${TOKEN.token}` }
         });
@@ -421,30 +421,23 @@ async function loadAccountInfo() {
 
         console.log("User info:", user);
 
-        
+
         const profilePic = document.querySelector(".accinfo .profile-pic");
         if (user.current_pfp) profilePic.src = user.current_pfp;
 
-       
+
         const usernameEl = document.querySelector(".accinfo .username");
         const usertitleEl = document.querySelector(".accinfo .usertitle");
         if (usernameEl) usernameEl.textContent = user.username || "Username";
         if (usertitleEl) usertitleEl.textContent = user.current_title || "Wildlife Spotter";
 
-        
-        const levelStrong = document.querySelector(".accinfo .level-row strong");
-        const progressFill = document.querySelector(".accinfo .progress-fill");
-        const xpText = document.querySelector(".accinfo .xp-text");
-        if (levelStrong) levelStrong.textContent = user.level || 1;
-        if (progressFill && user.xp != null && user.next_level_xp != null) {
-            const percent = Math.min((user.xp / user.next_level_xp) * 100, 100);
-            progressFill.style.width = percent + "%";
-        }
-        if (xpText && user.xp != null && user.next_level_xp != null) {
-            xpText.textContent = `${user.xp} / ${user.next_level_xp}XP`;
+
+        const totalXP = document.getElementById("total-xp");
+        if (totalXP && user.total_points != null) {
+            totalXP.textContent = user.total_points; 
         }
 
-        
+
         const spottingsRes = await fetch(`https://spotting-api.onrender.com/spottings/filter/user/${username}`, {
             headers: { Authorization: `Bearer ${TOKEN.token}` }
         });
@@ -455,7 +448,7 @@ async function loadAccountInfo() {
             console.warn("Failed to fetch spottings");
         }
 
-        
+
         const zooRes = await fetch(`https://spotting-api.onrender.com/users/zoo/${userId}`, {
             headers: { Authorization: `Bearer ${TOKEN.token}` }
         });
@@ -466,11 +459,11 @@ async function loadAccountInfo() {
             console.warn("Failed to fetch zoo");
         }
 
-        
+
         const statRows = document.querySelectorAll(".accinfo .user-stats .stat-row strong");
         if (statRows.length >= 2) {
-            statRows[0].textContent = zoo.length;      
-            statRows[1].textContent = spottings.length; 
+            statRows[0].textContent = zoo.length;
+            statRows[1].textContent = spottings.length;
         }
 
     } catch (err) {
@@ -483,7 +476,7 @@ async function loadAchievements() {
     if (!achList) return;
 
     try {
-        
+
         const res = await fetch(`https://spotting-api.onrender.com/achievements`, {
             headers: {
                 Authorization: `Bearer ${TOKEN.token}`
@@ -495,10 +488,10 @@ async function loadAchievements() {
         const achievements = await res.json();
         //console.log("Achievements:", achievements);
 
-       
+
         achList.innerHTML = "";
 
-        
+
         achievements.forEach(ach => {
             const item = document.createElement("div");
             item.className = "achievement-item";
@@ -506,27 +499,27 @@ async function loadAchievements() {
             const info = document.createElement("div");
             info.className = "achievement-info";
 
-            
+
             const title = document.createElement("div");
             title.className = "achievement-title";
             title.textContent = ach.title || "Untitled";
 
-           
+
             const desc = document.createElement("div");
             desc.className = "achievement-desc";
             desc.textContent = ach.achievement_description || "";
 
-            
+
             const reward = document.createElement("div");
             reward.className = "achievement-reward";
             reward.textContent = `Reward: ${ach.value || 0} XP`;
 
             info.append(title, desc, reward);
 
-            
+
             const tick = document.createElement("div");
             if (ach.achieved) {
-                tick.className = "achievement-tick achieved"; 
+                tick.className = "achievement-tick achieved";
             }
 
             item.append(info, tick);

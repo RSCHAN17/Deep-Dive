@@ -38,13 +38,15 @@ const API_BASE = "https://spotting-api.onrender.com"
 
 const passwordInput = document.querySelector("#password")
 const submitBtn = document.querySelector("#submit")
+const errorMessage = document.querySelector('#error')
 
 submitBtn.addEventListener("click", async () => {
     const username = usernameInput.value.trim()
     const password = passwordInput.value
+    
 
     if (!username || !password) {
-        alert("Please enter username and password")
+        errorMessage.textContent = ("Please enter username and password")
         return
     }
 
