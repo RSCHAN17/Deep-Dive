@@ -128,7 +128,7 @@ describe('User Model', () => {
 
             expect(db.query).toHaveBeenCalledTimes(1)
             expect(result).toEqual([{profile_picture: 'a'}, {profile_picture: 'b'}, {profile_picture: 'c'}])
-            expect(db.query).toHaveBeenCalledWith("SELECT * FROM families WHERE family_id IN (SELECT family_id FROM animals WHERE animal_id IN (SELECT animal_id FROM spottings WHERE username = $1));", [mockUser.username])
+            expect(db.query).toHaveBeenCalledWith("SELECT * FROM families WHERE family_id IN (SELECT family_id FROM animals WHERE name IN (SELECT animal_name FROM spottings WHERE username = $1));", [mockUser.username])
         })
 
         it('Returns all profile pictures for dev', async () => {

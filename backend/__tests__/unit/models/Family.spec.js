@@ -35,7 +35,7 @@ describe('Family Model', () => {
             expect(result).toBeInstanceOf(Family)
             expect(result.family_id).toBe(1)
             expect(result.profile_picture).toBe('d')
-            expect(db.query).toHaveBeenCalledWith("SELECT * FROM family WHERE family_id = $1;", [1])
+            expect(db.query).toHaveBeenCalledWith("SELECT * FROM families WHERE family_id = $1;", [1])
         })
 
         it('Throws error when family not found', async () => {

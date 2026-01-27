@@ -46,23 +46,36 @@ describe('Achievement Model', () => {
     })
 
     describe('checkGet', () => {
-        it('Works', async () => {
+        it('Awards achievements when not already given, doesn\'t if they have been', async () => {
             const achievements = [
-                {achievement_id: 1, achievement_name: 'a', achievement_description: 'Upload 2 spottings within the deer family.', value: 1, title: 'c'},
-                {achievement_id: 2, achievement_name: 'b', achievement_description: 'Upload 5 spottings within the deer family.', value: 2, title: 'b'},
-                {achievement_id: 3, achievement_name: 'c', achievement_description: 'Discover 10 unique animals.', value: 3, title: 'a'}
+                {achievement_id: 1, achievement_name: 'Deer', achievement_description: 'Upload 2 spottings within the deer family.', value: 1, title: 'c'},
+                {achievement_id: 2, achievement_name: 'Spotter', achievement_description: 'Upload 5 spottings', value: 2, title: 'b'},
+                {achievement_id: 3, achievement_name: 'Portfolio', achievement_description: 'Discover 10 unique animals.', value: 3, title: 'a'},
+                {achievement_id: 4, achievement_name: 'Spotter', achievement_description: 'Upload your first spotting.', value: 3, title: 'a'},
+                {achievement_id: 4, achievement_name: 'Portfolio', achievement_description: 'Discover 2 unique animals.', value: 3, title: 'a'}
             ]
 
             jest.spyOn(Achievement, 'getAll').mockResolvedValueOnce(achievements)
             jest.spyOn(db, 'query')
             .mockResolvedValueOnce({ rows: [] })
-            .mockResolvedValueOnce(1)
-            .mockResolvedValueOnce({ rows: [1,2,3,4] })
-            .mockResolvedValueOnce(1)
+            .mockResolvedValueOnce({ rows: [{ family_id: 1 }]})
+            .mockResolvedValueOnce({ rows: [1,2,3,4,5] })
+            .mockResolvedValueOnce({ rows: [{ user_id: 1 }] })
+            .mockResolvedValueOnce({ rows: [] })
+            .mockResolvedValueOnce({ rows: [1,2,3,5,6,7,8,9,4] })
+            .mockResolvedValueOnce({ rows: [{ user_id: 1 }] })
+            .mockResolvedValueOnce({ rows: [] })
+            .mockResolvedValueOnce({ rows: [1,2,3,4,5,6,7] })
+            .mockResolvedValueOnce({ rows: [{ user_id: 1 }] })
+            .mockResolvedValueOnce({ rows: [] })
+            .mockResolvedValueOnce({ rows: [1,2,3,4,5,6,7] })
+            .mockResolvedValueOnce({ rows: [{ user_id: 1 }] })
+            .mockResolvedValueOnce({ rows: [1,2,3,4,5] })
+            
 
             const result = await Achievement.checkGet(1);
 
-            expect(db.query).toHaveBeenCalledTimes(4);
+            expect(db.query).toHaveBeenCalledTimes(13);
         })
     })
 })
