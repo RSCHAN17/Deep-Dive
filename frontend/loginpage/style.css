@@ -20,7 +20,7 @@ html, body {
 .navbar a {
   float: left;
   font-size: 16px;
-  color: #F5F1C4;
+  color: #fbfae5;
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
@@ -28,7 +28,7 @@ html, body {
 
 #title {
     font-family: "Jockey One", sans-serif;
-    color: #F5F1C4;
+    color: #fbfae5;
     font-size: 35px;
     padding-bottom: 18px;
 }
@@ -43,7 +43,7 @@ html, body {
   font-size:16px;
   border: none;
   outline: none;
-  color: #F5F1C4;
+  color: #fbfae5;
   padding: 19px 16px;
   background-color: inherit;
   font-family: inherit; 
@@ -107,7 +107,7 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: #F5F1C4;
+  background-color: #fbfae5;
   color: #36656B; 
 } 
 
@@ -143,7 +143,7 @@ input {
   font-size: 16px;
   border-radius: 999px;
   border: 0px solid #36656B;
-  background-color: #F5F1C4;
+  background-color: #fbfae5;
   font-family: "Roboto Slab", serif;
   color: #36656B;
 }
@@ -158,7 +158,7 @@ input:focus {
   border-radius: 999px;
   border: none;
   background-color: #36656B;
-  color: #F5F1C4;
+  color: #fbfae5;
   cursor: pointer;
   font-family: "Roboto Slab", serif;
 }
@@ -195,7 +195,7 @@ button:hover {
     justify-content: center;
 }
 #contactdetails {
-    color: #F5F1C4;
+    color: #fbfae5;
     display:flex;
     align-items: center;
     justify-content: center;

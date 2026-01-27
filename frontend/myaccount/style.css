@@ -31,7 +31,7 @@ html, body {
 
 #title {
     font-family: "Jockey One", sans-serif;
-    color: #F5F1C4;
+    color: #fbfae5;
     font-size: 35px;
     padding-bottom: 18px;
 }
@@ -62,7 +62,7 @@ html, body {
   grid-template-columns:repeat(2,1fr);
   gap:16px;
   position: absolute;
-  background-color: #F5F1C4;
+  background-color: #fbfae5;
   top:100%;
   left: 0;
   right: 0;
@@ -105,7 +105,7 @@ body {
   /* min-height: 100vh; */
   display: flex;
   flex-direction: column;
-  background-color: #F5F1C4; 
+  background-color: #fbfae5; 
   color: #10323A; 
 } 
 
@@ -182,7 +182,7 @@ select, input{
   border: none;
   border-radius: 8px;
   background-color: #36656B;
-  color: #F5F2D7;
+  color: #fbfae5;
   cursor: pointer;
   font-family: "Roboto Slab", serif;
 }
@@ -348,7 +348,7 @@ select, input{
 }
 
 .achlist {
-   background-color:#F5F1C4;
+   background-color:#fbfae5;
   border-radius: 15px;
   height: 310px;
   width:330px;
@@ -458,7 +458,7 @@ select, input{
 }
 /* Modal box */
 .modal-content {
-  background-color: #F5F1C4;
+  background-color: #fbfae5;
   border-radius: 15px;
   padding: 20px;
   width: 320px;
@@ -491,7 +491,7 @@ h3 {
   border: none;
   border-radius: 8px;
   background-color: #36656B;
-  color: #F5F1C4;
+  color: #fbfae5;
   cursor: pointer;
   font-family: "Roboto Slab", serif;
   margin-top: 10px;
@@ -508,7 +508,7 @@ h3 {
     justify-content: center;
 }
 #contactdetails {
-    color: #F5F1C4;
+    color: #fbfae5;
     display:flex;
     align-items: center;
     justify-content: center;

@@ -29,12 +29,12 @@ html, body {
 
 #title {
     font-family: "Jockey One", sans-serif;
-    color: #F5F1C4;
+    color: #fbfae5;
     font-size: 35px;
     padding-bottom: 18px;
 }
 body{
-  background-color: #F5F1C4;
+  background-color: #fbfae5;
   margin: 0;
   font-family: "Roboto Slab", serif;
   min-height: 100vh;
@@ -61,14 +61,14 @@ main {
   float: none;
   overflow: hidden;
   position: static;
-  color: #F5F1C4;
+  color: #fbfae5;
 }
 
 .dropdown .dropbtn {
   font-size:16px;
   border: none;
   outline: none;
-  color: #F5F1C4;
+  color: #fbfae5;
   padding: 19px 16px;
   background-color: inherit;
   font-family: inherit; 
@@ -166,7 +166,7 @@ input {
   font-size: 16px;
   border-radius: 15px;
   border: none;
-  background-color: #F5F1C4;
+  background-color: #fbfae5;
   font-family: "Roboto Slab", serif;
   width: 250px;
 }
@@ -199,7 +199,7 @@ input:focus {
     justify-content: center;
 }
 #contactdetails {
-    color: #F5F1C4;
+    color: #fbfae5;
     display:flex;
     align-items: center;
     justify-content: center;

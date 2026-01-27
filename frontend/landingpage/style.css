@@ -21,7 +21,7 @@ html, body {
 .navbar a {
   float: left;
   font-size: 16px;
-  color: #F5F1C4;
+  color: #fbfae5;
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
@@ -29,7 +29,7 @@ html, body {
 
 #title {
     font-family: "Jockey One", sans-serif;
-    color: #F5F1C4;
+    color: #fbfae5;
     font-size: 35px;
     padding-bottom: 18px;
 }
@@ -44,7 +44,7 @@ html, body {
   font-size:16px;
   border: none;
   outline: none;
-  color: #F5F1C4;
+  color: #fbfae5;
   padding: 19px 16px;
   background-color: inherit;
   font-family: inherit; 
@@ -103,7 +103,7 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: #F5F1C4;
+  background-color: #fbfae5;
   color: #36656B; 
   
 } 
@@ -168,7 +168,7 @@ main {
   font-family: "Jockey One", sans-serif;
   padding: 5px;
   margin-top: 2px;
-  color: #F5F1C4;
+  color: #fbfae5;
 }
 .titleorder {
   display:flex;
@@ -194,7 +194,7 @@ main {
   font-size: 14px;
   font-family: "Roboto Slab",serif;
   user-select:none;
-  color: #F5F1C4;
+  color: #fbfae5;
 }
 
 .switch input {
@@ -222,7 +222,7 @@ main {
   width: 26px;
   left: 2px;
   bottom: 2px;
-  background-color: #F5F1C4;
+  background-color: #fbfae5;
   -webkit-transition: .4s;
   transition: .4s;
   
@@ -244,7 +244,7 @@ input:checked + .slider:before {
 
 .slider.round {
   border-radius: 34px;
-  border: 2px solid #F5F1C4;
+  border: 2px solid #fbfae5;
 
 }
 
@@ -310,7 +310,7 @@ input:checked + .slider:before {
     justify-content: center;
 }
 #contactdetails {
-    color: #F5F1C4;
+    color: #fbfae5;
     display:flex;
     align-items: center;
     justify-content: center;

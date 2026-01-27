@@ -6,7 +6,7 @@ html, body {
 }
 
 body {
-  background-color: #F5F1C4;
+  background-color: #fbfae5;
 }
 
 .navbar {
@@ -25,7 +25,7 @@ body {
 .navbar a {
   float: left;
   font-size: 16px;
-  color: #F5F1C4;
+  color: #fbfae5;
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
@@ -33,7 +33,7 @@ body {
 
 #title {
   font-family: "Jockey One", sans-serif;
-  color: #F5F1C4;
+  color: #fbfae5;
   font-size: 35px;
   padding-bottom: 18px;
 }
@@ -48,7 +48,7 @@ body {
   font-size: 16px;
   border: none;
   outline: none;
-  color: #F5F1C4;
+  color: #fbfae5;
   padding: 19px 16px;
   background-color: inherit;
   font-family: inherit;
@@ -103,7 +103,7 @@ body {
 }
 
 #contactdetails {
-  color: #F5F1C4;
+  color: #fbfae5;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -225,7 +225,7 @@ body {
   font-size: 14px;
   padding-left: 10px;
   font-family: "Roboto Slab", sans-serif;
-  color: #F5F1C4;
+  color: #fbfae5;
 }
 
 .map-filter-btn {
@@ -268,7 +268,7 @@ body {
 .filter-title {
   font-family: "Jockey One", sans-serif;
   font-size: 18px;
-  color: #F5F1C4;
+  color: #fbfae5;
   text-align: center;
   margin-bottom: 8px;
 }
@@ -296,7 +296,7 @@ body {
   height: 16px;
   border-radius: 999px;
   background: #A5C89E;
-  border: 2px solid #F5F1C4;
+  border: 2px solid #fbfae5;
   cursor: pointer;
   margin-top: -5px;
 }
@@ -318,14 +318,14 @@ body {
   height: 16px;
   border-radius: 999px;
   background: #A5C89E;
-  border: 2px solid #F5F1C4;
+  border: 2px solid #fbfae5;
   cursor: pointer;
 }
 
 .filter-range-value {
   font-family: "Roboto Slab", serif;
   font-size: 11px;
-  color: #F5F1C4;
+  color: #fbfae5;
   text-align: center;
   margin: 5px 0 8px;
 }
