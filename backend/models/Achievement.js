@@ -45,6 +45,7 @@ class Achievement{
                 //console.log(current_achievement.achievement_id);
 
                 let description = current_achievement.achievement_description;
+                let current_name = current_achievement.achievement_name
                 // determine type of achievement
                 if (description.includes('family')){
                     // this is a family based achievement!
@@ -59,6 +60,26 @@ class Achievement{
 
                     let response = await db.query("SELECT * FROM spottings WHERE username IN (SELECT username FROM users WHERE user_id = $1) AND animal_name IN (SELECT name FROM animals WHERE family_id = $2);", [user_id, family_id])
 
+                    if (response.rows.length >= numberOf){
+                        newResponse = await db.query("INSERT INTO achievement_user_complete (user_id, achievement_id) VALUES ($1, $2) RETURNING user_id;", [user_id, current_achievement.achievement_id])
+                    }
+                }
+                else if (current_name.includes('Portfolio')) {
+                    // this is a unique animal based achievement!
+                    let splitText = description.split(' ');
+                    let numberOf = parseInt(splitText[1])
+                    
+                    let response = await db.query("SELECT * FROM animals WHERE name IN (SELECT animal_name FROM spottings WHERE username IN (SELECT username FROM users WHERE user_id = $1));", [user_id])
+                    if (response.rows.length >= numberOf){
+                        newResponse = await db.query("INSERT INTO achievement_user_complete (user_id, achievement_id) VALUES ($1, $2) RETURNING user_id;", [user_id, current_achievement.achievement_id])
+                    }
+                }
+                else if (current_name.includes('Spotter')) {
+                    // this is a total spottings based achievement!
+                    let splitText = description.split(' ');
+                    let numberOf = parseInt(splitText[1])
+                    
+                    let response = await db.query("SELECT * FROM spottings WHERE username IN (SELECT username FROM users WHERE user_id = $1);", [user_id])
                     if (response.rows.length >= numberOf){
                         newResponse = await db.query("INSERT INTO achievement_user_complete (user_id, achievement_id) VALUES ($1, $2) RETURNING user_id;", [user_id, current_achievement.achievement_id])
                     }
