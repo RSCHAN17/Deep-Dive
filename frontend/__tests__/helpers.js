@@ -2,21 +2,20 @@ const path = require('path');
 const jsdom = require('jsdom');
 const { JSDOM } = jsdom;
 
-const renderDOM = async (filename) => {
-  const filePath = path.join(process.cwd(), filename);
-  
-  // This allows us to see console.logs and ERRORS from script.js in our terminal
-  const virtualConsole = new jsdom.VirtualConsole();
-  virtualConsole.sendTo(console);
+const renderDOM = async (url) => {
+  const response = await fetch(url);
+  const html = await response.text();
 
-  const dom = await JSDOM.fromFile(filePath, {
+
+  const dom = new JSDOM(html, {
+    url,
     runScripts: 'dangerously',
-    resources: 'usable',
-    virtualConsole
+    resources: 'usable'
+
   });
 
-  return new Promise((resolve) => {
-    dom.window.document.addEventListener('load', () => {
+  return new Promise((resolve, _) => {
+    dom.window.document.addEventListener('DOMContentLoaded', () => {
       resolve(dom);
     });
   });

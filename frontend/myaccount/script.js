@@ -9,7 +9,7 @@ if (!TOKEN.token || !TOKEN.user_id) {
 }
 document.querySelector('#signout').addEventListener('click', () => {
     localStorage.removeItem('token');
-    window.location.assign('./../loginpage/index.html')
+    window.location.href = ('./../loginpage/index.html')
 })
 function getUsernameFromToken(token) {
     try {
