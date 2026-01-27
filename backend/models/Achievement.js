@@ -28,6 +28,7 @@ class Achievement{
 
         let newResponse;
         let current_achievement;
+        let numberOf;
         
  
 
@@ -53,7 +54,7 @@ class Achievement{
                     let familySplit = splitText[splitText.length - 1].split(" family")[0]
    
                     splitText = description.split(" ")
-                    let numberOf = parseInt(splitText[1])
+                    numberOf = parseInt(splitText[1])
 
                     let family_response = await db.query("SELECT family_id FROM families WHERE UPPER(common_name) = UPPER($1);", [familySplit])
                     let family_id = family_response.rows[0].family_id
@@ -67,7 +68,7 @@ class Achievement{
                 else if (current_name.includes('Portfolio')) {
                     // this is a unique animal based achievement!
                     let splitText = description.split(' ');
-                    let numberOf = parseInt(splitText[1])
+                    numberOf = parseInt(splitText[1])
                     
                     let response = await db.query("SELECT * FROM animals WHERE name IN (SELECT animal_name FROM spottings WHERE username IN (SELECT username FROM users WHERE user_id = $1));", [user_id])
                     if (response.rows.length >= numberOf){
@@ -77,7 +78,10 @@ class Achievement{
                 else if (current_name.includes('Spotter')) {
                     // this is a total spottings based achievement!
                     let splitText = description.split(' ');
-                    let numberOf = parseInt(splitText[1])
+                    if (splitText[1] == 'your') {
+                        numberOf = 1;
+                    }
+                    numberOf = parseInt(splitText[1])
                     
                     let response = await db.query("SELECT * FROM spottings WHERE username IN (SELECT username FROM users WHERE user_id = $1);", [user_id])
                     if (response.rows.length >= numberOf){
