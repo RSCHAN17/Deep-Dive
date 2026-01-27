@@ -85,7 +85,7 @@ class User{
         if (this.username === 'dev'){
             response = await db.query('SELECT * FROM families;');
         } else {
-            response = await db.query("SELECT * FROM families WHERE family_id IN (SELECT family_id FROM animals WHERE animal_id IN (SELECT animal_id FROM spottings WHERE username = $1));", [this.username]);
+            response = await db.query("SELECT * FROM families WHERE family_id IN (SELECT family_id FROM animals WHERE name IN (SELECT animal_name FROM spottings WHERE username = $1));", [this.username]);
         }
         return response.rows;
         
