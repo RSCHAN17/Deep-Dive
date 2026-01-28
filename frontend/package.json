@@ -23,7 +23,7 @@
   "jest": {
     "collectCoverage": true,
     "collectCoverageFrom": [
-      "src/**/*.js"
+      "frontend/**/*.js"
     ],
     "coveragePathIgnorePatterns": [
       "/node_modules/",
