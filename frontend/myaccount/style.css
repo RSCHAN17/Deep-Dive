@@ -72,6 +72,11 @@ html, body {
   visibility: hidden;
 }
 
+#edit-profile-form{
+  display:flex;
+  flex-direction: column;
+}
+
 .dropdown-content a {
   float: none;
   color: black;
