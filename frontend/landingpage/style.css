@@ -317,3 +317,13 @@ input:checked + .slider:before {
     font-family: "Roboto Slab", serif;
 }
 
+.birdimage {
+  border-radius: 15px;
+  width:320px;
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+
+}
