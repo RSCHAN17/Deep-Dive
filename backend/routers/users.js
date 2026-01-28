@@ -15,6 +15,7 @@ userRouter.patch("/pics/:id", authenticator, userController.setPFP);
 userRouter.get("/title/:id", authenticator, userController.getTitle);
 userRouter.patch("/title/:id", authenticator, userController.setTitle);
 userRouter.patch("/update/:id", authenticator, userController.updatePassword);
-userRouter.get("/zoo/:id", authenticator, userController.getZoo)
+userRouter.get("/zoo/:id", authenticator, userController.getZoo);
+userRouter.get("/achievements/:id", authenticator, userController.getAch);
 
 module.exports = userRouter;
