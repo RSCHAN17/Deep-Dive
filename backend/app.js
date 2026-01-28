@@ -10,6 +10,7 @@ const animalRouter = require('./routers/animals');
 const achievementRouter = require('./routers/achievements');
 const spotRouter = require('./routers/spottings');
 const challengesRouter = require('./routers/challenges')
+const familyRouter = require('./routers/family')
 
 const app = express();
 app.use(cors());
@@ -30,5 +31,6 @@ app.use("/animals", animalRouter);
 app.use("/achievements", achievementRouter);
 app.use("/spottings", spotRouter);
 app.use("/challenges", challengesRouter)
+app.use("/families", familyRouter)
 
 module.exports = app;
