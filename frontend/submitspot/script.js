@@ -25,3 +25,4 @@ dropDown3.addEventListener("click", () => {
 dropDown4.addEventListener("click", () => {
     window.location.href = "../leaderboards/index.html"
 })
+

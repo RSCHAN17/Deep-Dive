@@ -8,7 +8,8 @@ if (!TOKEN.token || !TOKEN.user_id) {
     console.error("User is not logged in!");
 }
 document.querySelector('#signout').addEventListener('click', () => {
-    localStorage.removeItem('token');
+    localStorage.removeItem('token')
+    localStorage.removeItem('user_id');
     window.location.href = ('./../loginpage/index.html')
 })
 function getUsernameFromToken(token) {
