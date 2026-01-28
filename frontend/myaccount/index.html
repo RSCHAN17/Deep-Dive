@@ -33,41 +33,45 @@
     </div>
     <main>
         <h2>My Account</h2>
-        <div class="accinfo">
-            <div class="accinfo-loading">
-                <div class="spinner"></div>
-                <span>Loading account information...</span>
+        <div class="acccontainer">
+            <div class="accinfo">
+                <div class="accinfo-loading">
+                    <div class="spinner"></div>
+                    <span>Loading account information...</span>
                 </div>
-            <div class="user-left">
-                <img class="profile-pic" src="../assets/ravenlogo.svg" alt="Profile picture">
-                <button class="edit-profile">Edit</button>
-            </div>
-
-            <div class="user-right">
-                <div class="user-header">
-                    <div class="username">Username</div>
-                    <div class="usertitle">Wildlife Spotter</div>
+                <div class="user-left">
+                    <img class="profile-pic" src="../assets/ravenlogo.svg" alt="Profile picture">
+                    <button class="edit-profile">Edit</button>
                 </div>
 
-                <div class="level-section">
-                    <div class="level-row">
-                        <span>Total XP</span>
-                        <strong id="total-xp">4</strong>
+                <div class="user-right">
+                    <div class="user-header">
+                        <div class="username">Username</div>
+                        <div class="usertitle">Wildlife Spotter</div>
                     </div>
-                    <div class="user-stats">
-                        <div class="stat-row">
-                            <span>Species</span>
-                            <strong>27</strong>
+
+                    <div class="level-section">
+                        <div class="level-row">
+                            <span>Total XP</span>
+                            <strong id="total-xp">4</strong>
                         </div>
-                        <div class="stat-row">
-                            <span>Spottings</span>
-                            <strong>142</strong>
+                        <div class="user-stats">
+                            <div class="stat-row">
+                                <span>Species</span>
+                                <strong>27</strong>
+                            </div>
+                            <div class="stat-row">
+                                <span>Spottings</span>
+                                <strong>142</strong>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        
         <button id="signout">Click here to sign out</button>
+        
         <h2>My Sightings</h2>
         <div class="sightinglist" id="sighting-list">
         </div>
