@@ -124,6 +124,11 @@ class User{
         const response = await db.query("SELECT * FROM animals WHERE name IN (SELECT animal_name FROM spottings WHERE username = $1);", [this.username])
         return response.rows.map(r => new Animal(r))
     }
+
+    async getAch() {
+        const response = await db.query("SELECT * FROM achievements WHERE achievement_id IN (SELECT achievement_id FROM achievement_user_complete WHERE user_id = $1);", [this.user_id]);
+        return response.rows.map(r => new Achievement(r));
+    }
 }
 
 module.exports = User;

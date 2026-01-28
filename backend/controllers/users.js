@@ -164,6 +164,18 @@ async function getZoo(req, res) {
     }
 }
 
+async function getAch(req, res) {
+    try {
+        id = req.params.id;
+        const user = await User.getOneByID(id)
+        const ach = await user.getAch()
+        res.status(200).json(ach)
+    } catch (err) {
+        res.status(404).json({ error: err.message })
+    }
+    
+}
+
 module.exports = { 
     register,
     login,
@@ -174,5 +186,6 @@ module.exports = {
     getTitle,
     setTitle,
     updatePassword,
-    getZoo
+    getZoo,
+    getAch
 }
