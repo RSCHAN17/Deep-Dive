@@ -1,6 +1,5 @@
 const Achievement = require('../../../models/Achievement')
 const achievementController = require('../../../controllers/achievements')
-
 const mockSend = jest.fn()
 const mockJson = jest.fn()
 const mockEnd = jest.fn()
