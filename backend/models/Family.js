@@ -20,6 +20,11 @@ class Family{
         }
         return new Family(response.rows[0]);
     }
+
+    static async addPic(photo, id){ 
+        const response = await db.query("UPDATE families SET profile_picture = $1 WHERE family_id = $2 returning family_id;", [photo, id]);
+        return response.rows[0].family_id;
+    }
 }
 
 module.exports = Family;
