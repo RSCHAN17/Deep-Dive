@@ -46,7 +46,19 @@ Your total points will originate from one of three locations:
 - The most extensive set of achievements are based on the family of the animals that the user can photograph, rewarding points by how many spottings of certain groups (such as deer, weasels or owls) the user has.
 
 ### 1.4 The Account Page
+On the account page, you will be able to see your statistics; detailing not only your total points, but how many unique species you have found and how many spottings you have made.
 
-### 1.5 View The Map
+Below the statistical overview you will be able to see all of your spottings, showing the image alongside the animal name and the date at which it was taken.
 
-### 1.6 Leaderboard
+Further below is the achievements tab, where you see all achievements in the game. Check marks appear next to achievements that you have acquired.
+
+In a similar vein, the "My Zoo" section shows every animal available to be captured, displaying ticks once you have a spotting containing one.
+### 1.5 Account Customisation
+When editing your account, you can customise three pieces of information. Internally, you are able to change your password at any time. 
+
+You can also customise your profile picture with a set of pictures that are obtained by submitting spottings of certain animal families.
+
+Titles are given for every achievement you have unlocked. 
+### 1.6 View The Map
+
+### 1.7 Leaderboard
