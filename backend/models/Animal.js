@@ -46,6 +46,11 @@ class Animal{
         const new_animal = await Animal.getOneByID(new_id);
         return new_animal;
     }
+
+    static async addPic(photo, id){ 
+        const response = await db.query("UPDATE animals SET zoo_image = $1 WHERE animal_id = $2 returning animal_id;", [photo, id]);
+        return response.rows[0].family_id;
+    }
 }
 
 module.exports = Animal;

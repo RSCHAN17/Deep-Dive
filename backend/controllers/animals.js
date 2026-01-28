@@ -29,4 +29,15 @@ async function create(req, res) {
     }
 }
 
-module.exports = { index, show, create }
+async function uploadPhoto(req, res){
+    try {
+        let id = req.params.id
+        let photo = req.body.photo
+        const response = await Animal.addPic(photo, id)
+        res.status(201).json(response)
+    } catch (err) {
+        res.status(404).json({ error: err.message })
+    }
+}
+
+module.exports = { index, show, create, uploadPhoto }
