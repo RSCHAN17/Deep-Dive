@@ -107,7 +107,10 @@ body {
   color: #36656B; 
   
 } 
-
+h3{
+  font-family: "Jockey One",serif;
+  font-size: 25px;
+}
 main {
   flex: 1;
   display: flex;
@@ -325,5 +328,6 @@ input:checked + .slider:before {
   justify-content: center;
   align-items: center;
   align-content: center;
+  margin-top: -20px;
 
 }

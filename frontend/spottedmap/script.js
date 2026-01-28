@@ -32,51 +32,30 @@ dropDown4.addEventListener("click", () => {
 
 
 
-const panel = document.getElementById("filterPanel");
-const btn = document.querySelector(".map-filter-btn");
-const slider = document.getElementById("proximity");
-const sliderValue = document.getElementById("proximityValue");
-const clearBtn = document.getElementById("clearFilters");
-const chips = Array.from(document.querySelectorAll(".filter-chip"));
+document.addEventListener("DOMContentLoaded", () => {
+    const token = localStorage.getItem("token");
+    const signInBtn = document.getElementById("signInBtn");
+    const submitBtn = document.querySelector("#submitBtn")
+    const dropdownBtn = document.querySelector(".dropbtn")
+    const dropdown = document.querySelector(".dropdown")
 
+    if (token && signInBtn) {
+        
+        signInBtn.style.display = "none";
+    }
+    if (!token && submitBtn) {
+        submitBtn.style.display = "none";
+    }
+    if ((!token || token === "null" || token === "undefined") && dropdownBtn) {
+        dropdownBtn.disabled = true;
+        dropdownBtn.style.opacity = 0.5;
+        dropdownBtn.style.pointerEvents = "none"
 
-btn.addEventListener("click", () => {
-  const isOpen = panel.classList.toggle("open");
-  panel.setAttribute("aria-hidden", String(!isOpen));
-  btn.setAttribute("aria-expanded", String(isOpen));
-});
+        const dropdownContent = dropdown.querySelector(".dropdown-content")
+        if (dropdownContent) {
+            dropdownContent.style.display = "none"
+        }
+    }
 
-
-slider.addEventListener("input", () => {
-  sliderValue.textContent = slider.value;
-});
-
-
-chips.forEach(chip => {
-  chip.addEventListener("click", () => {
-    chip.classList.toggle("selected");
-    const pressed = chip.classList.contains("selected");
-    chip.setAttribute("aria-pressed", String(pressed));
-  });
-});
-
-
-clearBtn.addEventListener("click", () => {
-  slider.value = 0;
-  sliderValue.textContent = "0";
-
-  chips.forEach(chip => {
-    chip.classList.remove("selected");
-    chip.setAttribute("aria-pressed", "false");
-  });
-});
-
-
-document.addEventListener("click", (e) => {
-  if (!panel.classList.contains("open")) return;
-  if (panel.contains(e.target) || btn.contains(e.target)) return;
-
-  panel.classList.remove("open");
-  panel.setAttribute("aria-hidden", "true");
-  btn.setAttribute("aria-expanded", "false");
+    
 });
