@@ -62,7 +62,7 @@ html, body {
   grid-template-columns:repeat(2,1fr);
   gap:16px;
   position: absolute;
-  background-color: #fbfae5;
+  background-color: #36656B;
   top:100%;
   left: 0;
   right: 0;
@@ -156,7 +156,43 @@ select, input{
   height: 160px;
   width:320px;
   display: flex;
+  position: relative;
 
+}
+.accinfo-loading {
+    position: absolute;
+    inset: 0;
+    background: #A5C89E;
+    z-index: 10;
+    border-radius: 15px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+
+    font-family: "Roboto Slab", serif;
+    font-weight: 600;
+}
+
+
+.accinfo:not(.loading) .accinfo-loading {
+    display: none;
+}
+
+
+.spinner {
+    width: 32px;
+    height: 32px;
+    border: 4px solid rgba(255,255,255,0.2);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
 }
 .user-left {
   width: 80px;
@@ -452,6 +488,59 @@ select, input{
   justify-content: center;
   align-items: center;
 }
+.no-sightings {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    color:#fbfae5 ;
+    font-family: "Jockey One", serif;
+    font-size: 25px;
+    
+}
+
+.no-sightings img {
+    max-width: 120px;
+    height: auto;
+    border-radius: 15px;
+    
+}
+.modal-content {
+  position: relative;
+}
+
+.modal-loading {
+   position: absolute;
+    inset: 0;
+    background: #fbfae5;
+    z-index: 10;
+    border-radius: 15px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+
+    font-family: "Roboto Slab", serif;
+    font-weight: 600;
+}
+
+.modal-content:not(.loading) .modal-loading {
+    display: none;
+}
+.spinner2{
+  
+    width: 32px;
+    height: 32px;
+    border: 4px solid #12464D;
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.9s linear infinite;
+    
+}
+
+
 #total-xp{
   font-size: 20px;
   font-family:"Roboto Slab", sans-serif;

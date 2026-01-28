@@ -34,8 +34,12 @@
     <main>
         <h2>My Account</h2>
         <div class="accinfo">
+            <div class="accinfo-loading">
+                <div class="spinner"></div>
+                <span>Loading account information...</span>
+                </div>
             <div class="user-left">
-                <img class="profile-pic" src="" alt="Profile picture">
+                <img class="profile-pic" src="../assets/ravenlogo.svg" alt="Profile picture">
                 <button class="edit-profile">Edit</button>
             </div>
 
@@ -80,6 +84,10 @@
         </div>
         <div id="edit-modal" class="modal">
             <div class="modal-content">
+                <div class="modal-loading">
+                    <div class="spinner2"></div>
+                    <span>Loading customisation options...</span>
+                </div>
                 <span class="close-btn">&times;</span>
                 <h3>Edit Profile</h3>
                 <form id="edit-profile-form">

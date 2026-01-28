@@ -141,8 +141,17 @@ editBtn.addEventListener("click", () => {
 async function loadProfileOptions(userId) {
     const pfpSelect = document.getElementById("edit-profile-pic");
     const titleSelect = document.getElementById("edit-title")
+    const modalContent = document.querySelector(".modal-content")
     console.log("pfpSelect:", pfpSelect);
     console.log("titleSelect:", titleSelect);
+    
+    modalContent.classList.add("loading")
+
+    pfpSelect.innerHTML = ""
+    titleSelect.innerHTML = ""
+    
+    
+    
     try {
 
         const pfpResponse = await fetch(`https://spotting-api.onrender.com/users/pics/${userId}`, {
@@ -198,6 +207,8 @@ async function loadProfileOptions(userId) {
 
     } catch (err) {
         console.error("Error loading profile options:", err);
+    } finally {
+        modalContent.classList.remove("loading")
     }
 }
 const saveBtn = document.getElementById("save-profile");
@@ -205,6 +216,11 @@ const profileMessage = document.getElementById("profile-message");
 
 saveBtn.addEventListener("click", async (e) => {
     e.preventDefault();
+
+    modal.style.display = "none"
+
+    const accInfo = document.querySelector(".accinfo");
+    accInfo.classList.add("loading");
 
     const selectedTitle = document.getElementById("edit-title").value;
     const selectedPFP = document.getElementById("edit-profile-pic").value;
@@ -277,7 +293,7 @@ async function loadMySpottings() {
             }
         );
 
-        if (!res.ok) throw new Error("Failed to load spottings");
+        if (!res.ok) throw new Error("No Spottings Yet!");
 
         const spottings = await res.json();
 
@@ -310,8 +326,12 @@ async function loadMySpottings() {
 
     } catch (err) {
         console.error("Error loading spottings:", err);
-        list.innerHTML = "<p>Error loading sightings.</p>";
-    }
+        list.innerHTML = `<div class="no-sightings">
+            <p>No Spottings Yet!</p>
+            <img src="../assets/sadowl.jpeg" alt="No sightings" />
+        </div>`
+    ;
+}
 }
 function formatDate(date) {
     return new Date(date).toLocaleDateString("en-GB", {
@@ -406,87 +426,84 @@ zooSearchInput.addEventListener("input", () => {
         item.style.display = matches ? "flex" : "none";
     });
 });
+
 async function loadAccountInfo() {
+   
+    
+    const accInfo = document.querySelector(".accinfo");
+    accInfo.classList.add("loading");
+
     try {
         const userId = TOKEN.user_id;
         const username = TOKEN.username;
 
-
-        const userRes = await fetch(`https://spotting-api.onrender.com/users/id/${userId}`, {
-            headers: { Authorization: `Bearer ${TOKEN.token}` }
-        });
-
+        const userRes = await fetch(
+            `https://spotting-api.onrender.com/users/id/${userId}`,
+            { headers: { Authorization: `Bearer ${TOKEN.token}` } }
+        );
         if (!userRes.ok) throw new Error("Failed to fetch user info");
         const user = await userRes.json();
+ 
+        const spottingsRes = await fetch(
+            `https://spotting-api.onrender.com/spottings/filter/user/${username}`,
+            { headers: { Authorization: `Bearer ${TOKEN.token}` } }
+        );
+        const spottings = spottingsRes.ok ? await spottingsRes.json() : [];
 
-        console.log("User info:", user);
+        const zooRes = await fetch(
+            `https://spotting-api.onrender.com/users/zoo/${userId}`,
+            { headers: { Authorization: `Bearer ${TOKEN.token}` } }
+        );
+        const zoo = zooRes.ok ? await zooRes.json() : [];
 
+        /* === Update DOM AFTER all data is ready === */
 
-        const profilePic = document.querySelector(".accinfo .profile-pic");
+        const profilePic = document.querySelector(".profile-pic");
         if (user.current_pfp) profilePic.src = user.current_pfp;
 
+        document.querySelector(".username").textContent = user.username;
+        document.querySelector(".usertitle").textContent =
+            user.current_title || "Wildlife Spotter";
 
-        const usernameEl = document.querySelector(".accinfo .username");
-        const usertitleEl = document.querySelector(".accinfo .usertitle");
-        if (usernameEl) usernameEl.textContent = user.username || "Username";
-        if (usertitleEl) usertitleEl.textContent = user.current_title || "Wildlife Spotter";
+        document.getElementById("total-xp").textContent =
+            user.total_points ?? 0;
 
-
-        const totalXP = document.getElementById("total-xp");
-        if (totalXP && user.total_points != null) {
-            totalXP.textContent = user.total_points; 
-        }
-
-
-        const spottingsRes = await fetch(`https://spotting-api.onrender.com/spottings/filter/user/${username}`, {
-            headers: { Authorization: `Bearer ${TOKEN.token}` }
-        });
-        let spottings = [];
-        if (spottingsRes.ok) {
-            spottings = await spottingsRes.json();
-        } else {
-            console.warn("Failed to fetch spottings");
-        }
-
-
-        const zooRes = await fetch(`https://spotting-api.onrender.com/users/zoo/${userId}`, {
-            headers: { Authorization: `Bearer ${TOKEN.token}` }
-        });
-        let zoo = [];
-        if (zooRes.ok) {
-            zoo = await zooRes.json();
-        } else {
-            console.warn("Failed to fetch zoo");
-        }
-
-
-        const statRows = document.querySelectorAll(".accinfo .user-stats .stat-row strong");
-        if (statRows.length >= 2) {
-            statRows[0].textContent = zoo.length;
-            statRows[1].textContent = spottings.length;
-        }
+        const stats = document.querySelectorAll(".stat-row strong");
+        stats[0].textContent = zoo.length;
+        stats[1].textContent = spottings.length;
 
     } catch (err) {
         console.error("Error loading account info:", err);
+    } finally {
+        accInfo.classList.remove("loading");
     }
 }
-
 async function loadAchievements() {
     const achList = document.querySelector(".achlist");
     if (!achList) return;
 
     try {
 
-        const res = await fetch(`https://spotting-api.onrender.com/achievements`, {
+        const [resAll, resUser] = await Promise.all([
+            fetch(`https://spotting-api.onrender.com/achievements`, {
             headers: {
                 Authorization: `Bearer ${TOKEN.token}`
             }
-        });
+        }),
+        fetch(`https://spotting-api.onrender.com/users/achievements/${TOKEN.user_id}`,{
+            headers: { Authorization: `Bearer ${TOKEN.token}`}
+        })
 
-        if (!res.ok) throw new Error("Failed to fetch achievements");
+        ])
+         
 
-        const achievements = await res.json();
-        //console.log("Achievements:", achievements);
+        if (!resAll.ok) throw new Error("Failed to fetch achievements");
+        if (!resUser.ok) throw new Error("Failed to fetch user achievements")
+
+        const achievements = await resAll.json();
+        const userAchievements = await resUser.json();
+
+        const completedSet = new Set(userAchievements.map(a => a.achievement_id))
 
 
         achList.innerHTML = "";
@@ -518,7 +535,7 @@ async function loadAchievements() {
 
 
             const tick = document.createElement("div");
-            if (ach.achieved) {
+            if (completedSet.has(ach.achievement_id)) {
                 tick.className = "achievement-tick achieved";
             }
 
