@@ -25,7 +25,12 @@ main {
   padding-right: 20px;
   padding-left: 20px;
 }
-
+.user-pfp {
+  width: 50px;      /* desired width */
+  height: 50px;     /* desired height */
+  object-fit: cover; /* crops to fill square without stretching */
+  border-radius: 15px; /* optional: makes it circular */
+}
 
 .navbar {
   background-color: #36656B;
@@ -254,36 +259,57 @@ input:checked + .slider:before {
   overflow: hidden;
 }
 
+.leaderboard-item {
+  display: flex;
+  align-items: center;         /* vertically center all items */
+  justify-content: space-between; /* left section vs score */
+  padding: 12px 16px;
+  gap: 12px;
+}
+
+.left-section {
+  display: flex;
+  align-items: center;  /* vertically align rank, image, text */
+  gap: 12px;
+}
+
 .rank {
-  width: 36px;
   font-weight: bold;
   font-size: 18px;
+  min-width: 20px;      /* keeps numbers aligned */
+  text-align: left;
+}
+
+.user-pfp {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.user-text {
+  display: flex;
+  flex-direction: column; /* username above title */
+  justify-content: center;
 }
 
 .username {
   font-weight: 600;
-  font-size: 16px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  font-size: 1rem;
+  color: #222;
 }
 
 .user-title {
   font-weight: 400;
-  font-size: 12px;
-  color: #12464D;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  font-size: 0.85rem;
+  color: #555;
 }
 
 .score {
-  font-weight: 600;
-  color: #2F6B72;
-  white-space: nowrap;
+  font-weight: 500;
+  min-width: 60px;
+  text-align: right;
 }
-
-
 
 #footerdiv {
   position: relative;

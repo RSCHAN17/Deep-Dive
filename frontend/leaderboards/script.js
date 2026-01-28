@@ -64,18 +64,20 @@ function render(rows, suffix) {
   leaderboardList.innerHTML = rows
     .map(
       (row, index) => `
-      <div class="${getItemClass(index + 1)}">
-        <span class="rank">${index + 1}</span>
-
-        <div class="user-info">
-          <span class="username">${row.username}</span>
-          <span class="user-title">${row.title || ""}</span>
-        </div>
-
-        <span class="score">
-          ${Math.floor(row.score || 0)} ${suffix}
-        </span>
-      </div>
+      <div class="${getItemClass(index + 1)} leaderboard-item">
+  <div class="left-section">
+    <span class="rank">${index + 1}</span>
+    <img class="user-pfp" src="${row.current_pfp}">
+    <div class="user-text">
+      <span class="username">${row.username}</span>
+      <span class="user-title">${row.current_title || ""}</span>
+    </div>
+  </div>
+  
+  <span class="score">
+    ${Math.floor(row.score || 0)} ${suffix}
+  </span>
+</div>
     `
     )
     .join("");
@@ -103,7 +105,8 @@ async function loadAllTime() {
   render(
     users.slice(0, 10).map((u) => ({
       username: u.username,
-      title: getTitle(u),
+      current_title: u ? u.current_title : "",
+        current_pfp: (u && u.current_pfp) ? u.current_pfp : "../assets/ravenlogo.svg",
       score: u.total_points || 0,
     })),
     "XP"
@@ -148,7 +151,8 @@ async function loadMonthlyThisMonth() {
       const u = userMap.get(username);
       return {
         username,
-        title: u ? getTitle(u) : "",
+        current_title: u ? u.current_title : "",
+        current_pfp: (u && u.current_pfp) ? u.current_pfp : "../assets/ravenlogo.svg",
         score,
       };
     })
