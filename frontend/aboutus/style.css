@@ -70,7 +70,9 @@ html, body {
   z-index: 1000;
   visibility: hidden;
 }
-
+h2{
+  font-size: px;
+}
 .dropdown-content a {
   float: none;
   color: #36656B;
@@ -100,7 +102,7 @@ html, body {
 }
 
 #footerdiv {
-    position: fixed;
+    position: relative;
     bottom:0;
     left:0;
     background-color: #36656B;
@@ -120,15 +122,38 @@ html, body {
 .section {
   margin: 16px 16px 18px;
 }
-
+main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding-left: 20px;
+  padding-right: 20px;
+  align-items: center;
+}
+body {
+  margin: 0;
+  font-family: "Roboto Slab", serif;
+  /* min-height: 100vh; */
+  display: flex;
+  flex-direction: column;
+  background-color: #fbfae5; 
+  color: #10323A; 
+} 
 .section-title {
   font-family: "Jockey One", serif;
   font-weight: 800;
-  font-size: 18px;
+  font-size: 25px;
   color: #36656B;
   margin: 8px 0 10px;
 }
-
+.verifier{
+  display: block;
+  margin: 0 auto;
+  padding:15px;
+  border-radius: 30px;
+  
+}
 .rounded-box {
   border-radius: 18px;
   padding: 14px;
