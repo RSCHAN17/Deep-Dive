@@ -116,6 +116,40 @@ describe('User Controller', () =>{
         })
     })
 
+    describe('updatePassword', () => {
+        it('Updates password correctly', async () => {
+            let mockReq = { params: {id: 1}, body: {currentPassword: 'a', newPassword: 'b'} }
+            let mockUser = new User({user_id: 1, username: 'dev', password: 'a', email_address: 'test',  spotting_points: 0.0, achievement_points: 0, challenge_points: 0, total_points: 0, current_pfp: '', current_title: '', daily_streak: 0})
+
+            jest.spyOn(User, 'updatePointsByID').mockResolvedValue(mockUser)
+            bcrypt.compare.mockResolvedValue(true)
+            bcrypt.genSalt.mockResolvedValue('salt')
+            bcrypt.hash.mockResolvedValue('hashedpassword')
+            jest.spyOn(mockUser, 'updatePassword').mockResolvedValue(mockUser)
+
+            await userController.updatePassword(mockReq, mockRes)
+
+            expect(bcrypt.genSalt).toHaveBeenCalled()
+            expect(bcrypt.hash).toHaveBeenCalledWith('b', 'salt')
+            expect(mockRes.status).toHaveBeenCalledWith(201)
+
+        })
+
+        it('Returns error if old password not correct', async () => {
+            let mockReq = { params: {id: 1}, body: {currentPassword: 'a', newPassword: 'b'} }
+            let mockUser = new User({user_id: 1, username: 'dev', password: 'a', email_address: 'test',  spotting_points: 0.0, achievement_points: 0, challenge_points: 0, total_points: 0, current_pfp: '', current_title: '', daily_streak: 0})
+
+            jest.spyOn(User, 'updatePointsByID').mockResolvedValue(mockUser)
+            bcrypt.compare.mockRejectedValue(false)
+            
+            await userController.updatePassword(mockReq, mockRes)
+
+            expect(bcrypt.compare).toHaveBeenCalledTimes(1)
+            expect(mockStatus).toHaveBeenCalledWith(404)
+           
+        })
+    })
+
     describe('login', () => {
         it('Logs user in successfully', async () => {
             req.body = { username: 'dev', password: 'test', email_address: 'test' }
@@ -132,6 +166,24 @@ describe('User Controller', () =>{
             expect(jwt.sign).toHaveBeenCalledWith({ user_id: 1, username: 'dev' }, process.env.SECRET_TOKEN, {expiresIn: 3600}, expect.any(Function))
             expect(res.status).toHaveBeenCalledWith(200)
             expect(res.json).toHaveBeenCalledWith({ success: true, token: 'mocktoken', user: { user_id: 1, username: 'dev', email_address: 'test' } })
+        })
+
+        it('Returns error 401 if username missing', async () => {
+            req.body = { password: 'test' }
+            
+            await userController.login(req, res)
+
+            expect(res.status).toHaveBeenCalledWith(401)
+            expect(res.json).toHaveBeenCalledWith({ error: 'Please provide username and password' })
+        })
+
+        it('Returns error 401 if password missing', async () => {
+            req.body = { username: 'test' }
+            
+            await userController.login(req, res)
+
+            expect(res.status).toHaveBeenCalledWith(401)
+            expect(res.json).toHaveBeenCalledWith({ error: 'Please provide username and password' })
         })
     })
 
@@ -227,26 +279,26 @@ describe('User Controller', () =>{
         })
 
         it('Returns all available titles', async () => {
-            let user2 = new User(testUser)
+            let user2 = new User({user_id: 1, username: 'a', password: 'd', email_address: 'ab', spotting_points: 3, achievement_points: 44, challenge_points: 3, total_points: 50, current_pfp: 'a', current_title: 'a', daily_streak: 4})
             const mockProfiles = [1,2,3]
-            jest.spyOn(User, "updatePointsByID").mockResolvedValue(user2)
+            jest.spyOn(User, "getOneByID").mockResolvedValue(user2)
             jest.spyOn(user2, 'getAvailableTitles').mockResolvedValue(mockProfiles)
 
             await userController.getTitle(mockReq, mockRes)
 
-            //expect(User.updatePointsByID).toHaveBeenCalledTimes(1)
+            expect(User.getOneByID).toHaveBeenCalledTimes(1)
             expect(mockStatus).toHaveBeenCalledWith(200)
             //expect(mockSend).toHaveBeenCalledWith(mockProfiles)
         })
 
         it('Returns error upon failure', async () => {
             let user3 = new User(testUser)
-            jest.spyOn(User, 'updatePointsByID').mockRejectedValue(new Error('b'))
+            jest.spyOn(User, 'getOneByID').mockRejectedValue(new Error('b'))
             jest.spyOn(user3, 'getAvailableTitles').mockRejectedValue(new Error('b'))
 
             await userController.getTitle(mockReq, mockRes)
 
-            //expect(User.updatePointsByID).toHaveBeenCalledTimes(1)
+            expect(User.getOneByID).toHaveBeenCalledTimes(1)
             expect(mockStatus).toHaveBeenCalledWith(500)
             expect(mockSend).toHaveBeenCalledWith({error: 'b'})
         })
@@ -343,6 +395,38 @@ describe('User Controller', () =>{
             await userController.setTitle(mockReq, mockRes)
 
             expect(User.updatePointsByID).toHaveBeenCalledTimes(1)
+            expect(mockStatus).toHaveBeenCalledWith(404)
+            expect(mockSend).toHaveBeenCalledWith({error: 'b'})
+        })
+    })
+
+    describe('getAch', () => {
+        let testUser, mockReq;
+
+        beforeEach(() => {
+            testUser = {user_id: 1, username: 'a', password: 'd', email_address: 'ab', spotting_points: 3, achievement_points: 44, challenge_points: 3, total_points: 50, current_pfp: 'a', current_title: 'a', daily_streak: 4}
+            mockReq = { params: {id: 1} }
+        })
+
+        it('Returns all achievements the user has achieved', async () => {
+            let user = new User(testUser)
+            const mockProfiles = [1,2,3]
+            jest.spyOn(User, "getOneByID").mockResolvedValue(user)
+            jest.spyOn(user, 'getAch').mockResolvedValue(mockProfiles)
+
+            await userController.getAch(mockReq, mockRes)
+
+            expect(User.getOneByID).toHaveBeenCalledTimes(1)
+            expect(mockStatus).toHaveBeenCalledWith(200)
+            //expect(mockSend).toHaveBeenCalledWith(mockProfiles)
+        })
+
+        it('Returns error upon failure', async () => {
+            jest.spyOn(User, 'getOneByID').mockRejectedValue(new Error('b'))
+
+            await userController.getAch(mockReq, mockRes)
+
+            expect(User.getOneByID).toHaveBeenCalledTimes(1)
             expect(mockStatus).toHaveBeenCalledWith(404)
             expect(mockSend).toHaveBeenCalledWith({error: 'b'})
         })

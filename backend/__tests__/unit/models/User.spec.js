@@ -240,4 +240,23 @@ describe('User Model', () => {
             expect(result).toEqual(mockAnimals)
         })
     })
+
+    describe('getAch', () => {
+        it('returns all achievements that the user has', async () => {
+            const mockUser = new User({user_id: 1, username: 'a', password: 'd', email_address: 'ab', spotting_points: 3, achievement_points: 44, challenge_points: 3, total_points: 50, current_pfp: 'b', current_title: 'a', daily_streak: 4})
+            const mockAchievements = [
+                {achievement_id: 1, achievement_name: 'Deer', achievement_description: 'Upload 2 spottings within the deer family.', value: 1, title: 'c'},
+                {achievement_id: 2, achievement_name: 'Spotter', achievement_description: 'Upload 5 spottings', value: 2, title: 'b'},
+                {achievement_id: 3, achievement_name: 'Portfolio', achievement_description: 'Discover 10 unique animals.', value: 3, title: 'a'},
+                {achievement_id: 4, achievement_name: 'Spotter', achievement_description: 'Upload your first spotting.', value: 3, title: 'a'},
+                {achievement_id: 4, achievement_name: 'Portfolio', achievement_description: 'Discover 2 unique animals.', value: 3, title: 'a'}
+            ]
+
+            jest.spyOn(db, 'query').mockResolvedValueOnce({rows: mockAchievements})
+
+            const result = await mockUser.getAch();
+
+            expect(result).toEqual(mockAchievements)
+        })
+    })
 })
