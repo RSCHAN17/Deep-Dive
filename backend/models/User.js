@@ -56,24 +56,24 @@ class User{
     }
 
     static async updatePointsByID(id){
-        console.log('step 2');
+        // first we check if the user has any additional achievements
         const user_id = await Achievement.checkGet(id);
-        console.log('step 4');
         const user = await User.getOneByID(parseInt(user_id));
-        console.log('step 5');
-        // previously ^^ This just got by id, but we want to check achievements are got
+        // then we calculate their total points from spotting alone
         const spot_response = await db.query("SELECT COALESCE(SUM(spot_points),0) FROM spottings WHERE username = $1;", [user.username]);
         const spot_score = spot_response.rows[0].coalesce;
-
-        const achievement_response = await db.query("SELECT COALESCE(SUM(value),0) FROM achievements WHERE achievement_id IN (SELECT achievement_id FROM achievement_user_complete WHERE user_id = $1);", [id]);
+        // then we calculate their total points from achievements
+        const achievement_response = await db.query(`SELECT COALESCE(SUM(value),0) FROM achievements WHERE achievement_id IN 
+            (SELECT achievement_id FROM achievement_user_complete WHERE user_id = $1);`, [id]);
         const achievement_score = achievement_response.rows[0].coalesce;
-
+        // finally we also find how many challenges they have completed
         const challenge_response = await db.query("SELECT COALESCE(SUM(challenge_score),0) FROM challenge_user_complete WHERE user_id = $1;", [id]);
         const challenge_score = challenge_response.rows[0].coalesce;
-
+        // before summing everything together
         const total_points = Math.ceil(spot_score) + achievement_score + challenge_score;
-        console.log(total_points);
-        const response = await db.query("UPDATE users SET spotting_points = $1, achievement_points = $2, total_points = $3 WHERE user_id = $4 RETURNING user_id;", [spot_score, achievement_score, total_points, id]);
+        //console.log(total_points); < check if the points are correct and add to database again
+        const response = await db.query(`UPDATE users SET spotting_points = $1, achievement_points = $2, total_points = $3 
+            WHERE user_id = $4 RETURNING user_id;`, [spot_score, achievement_score, total_points, id]);
         const player_id = response.rows[0].user_id;
         const player = await User.getOneByID(player_id);
         return player;
@@ -126,6 +126,7 @@ class User{
     }
 
     async getAch() {
+        const id = Achievement.checkGet(this.user_id)
         const response = await db.query("SELECT * FROM achievements WHERE achievement_id IN (SELECT achievement_id FROM achievement_user_complete WHERE user_id = $1);", [this.user_id]);
         return response.rows.map(r => new Achievement(r));
     }
