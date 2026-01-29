@@ -49,7 +49,7 @@ class Animal{
 
     static async addPic(photo, id){ 
         const response = await db.query("UPDATE animals SET zoo_image = $1 WHERE animal_id = $2 returning animal_id;", [photo, id]);
-        return response.rows[0].family_id;
+        return response.rows[0].animal_id;
     }
 }
 
