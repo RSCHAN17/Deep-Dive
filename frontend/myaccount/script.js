@@ -457,7 +457,6 @@ async function loadAccountInfo() {
         );
         const zoo = zooRes.ok ? await zooRes.json() : [];
 
-        /* === Update DOM AFTER all data is ready === */
 
         const profilePic = document.querySelector(".profile-pic");
         if (user.current_pfp) profilePic.src = user.current_pfp;
