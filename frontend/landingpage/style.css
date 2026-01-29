@@ -260,9 +260,9 @@ input:checked + .slider:before {
     max-width: 420px;
     display: flex;
     flex-direction: column;
-    gap: 12px; /* space between each challenge box */
-    padding: 16px; /* space between the green boxes and the blue background edges */
-    box-sizing: border-box; /* include padding in width */
+    gap: 12px; 
+    padding: 16px; 
+    box-sizing: border-box; 
    
 }
 
@@ -272,10 +272,10 @@ input:checked + .slider:before {
     gap: 12px;
     background-color: #A5C89E;
     border-radius: 12px;
-    width: 100%; /* make it stretch to full container width */
-    padding: 12px 16px; /* top/bottom 12px, left/right 16px */
-    box-sizing: border-box; /* ensures padding is included in width */
-    min-height: 60px; /* makes boxes thicker */
+    width: 100%; 
+    padding: 12px 16px; 
+    box-sizing: border-box; 
+    min-height: 60px; 
 }
 
 .challenge-check {

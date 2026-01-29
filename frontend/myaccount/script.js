@@ -145,14 +145,14 @@ async function loadProfileOptions(userId) {
     const modalContent = document.querySelector(".modal-content")
     console.log("pfpSelect:", pfpSelect);
     console.log("titleSelect:", titleSelect);
-    
+
     modalContent.classList.add("loading")
 
     pfpSelect.innerHTML = ""
     titleSelect.innerHTML = ""
-    
-    
-    
+
+
+
     try {
 
         const pfpResponse = await fetch(`https://spotting-api.onrender.com/users/pics/${userId}`, {
@@ -331,8 +331,8 @@ async function loadMySpottings() {
             <p>No Spottings Yet!</p>
             <img src="../assets/sadowl.jpeg" alt="No sightings" />
         </div>`
-    ;
-}
+            ;
+    }
 }
 function formatDate(date) {
     return new Date(date).toLocaleDateString("en-GB", {
@@ -429,8 +429,8 @@ zooSearchInput.addEventListener("input", () => {
 });
 
 async function loadAccountInfo() {
-   
-    
+
+
     const accInfo = document.querySelector(".accinfo");
     accInfo.classList.add("loading");
 
@@ -444,7 +444,7 @@ async function loadAccountInfo() {
         );
         if (!userRes.ok) throw new Error("Failed to fetch user info");
         const user = await userRes.json();
- 
+
         const spottingsRes = await fetch(
             `https://spotting-api.onrender.com/spottings/filter/user/${username}`,
             { headers: { Authorization: `Bearer ${TOKEN.token}` } }
@@ -486,16 +486,16 @@ async function loadAchievements() {
 
         const [resAll, resUser] = await Promise.all([
             fetch(`https://spotting-api.onrender.com/achievements`, {
-            headers: {
-                Authorization: `Bearer ${TOKEN.token}`
-            }
-        }),
-        fetch(`https://spotting-api.onrender.com/users/achievements/${TOKEN.user_id}`,{
-            headers: { Authorization: `Bearer ${TOKEN.token}`}
-        })
+                headers: {
+                    Authorization: `Bearer ${TOKEN.token}`
+                }
+            }),
+            fetch(`https://spotting-api.onrender.com/users/achievements/${TOKEN.user_id}`, {
+                headers: { Authorization: `Bearer ${TOKEN.token}` }
+            })
 
         ])
-         
+
 
         if (!resAll.ok) throw new Error("Failed to fetch achievements");
         if (!resUser.ok) throw new Error("Failed to fetch user achievements")

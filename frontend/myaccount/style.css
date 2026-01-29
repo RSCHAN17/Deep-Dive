@@ -469,7 +469,7 @@ select, input{
   color:#12464D;
 }
 .achievement-tick.achieved::after {
-  content: "✓"; /* adds checkmark */
+  content: "✓"; 
 }
 
 .achievement-tick.not-achieved {
@@ -485,7 +485,7 @@ select, input{
   align-items: center;
   flex-direction: column;
 }
-/* Modal overlay */
+
 .modal {
   display: none;                  
   position: fixed;                 
@@ -556,7 +556,7 @@ select, input{
   font-size: 20px;
   font-family:"Roboto Slab", sans-serif;
 }
-/* Modal box */
+
 .modal-content {
   background-color: #fbfae5;
   border-radius: 15px;
@@ -569,7 +569,7 @@ select, input{
   gap: 10px;
 }
 
-/* Close button */
+
 .close-btn {
   align-self: flex-end;
   font-size: 20px;
