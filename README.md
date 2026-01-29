@@ -8,6 +8,8 @@ This application represents the middle ground between an association of professi
 
 The game relies on rewards for finding specific animals and certain unique species, allowing them to gain points based on animal rarity and completing achievements.
 ## 1. How To Use
+You can access the application via the link [here](https://spotted-app.netlify.app).
+
 When opening the application for the first time, users are invited to create a new profile. With the addition of a username, password and email address, they gain full access into every part of the game.
 ### 1.1 The Homepage & Navigation Overview
 After logging in, you will be shown two main buttons:
@@ -60,5 +62,73 @@ You can also customise your profile picture with a set of pictures that are obta
 
 Titles are given for every achievement you have unlocked. 
 ### 1.6 View The Map
+The user is able to see the a map which will display pins of every uploaded Spotting. They are coloured green for common animals, blue for rarer animals and purple for exceptionally rare animals worth over 40 points each.
+
+For uncommon animals, the point on the map they were photographed at will be randomly selected within a range of 500 metres to 1 kilometre. This is to prevent people from flocking to these locations and disrupting wildlife that is uncommon.
+
+Filters exist on the map so you can also reduce clutter on your screen. You are able to filter two ways:
+- By rarity - you can select only common, rare or exceptional animals to show up.
+- By type - you can select between mammals, birds, amphibians and reptiles as the only ones showing up.
+
 
 ### 1.7 Leaderboard
+Two different leaderboards are available right now. One is ordered by the total points each user has achieved through their uploaded spottings within the current month. The other displays overall total values for each user, including the points they have gained through achievements.
+## 2 Technologies Used
+### 2.1 Frontend Technologies
+- HTML for web layout
+- CSS for stylisation
+- JavaScript for interactivity and reaching the API to fetch data
+    - Libraries such as Express and Jest were used to provide web frameworks and testing features worked as intended
+### 2.2 Map Application Technologies
+- Python libraries for dispaying coordinates on interactive maps
+    - For example, we used Pandas to help randomise the coordinates of rarer animals
+- Streamlit for deploying the services independently of the final product
+### 2.3 Uploading Image Application Technologies
+- Python for building the prompts and sending requests
+- OpenAI for the chatbot to recognise animals from our database
+### 2.4 Backend Technologies
+- JavaScript for transforming requests and responses from the API to the database, with libraries such as
+    - Postgres for sending SQL queries
+    - Express and Node js as a backend framework 
+    - Bcrypt for safely storing encrypted passwords
+    - JSONWebToken for ensuring users remain logged in when changing between web pages
+- SQL for updating and fetching information from our databases
+### 2.5 External Hosting
+- Netlify is the main application's host, where users are able to reach the application without having the front end run locally
+- Supabase for hosting our databases
+- Render for hosting our API, allowing HTTP requests to be sent without the backend being run locally
+- GitHub for version control and collaborative work
+## 3 Processes
+### 3.1 API Requests
+Every text that begins with a colon denotes a parameter which can be changed to give different results
+- /users
+    - /register - POST request that registers user accounts
+    - /login - POST request that checks credentials and logs user in
+    - / - GET request which pulls all users and sorts by their total points
+    - /id/:id - GET request which returns information on a user by their ID
+    - /pics/:id - GET request which returns all available profile pictures the user can equip
+    - /pics/:id - PATCH request which replaces the old profile picture with the new profile picture
+    - /title/:id - GET request which returns all available titles the user can equip
+    - /title/:id - PATCH request which replaces the old title with the new title
+    - /update/:id - PATCH request that updates the user's old password with a new encrypted password
+    - /zoo/:id - GET request which returns all animals that the user has uploaded sightings of
+    - /achievements/:id - GET request which returns all achievements which the user has acquired
+- /spottings
+    - / - GET request which loads all information about all spottings
+    - /id/:id - GET request which returns one spotting by its ID
+    - /filter/user/:id - GET request which returns all spottings by a certain user (by ID)
+    - /filter/type/:type - GET request which returns all spottings by a certain type (e.g. mammal, bird, reptile ...)
+    - /new - POST request which creates a new spotting and uploads it to a database
+- /family
+    - /update/:id - PATCH request which updates the profile picture image associated with the families
+- /challenges
+    - / - GET request which returns all challenges in our database
+- /animals
+    - / - GET request which returns all animals
+    - /id/:id - GET request which returns all information on a specific animal
+    - /new - POST request which adds a new animal to the database
+    - /update/:id - PATCH request which updates the animal's zoo image associated with each animal
+- /achievements
+    - / - GET request which returns all achievements
+    - /id/:id - GET request which returns information about a specific achievement (by ID)
+    - /check/:id - GET request which takes in the user's ID and checks any achievements which the user has achieved
