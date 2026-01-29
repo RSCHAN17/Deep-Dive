@@ -384,7 +384,7 @@ async function loadMyZoo() {
             item.className = "zoo-item";
 
             item.innerHTML = `
-                <img src="${animal.image_url || '../assets/fox.jpg'}"
+                <img src="${animal.zoo_image || '../assets/fox.jpg'}"
                      alt="${animal.name}"
                      class="zoo-img">
 
