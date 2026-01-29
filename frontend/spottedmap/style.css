@@ -118,7 +118,7 @@ border-radius: 18px;
 }
 
 .map-page {
-  padding: 14px 14px 90px;
+  padding: 14px;
 }
 
 .map-wrap {
@@ -135,7 +135,7 @@ border-radius: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 .placeholder-text {
