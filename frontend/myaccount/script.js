@@ -8,7 +8,8 @@ if (!TOKEN.token || !TOKEN.user_id) {
     console.error("User is not logged in!");
 }
 document.querySelector('#signout').addEventListener('click', () => {
-    localStorage.removeItem('token');
+    localStorage.removeItem('token')
+    localStorage.removeItem('user_id');
     window.location.href = ('./../loginpage/index.html')
 })
 function getUsernameFromToken(token) {
@@ -456,7 +457,6 @@ async function loadAccountInfo() {
         );
         const zoo = zooRes.ok ? await zooRes.json() : [];
 
-        /* === Update DOM AFTER all data is ready === */
 
         const profilePic = document.querySelector(".profile-pic");
         if (user.current_pfp) profilePic.src = user.current_pfp;
