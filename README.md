@@ -24,6 +24,9 @@ The __Navigation Bar__ located at the top right of the screen drops down giving 
 - __Leaderboards__ will display the top users based on earned xp from their photographs and recently earned achievements.
 
 ### 1.2 Submitting Spottings
+![image](./frontend/assets/verifier.png)
+
+
 When entering the page to submit your spots, an external application will wake up and ask you to enter a photo. This pulls up a standard file selector so that you are able to load any pictures stored on your device.
 
 After the picture is uploaded, the ML Chatbot will compare the image to every animal in our database and determine which one you have photographed. Alongside this, it will tell you how many of the animal is in the picture before requiring your username as confirmation that you would like to submit the image; and a pair of coordinates entered for the location at which you spotted the animal(s) in order for the map to work correctly.
@@ -48,6 +51,8 @@ Your total points will originate from one of three locations:
 - The most extensive set of achievements are based on the family of the animals that the user can photograph, rewarding points by how many spottings of certain groups (such as deer, weasels or owls) the user has.
 
 ### 1.4 The Account Page
+![image](./frontend/assets/profile.png)
+
 On the account page, you will be able to see your statistics; detailing not only your total points, but how many unique species you have found and how many spottings you have made.
 
 Below the statistical overview you will be able to see all of your spottings, showing the image alongside the animal name and the date at which it was taken.
@@ -62,6 +67,8 @@ You can also customise your profile picture with a set of pictures that are obta
 
 Titles are given for every achievement you have unlocked. 
 ### 1.6 View The Map
+![image](./frontend/assets/map.png)
+
 The user is able to see the a map which will display pins of every uploaded Spotting. They are coloured green for common animals, blue for rarer animals and purple for exceptionally rare animals worth over 40 points each.
 
 For uncommon animals, the point on the map they were photographed at will be randomly selected within a range of 500 metres to 1 kilometre. This is to prevent people from flocking to these locations and disrupting wildlife that is uncommon.
@@ -132,3 +139,15 @@ Every text that begins with a colon denotes a parameter which can be changed to 
     - / - GET request which returns all achievements
     - /id/:id - GET request which returns information about a specific achievement (by ID)
     - /check/:id - GET request which takes in the user's ID and checks any achievements which the user has achieved
+
+## 4. Challenges Faced
+### 4.1 Uploading a Photo
+![image](./frontend/assets/image1.png)
+Above is the code we used to upload images and the necessary information for a user's spotting. This was a challenge for us due to the translation from an AI's response determining the animal into a JSON object which is then to be sent as a request to the API to update the database.
+
+Our biggest issue also depended on the display for the user, as many problems arose with the user interface's colour scheme.
+
+
+![image](./frontend/assets/image2.png)
+
+Another issue came with generating the map. This was a challenge which was solved after several tests and preview images. The problems involved the pins, which were not displaying the correct information at first.
